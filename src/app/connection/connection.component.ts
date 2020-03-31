@@ -42,10 +42,18 @@ export class ConnectionComponent implements OnInit {
   constructor(private rustSrv: RustService) { }
 
   ngOnInit() {
+    if (localStorage.getItem('rcon-server')) {
+      this.serverIP = localStorage.getItem('rcon-server');
+      this.rconPort = parseInt(localStorage.getItem('rcon-port'), 10);
+      this.rconPasswd = localStorage.getItem('rcon-password');
+    }
   }
 
   connect() {
     this.loginLoading = true;
+    localStorage.setItem('rcon-server', this.serverIP);
+    localStorage.setItem('rcon-port', this.rconPort.toString());
+    localStorage.setItem('rcon-password', this.rconPasswd);
     this.rustSrv.connect(this.serverIP, this.rconPort, this.rconPasswd).subscribe(d => {
       if (d.type === REType.UNKOWN) {
         // show in console.
