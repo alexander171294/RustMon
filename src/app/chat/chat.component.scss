@@ -1,0 +1,29 @@
+ul {
+  list-style: none;
+  height: calc(100% - 75px);
+  margin: 0px;
+  padding: 5px;
+  overflow-y: scroll;
+  color: wheat;
+  li {
+    font-size: 14px;
+
+  }
+}
+#players {
+  li{
+    padding: 2px 0px;
+    &:hover {
+      color: #cd412b;
+      background: #292929;
+    }
+  }
+}
+span {
+  &.time {
+    font-size: 11px;
+    width: 78px;
+    display: inline-block;
+    color: gray;
+  }
+}

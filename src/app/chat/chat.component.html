@@ -1,0 +1,13 @@
+<ul #chat>
+  <li *ngFor="let message of chatMessages" (click)="showData($event, message, op)">
+    <span class="time">[{{message.Time | date:'d/M/yy, h:mm'}}]</span>
+    <span class="username" [style.color]="message.Color">{{message.Username}}</span>
+    {{message.Message}}
+  </li>
+</ul>
+<p-overlayPanel #op>
+  <ng-template pTemplate>
+      <!-- Channel: {{clickedMessage.Channel}}<br /> -->
+      SteamID: {{clickedMessage.UserId}}
+  </ng-template>
+</p-overlayPanel>

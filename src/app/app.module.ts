@@ -17,6 +17,8 @@ import {ContextMenuModule} from 'primeng/contextmenu';
 import {ToastModule} from 'primeng/toast';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { ChatComponent } from './chat/chat.component';
+import {OverlayPanelModule} from 'primeng/overlaypanel';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     UptimePipe,
     UptimeFixedPipe,
     PortRemovePipe,
-    PlayersComponent
+    PlayersComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +40,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     InputSwitchModule,
     ContextMenuModule,
     ToastModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    OverlayPanelModule
   ],
   providers: [
     MessageService,
