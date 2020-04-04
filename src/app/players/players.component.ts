@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Player } from '../rustRCON/Player';
 import { RustService } from '../rustRCON/rust.service';
 import { MenuItem } from 'primeng/api/menuitem';
+import {MessageService, ConfirmationService} from 'primeng/api';
 
 @Component({
   selector: 'app-players',
@@ -33,25 +34,47 @@ export class PlayersComponent implements OnInit {
     { label: 'Copy STEAMID', command: (event) => this.ctxSteamID(this.selectedPlayer)}
   ];
 
-  constructor(private rustSrv: RustService) { }
+  constructor(private rustSrv: RustService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
 
   ngOnInit() {
   }
 
   ctxOwner(player: Player) {
-    this.doOwner(player.SteamID, player.DisplayName);
+    this.confirmationService.confirm({
+      message: 'What do you want?',
+      accept: () => {
+        this.doOwner(player.SteamID, player.DisplayName);
+        this.messageService.add({severity: 'success', summary: 'Added moderator', detail: player.SteamID + ' | ' + player.DisplayName});
+      },
+      reject: () => {
+        this.unOwner(player.SteamID);
+        this.messageService.add({severity: 'success', summary: 'Removed moderator', detail: player.SteamID + ' | ' + player.DisplayName});
+      }
+    });
   }
 
   ctxMod(player: Player) {
-    this.doMod(player.SteamID, player.DisplayName);
+    this.confirmationService.confirm({
+      message: 'What do you want?',
+      accept: () => {
+        this.doMod(player.SteamID, player.DisplayName);
+        this.messageService.add({severity: 'success', summary: 'Added admin', detail: player.SteamID + ' | ' + player.DisplayName});
+      },
+      reject: () => {
+        this.unMod(player.SteamID);
+        this.messageService.add({severity: 'success', summary: 'Removed admin', detail: player.SteamID + ' | ' + player.DisplayName});
+      }
+    });
   }
 
   ctxBan(player: Player) {
     this.ban(player.SteamID, player.DisplayName);
+    this.messageService.add({severity: 'success', summary: 'Banned', detail: player.SteamID + ' | ' + player.DisplayName});
   }
 
   ctxKick(player: Player) {
     this.kick(player.SteamID);
+    this.messageService.add({severity: 'success', summary: 'Kicked', detail: player.SteamID + ' | ' + player.DisplayName});
   }
 
   ctxSteamProfile(player: Player) {
@@ -59,7 +82,8 @@ export class PlayersComponent implements OnInit {
   }
 
   ctxSteamID(player: Player) {
-    alert(player.SteamID);
+    navigator.clipboard.writeText(player.SteamID);
+    this.messageService.add({severity: 'success', summary: 'Copied to clipboard.', detail: player.SteamID + ' | ' + player.DisplayName});
   }
 
   openUserPopup(user, event) {
@@ -100,18 +124,12 @@ export class PlayersComponent implements OnInit {
     }
   }
 
-  unOwner() {
-    const steamID = prompt('Ingrese el steamID');
-    if (steamID) {
-      this.rustSrv.sendCommand('removeowner ' + steamID);
-    }
+  unOwner(steamID: string) {
+    this.rustSrv.sendCommand('removeowner ' + steamID);
   }
 
-  unMod() {
-    const steamID = prompt('Ingrese el steamID');
-    if (steamID) {
-      this.rustSrv.sendCommand('removemoderator ' + steamID);
-    }
+  unMod(steamID: string) {
+    this.rustSrv.sendCommand('removemoderator ' + steamID);
   }
 
 }

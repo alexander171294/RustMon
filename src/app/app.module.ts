@@ -1,3 +1,4 @@
+import { MessageService, ConfirmationService } from 'primeng/api';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -13,7 +14,8 @@ import {TableModule} from 'primeng/table';
 import { PlayersComponent } from './players/players.component';
 import {InputSwitchModule} from 'primeng/inputswitch';
 import {ContextMenuModule} from 'primeng/contextmenu';
-
+import {ToastModule} from 'primeng/toast';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [
@@ -31,9 +33,14 @@ import {ContextMenuModule} from 'primeng/contextmenu';
     FormsModule,
     TableModule,
     InputSwitchModule,
-    ContextMenuModule
+    ContextMenuModule,
+    ToastModule,
+    ConfirmDialogModule
   ],
-  providers: [],
+  providers: [
+    MessageService,
+    ConfirmationService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
