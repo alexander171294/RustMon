@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Player } from '../rustRCON/Player';
 import { RustService } from '../rustRCON/rust.service';
+import { MenuItem } from 'primeng/api/menuitem';
 
 @Component({
   selector: 'app-players',
@@ -22,9 +23,43 @@ export class PlayersComponent implements OnInit {
     { field: 'Ping', header: 'Ping', width: '50px' }
   ];
 
+  public selectedPlayer: Player;
+  ctxMenu: MenuItem[] = [
+    { label: 'Owner?', command: (event) => this.ctxOwner(this.selectedPlayer) }, //, icon: 'pi pi-search'
+    { label: 'Mod?', command: (event) => this.ctxMod(this.selectedPlayer) },
+    { label: 'Ban', command: (event) => this.ctxBan(this.selectedPlayer) },
+    { label: 'Kick', command: (event) => this.ctxKick(this.selectedPlayer) },
+    { label: 'Steam Profile', command: (event) => this.ctxSteamProfile(this.selectedPlayer) },
+    { label: 'Copy STEAMID', command: (event) => this.ctxSteamID(this.selectedPlayer)}
+  ];
+
   constructor(private rustSrv: RustService) { }
 
   ngOnInit() {
+  }
+
+  ctxOwner(player: Player) {
+    this.doOwner(player.SteamID, player.DisplayName);
+  }
+
+  ctxMod(player: Player) {
+    this.doMod(player.SteamID, player.DisplayName);
+  }
+
+  ctxBan(player: Player) {
+    this.ban(player.SteamID, player.DisplayName);
+  }
+
+  ctxKick(player: Player) {
+    this.kick(player.SteamID);
+  }
+
+  ctxSteamProfile(player: Player) {
+    window.open('https://steamcommunity.com/profiles/' + player.SteamID, '_blank');
+  }
+
+  ctxSteamID(player: Player) {
+    alert(player.SteamID);
   }
 
   openUserPopup(user, event) {

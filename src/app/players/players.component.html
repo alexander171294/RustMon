@@ -1,4 +1,4 @@
-<p-table #dt [value]="playerList" [columns]="playerCols"  [paginator]="true" [rows]="15"  [resizableColumns]="true">
+<p-table #dt [value]="playerList" [columns]="playerCols"  [paginator]="true" [rows]="15"  [resizableColumns]="true"  [(contextMenuSelection)]="selectedPlayer" [contextMenu]="cm">
   <ng-template pTemplate="caption">
     <div style="vertical-align: middle;float: left;">
       Online <p-inputSwitch [(ngModel)]="onlyOnline"></p-inputSwitch>
@@ -17,7 +17,7 @@
   </ng-template>
   <ng-template pTemplate="body" let-player let-columns="columns">
       <tr> <!-- (click)="openUserPopup(player, $event)" -->
-          <td *ngFor="let col of columns">
+          <td *ngFor="let col of columns" [pContextMenuRow]="player">
             <span class="time" *ngIf="col.field == 'ConnectedSeconds'">{{player.ConnectedSeconds | uptimeFixed}}</span>
             <span class="hp" *ngIf="col.field == 'Health'" [class.greenText]="player.Health > 50" [class.yellowText]="player.Health <= 50 && player.Health >= 20" [class.redText]="player.Health < 20">
               {{player.Health | number:'1.0-0'}}
@@ -34,6 +34,7 @@
       </tr>
   </ng-template>
 </p-table>
+<p-contextMenu #cm [model]="ctxMenu"></p-contextMenu>
 <!--
       <ul>
         <li>

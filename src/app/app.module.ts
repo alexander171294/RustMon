@@ -12,6 +12,7 @@ import { PortRemovePipe } from './connection/port-remove.pipe';
 import {TableModule} from 'primeng/table';
 import { PlayersComponent } from './players/players.component';
 import {InputSwitchModule} from 'primeng/inputswitch';
+import {ContextMenuModule} from 'primeng/contextmenu';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {InputSwitchModule} from 'primeng/inputswitch';
     AppRoutingModule,
     FormsModule,
     TableModule,
-    InputSwitchModule
+    InputSwitchModule,
+    ContextMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]
