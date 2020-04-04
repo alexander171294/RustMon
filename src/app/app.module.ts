@@ -16,6 +16,7 @@ import {InputSwitchModule} from 'primeng/inputswitch';
 import {ContextMenuModule} from 'primeng/contextmenu';
 import {ToastModule} from 'primeng/toast';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     CommonModule,
     AppRoutingModule,
     FormsModule,

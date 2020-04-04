@@ -17,11 +17,11 @@ export class PlayersComponent implements OnInit {
   public onlyOnline: boolean = true;
 
   public playerCols = [
-    { field: 'ConnectedSeconds', header: 'Time', width: '94px' },
-    { field: 'DisplayName', header: 'Name', width: '150px'},
-    { field: 'Health', header: 'HP', width: '50px' },
-    { field: 'Address', header: 'IP', width: '135px' },
-    { field: 'Ping', header: 'Ping', width: '50px' }
+    { field: 'ConnectedSeconds', header: 'Time', width: '72px' },
+    { field: 'DisplayName', header: 'Name', width: '260px'},
+    { field: 'Health', header: 'HP', width: '52px' },
+    { field: 'Address', header: 'IP', width: '122px' },
+    { field: 'Ping', header: 'Ping', width: '61px' }
   ];
 
   public selectedPlayer: Player;
@@ -41,7 +41,10 @@ export class PlayersComponent implements OnInit {
 
   ctxOwner(player: Player) {
     this.confirmationService.confirm({
+      header: 'Action selection',
       message: 'What do you want?',
+      acceptLabel: 'Add admin',
+      rejectLabel: 'Remove admin',
       accept: () => {
         this.doOwner(player.SteamID, player.DisplayName);
         this.messageService.add({severity: 'success', summary: 'Added moderator', detail: player.SteamID + ' | ' + player.DisplayName});
@@ -56,6 +59,8 @@ export class PlayersComponent implements OnInit {
   ctxMod(player: Player) {
     this.confirmationService.confirm({
       message: 'What do you want?',
+      acceptLabel: 'Add mod',
+      rejectLabel: 'Remove mod',
       accept: () => {
         this.doMod(player.SteamID, player.DisplayName);
         this.messageService.add({severity: 'success', summary: 'Added admin', detail: player.SteamID + ' | ' + player.DisplayName});
@@ -99,13 +104,13 @@ export class PlayersComponent implements OnInit {
   doOwner(steamID: string, name: string) {
     this.userPopup.opened = false;
     this.rustSrv.sendCommand('ownerid ' + steamID + ' ' + name);
-    alert('El usuario debe reloguear para que impacten los cambios.');
+    // alert('El usuario debe reloguear para que impacten los cambios.');
   }
 
   doMod(steamID: string, name: string) {
     this.userPopup.opened = false;
     this.rustSrv.sendCommand('moderatorid ' + steamID + ' ' + name);
-    alert('El usuario debe reloguear para que impacten los cambios.');
+    // alert('El usuario debe reloguear para que impacten los cambios.');
   }
 
   ban(steamID: string, name: string) {
@@ -130,6 +135,11 @@ export class PlayersComponent implements OnInit {
 
   unMod(steamID: string) {
     this.rustSrv.sendCommand('removemoderator ' + steamID);
+  }
+
+  testToast() {
+    alert();
+    this.messageService.add({severity: 'success', summary: 'Kicked', detail: 'Probando'});
   }
 
 }
