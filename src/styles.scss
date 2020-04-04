@@ -82,3 +82,40 @@ input {
     transform: rotate(360deg);
   }
 }
+
+body aside .ui-table .ui-table-thead > tr > th {
+  border: 1px solid #1d1b18;
+  color: wheat;
+  background-color: #333333;
+}
+
+body aside .ui-table .ui-table-tbody > tr {
+  background-color: #1e1d19;
+  color: wheat;
+  td {
+    border: 1px solid #333333;
+  }
+  &:nth-child(even) {
+    background-color: #151311;
+  }
+}
+
+body aside .ui-paginator {
+  background-color: #333333;
+  border: 1px solid #151311;
+}
+
+body aside .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
+  background-color: #151311;
+  color: #55aaff;
+}
+
+body aside .ui-table .ui-sortable-column.ui-state-highlight {
+  background-color: #151311;
+  color: #55aaff;
+}
+
+body aside .ui-table .ui-sortable-column:not(.ui-state-highlight):hover {
+  background-color: #6f6e6e;
+  color: #333333;
+}

@@ -1,0 +1,35 @@
+span {
+  &.time {
+    font-size: 11px;
+    width: 78px;
+    display: inline-block;
+    color: gray;
+  }
+  &.username {
+    font-size: 14px;
+    cursor: pointer;
+  }
+  &.ping {
+    display: inline-block;
+    text-align: right;
+  }
+  &.ip {
+    display: inline-block;
+    width: 108px;
+  }
+  &.hp {
+    margin-right: 5px;
+  }
+  &.greenText {
+    color: #2cb32c;
+  }
+  &.yellowText {
+    color: yellow;
+  }
+  &.redText {
+    color: #cd412b;
+  }
+}
+.datablock {
+  float: right;
+}

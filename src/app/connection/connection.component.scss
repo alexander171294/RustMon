@@ -134,42 +134,7 @@ main {
           color: wheat;
           li {
             font-size: 14px;
-            span {
-              &.time {
-                font-size: 11px;
-                width: 78px;
-                display: inline-block;
-                color: gray;
-              }
-              &.username {
-                font-size: 14px;
-                cursor: pointer;
-              }
-              &.ping {
-                width: 50px;
-                display: inline-block;
-                text-align: right;
-              }
-              &.ip {
-                display: inline-block;
-                width: 108px;
-              }
-              &.hp {
-                margin-right: 5px;
-              }
-              &.greenText {
-                color: #2cb32c;
-              }
-              &.yellowText {
-                color: yellow;
-              }
-              &.redText {
-                color: #cd412b;
-              }
-            }
-            .datablock {
-              float: right;
-            }
+
           }
         }
         &#players {
@@ -182,6 +147,7 @@ main {
           }
         }
         .boxy {
+          text-align: center;
           input {
             width: calc(100% - 100px);
             text-indent: 6px;
@@ -246,4 +212,14 @@ main {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+app-players {
+  height: calc(100% - 75px);
+  padding: 5px 0px;
+  display: block;
+  color: wheat;
+  table {
+    width: 100%;
+  }
 }

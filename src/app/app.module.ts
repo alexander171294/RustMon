@@ -9,6 +9,8 @@ import { UptimePipe } from './connection/uptime.pipe';
 import { CommonModule } from '@angular/common';
 import { UptimeFixedPipe } from './connection/uptimeFixed.pipe';
 import { PortRemovePipe } from './connection/port-remove.pipe';
+import {TableModule} from 'primeng/table';
+import { PlayersComponent } from './players/players.component';
 
 @NgModule({
   declarations: [
@@ -16,13 +18,15 @@ import { PortRemovePipe } from './connection/port-remove.pipe';
     ConnectionComponent,
     UptimePipe,
     UptimeFixedPipe,
-    PortRemovePipe
+    PortRemovePipe,
+    PlayersComponent
   ],
   imports: [
     BrowserModule,
     CommonModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    TableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

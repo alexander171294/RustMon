@@ -28,8 +28,7 @@ export class ConnectionComponent implements OnInit {
   public serverInfo: ServerInfo;
   public chatMessages: ChatMessage[];
   public playerList: Player[];
-  public selctedUser: Player;
-  public userPopup = { x: 0, y: 0, opened: false };
+
   public consoleMessages: string[] = [];
 
   // form variables.
@@ -140,58 +139,6 @@ export class ConnectionComponent implements OnInit {
     }
   }
 
-  openUserPopup(user, event) {
-    this.selctedUser = user;
-    this.userPopup = {
-      x: event.clientX + 20,
-      y: event.clientY + 20,
-      opened: true
-    };
-    console.log(event.offsetX, event);
-  }
-
-  doOwner(steamID: string, name: string) {
-    this.userPopup.opened = false;
-    this.rustSrv.sendCommand('ownerid ' + steamID + ' ' + name);
-    alert('El usuario debe reloguear para que impacten los cambios.');
-  }
-
-  doMod(steamID: string, name: string) {
-    this.userPopup.opened = false;
-    this.rustSrv.sendCommand('moderatorid ' + steamID + ' ' + name);
-    alert('El usuario debe reloguear para que impacten los cambios.');
-  }
-
-  ban(steamID: string, name: string) {
-    this.userPopup.opened = false;
-    const reason = prompt('Ingrese la razon');
-    if (reason) {
-      this.rustSrv.sendCommand('banid ' + steamID + ' ' + name + ' ' + reason);
-    }
-  }
-
-  kick(steamID: string) {
-    this.userPopup.opened = false;
-    const reason = prompt('Ingrese la razon');
-    if (reason) {
-      this.rustSrv.sendCommand('kick ' + steamID + ' ' + reason);
-    }
-  }
-
-  unOwner() {
-    const steamID = prompt('Ingrese el steamID');
-    if (steamID) {
-      this.rustSrv.sendCommand('removeowner ' + steamID);
-    }
-  }
-
-  unMod() {
-    const steamID = prompt('Ingrese el steamID');
-    if (steamID) {
-      this.rustSrv.sendCommand('removemoderator ' + steamID);
-    }
-  }
-
   unban() {
     const steamID = prompt('Ingrese el steamID');
     if (steamID) {
@@ -209,9 +156,9 @@ export class ConnectionComponent implements OnInit {
       this.info();
     }, 1000);
     this.players();
-    setInterval(() => {
-      this.players();
-    }, 3500);
+    // setInterval(() => {
+    //   this.players();
+    // }, 3500);
   }
 
   config() {
