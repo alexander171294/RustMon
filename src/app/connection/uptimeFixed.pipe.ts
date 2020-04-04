@@ -7,6 +7,9 @@ export class UptimeFixedPipe implements PipeTransform {
 
   transform(value: any, ...args: any[]): any {
     console.log('Value of transform', value);
+    if (value < 0) {
+      return 'N/A';
+    }
     if (value < 60) {
       return '00:00:' + (value < 10 ? '0' + value : value);
     }
