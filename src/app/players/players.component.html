@@ -1,7 +1,10 @@
 <p-table #dt [value]="playerList" [columns]="playerCols"  [paginator]="true" [rows]="15"  [resizableColumns]="true">
   <ng-template pTemplate="caption">
-    <div style="text-align: right">
-        <input type="text" pInputText size="50" placeholder="Search Players" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+    <div style="vertical-align: middle;float: left;">
+      Online <p-inputSwitch [(ngModel)]="onlyOnline"></p-inputSwitch>
+    </div>
+    <div style="display: inline-block;text-align: right">
+      <input type="text" pInputText size="50" placeholder="Search Players" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
     </div>
   </ng-template>
   <ng-template pTemplate="header">

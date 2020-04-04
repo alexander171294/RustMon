@@ -12,6 +12,7 @@ export class PlayersComponent implements OnInit {
   @Input() playerList: Player[];
   public selctedUser: Player;
   public userPopup = { x: 0, y: 0, opened: false };
+  public onlyOnline: boolean = true;
 
   public playerCols = [
     { field: 'ConnectedSeconds', header: 'Time', width: '94px' },

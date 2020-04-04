@@ -11,6 +11,8 @@ import { UptimeFixedPipe } from './connection/uptimeFixed.pipe';
 import { PortRemovePipe } from './connection/port-remove.pipe';
 import {TableModule} from 'primeng/table';
 import { PlayersComponent } from './players/players.component';
+import {InputSwitchModule} from 'primeng/inputswitch';
+
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { PlayersComponent } from './players/players.component';
     CommonModule,
     AppRoutingModule,
     FormsModule,
-    TableModule
+    TableModule,
+    InputSwitchModule
   ],
   providers: [],
   bootstrap: [AppComponent]
