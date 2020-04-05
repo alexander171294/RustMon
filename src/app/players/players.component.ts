@@ -1,5 +1,5 @@
 import { PlayerWithStatus } from './../rustRCON/Player';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Player } from '../rustRCON/Player';
 import { RustService } from '../rustRCON/rust.service';
 import { MenuItem } from 'primeng/api/menuitem';
@@ -16,6 +16,7 @@ export class PlayersComponent implements OnInit {
   public selctedUser: Player;
   public userPopup = { x: 0, y: 0, opened: false };
   @Input() onlyOnline: boolean;
+  @Output() onlyOnlineEvt: EventEmitter<boolean> = new EventEmitter<boolean>();;
 
   public playerCols = [
     { field: 'ConnectedSeconds', header: 'Time', width: '72px' },
@@ -141,6 +142,10 @@ export class PlayersComponent implements OnInit {
   testToast() {
     alert();
     this.messageService.add({severity: 'success', summary: 'Kicked', detail: 'Probando'});
+  }
+
+  changeOnlineFilter(evt) {
+    this.onlyOnlineEvt.emit(evt.checked);
   }
 
 }

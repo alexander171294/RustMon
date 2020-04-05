@@ -1,7 +1,7 @@
 <p-table #dt [value]="playerList" [columns]="playerCols"  [paginator]="true" [rows]="15"  [resizableColumns]="true"  [(contextMenuSelection)]="selectedPlayer" [contextMenu]="cm">
   <ng-template pTemplate="caption">
     <div style="vertical-align: middle;float: left;">
-      Online <p-inputSwitch [(ngModel)]="onlyOnline" (onChange)="handleChange($event)"></p-inputSwitch>
+      Online <p-inputSwitch [(ngModel)]="onlyOnline" (onChange)="changeOnlineFilter($event)"></p-inputSwitch>
     </div>
     <div style="display: inline-block;text-align: right">
       <input type="text" pInputText size="50" placeholder="Search Players" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">

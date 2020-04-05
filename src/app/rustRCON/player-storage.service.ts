@@ -8,7 +8,7 @@ export class PlayerStorageService {
 
   constructor() { }
 
-  savePlayerList(players: Player[]): PlayerWithStatus[] {
+  savePlayerList(players: Player[], onlyOnline: boolean): PlayerWithStatus[] {
     const playersWS = [];
     let oldPlayers = JSON.parse(localStorage.getItem('players'));
     oldPlayers = oldPlayers ? oldPlayers : {};
@@ -19,8 +19,16 @@ export class PlayerStorageService {
     });
     localStorage.setItem('players', JSON.stringify(oldPlayers));
     Object.entries(oldPlayers).forEach(t => {
-      (t[1] as PlayerWithStatus).online = oPl.indexOf(t[0]) >= 0;
-      playersWS.push(t[1]);
+      console.log('Only online: ', onlyOnline);
+      if (onlyOnline) {
+        if (oPl.indexOf(t[0]) >= 0) {
+          (t[1] as PlayerWithStatus).online = true;
+          playersWS.push(t[1]);
+        }
+      } else {
+        (t[1] as PlayerWithStatus).online = oPl.indexOf(t[0]) >= 0;
+        playersWS.push(t[1]);
+      }
     });
     return playersWS;
   }

@@ -36,6 +36,8 @@ export class ConnectionComponent implements OnInit {
   public message: string;
   public command: string;
 
+  public onlineFilter = true;
+
   @ViewChild('chat', {static: false}) chatBox;
   @ViewChild('console', {static: false}) consoleBox;
 
@@ -79,7 +81,7 @@ export class ConnectionComponent implements OnInit {
       }
       if (d.type === REType.PLAYERS) {
         // this.playerList = d.data;
-        this.playerList = this.psSrv.savePlayerList(d.data);
+        this.playerList = this.psSrv.savePlayerList(d.data, this.onlineFilter);
       }
       if (d.rawtype === 'Chat') {
         this.chatMessages.push(d.data);
@@ -169,5 +171,10 @@ export class ConnectionComponent implements OnInit {
 
   help() {
     alert('proximamente');
+  }
+
+  changeFilterOnline(onlineFilter: boolean) {
+    this.onlineFilter = onlineFilter;
+    this.players();
   }
 }
