@@ -1,5 +1,5 @@
 <ul #chat>
-  <li *ngFor="let message of chatMessages" (click)="showData($event, message, op)">
+  <li *ngFor="let message of chatMessages" (click)="showData($event, message, op)" [class.teamChat]="message.Channel > 0">
     <span class="time">[{{message.Time | date:'d/M/yy, h:mm'}}]</span>
     <span class="username" [style.color]="message.Color">{{message.Username}}</span>
     {{message.Message}}
@@ -7,7 +7,9 @@
 </ul>
 <p-overlayPanel #op>
   <ng-template pTemplate>
-      <!-- Channel: {{clickedMessage.Channel}}<br /> -->
+      Channel:
+      <span *ngIf="clickedMessage.Channel == 0">Global Chat</span>
+      <span *ngIf="clickedMessage.Channel > 0">Team Chat</span><br />
       SteamID: {{clickedMessage.UserId}}
   </ng-template>
 </p-overlayPanel>
