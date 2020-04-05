@@ -1,3 +1,4 @@
+import { ChatComponent } from './../chat/chat.component';
 import { Player, PlayerWithStatus } from './../rustRCON/Player';
 import { REType } from './../rustRCON/RustEvent';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -38,7 +39,7 @@ export class ConnectionComponent implements OnInit {
 
   public onlineFilter = true;
 
-  @ViewChild('chat', {static: false}) chatBox;
+  @ViewChild('chatCompo', {static: false}) chatCompo: ChatComponent;
   @ViewChild('console', {static: false}) consoleBox;
 
   constructor(private rustSrv: RustService, private psSrv: PlayerStorageService) { }
@@ -76,7 +77,7 @@ export class ConnectionComponent implements OnInit {
           this.logIn();
         }
         setTimeout(() => {
-          this.chatBox.nativeElement.scrollTop = this.chatBox.nativeElement.scrollHeight;
+          this.chatCompo.goToDown();
         }, 100);
       }
       if (d.type === REType.PLAYERS) {
@@ -85,9 +86,8 @@ export class ConnectionComponent implements OnInit {
       }
       if (d.rawtype === 'Chat') {
         this.chatMessages.push(d.data);
-        console.log(this.chatBox.nativeElement);
         setTimeout(() => {
-          this.chatBox.nativeElement.scrollTop = this.chatBox.nativeElement.scrollHeight;
+          this.chatCompo.goToDown();
         }, 100);
       }
       if (d.type === REType.UNKOWN) {
@@ -99,6 +99,7 @@ export class ConnectionComponent implements OnInit {
       if (d.type === REType.BAN_LIST) {
         this.consoleMessages.push('Banlist: ' + d.raw);
         setTimeout(() => {
+          console.log(this.consoleBox);
           this.consoleBox.nativeElement.scrollTop = this.consoleBox.nativeElement.scrollHeight;
         }, 100);
       }

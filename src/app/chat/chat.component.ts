@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ChatMessage } from '../rustRCON/ChatMessage';
 import { OverlayPanel } from 'primeng/overlaypanel';
 
@@ -12,6 +12,8 @@ export class ChatComponent implements OnInit {
   @Input() chatMessages: ChatMessage[];
   clickedMessage: ChatMessage;
 
+  @ViewChild('chat', {static: true}) chatBox;
+
   constructor() { }
 
   ngOnInit() {
@@ -20,6 +22,10 @@ export class ChatComponent implements OnInit {
   showData(evt, message: ChatMessage, overlaypanel: OverlayPanel) {
     this.clickedMessage = message;
     overlaypanel.toggle(evt);
+  }
+
+  goToDown() {
+    this.chatBox.nativeElement.scrollTop = this.chatBox.nativeElement.scrollHeight;
   }
 
 }
