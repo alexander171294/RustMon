@@ -98,6 +98,9 @@ body aside .ui-table .ui-table-tbody > tr {
   &:nth-child(even) {
     background-color: #151311;
   }
+  &.offline {
+    opacity: 0.3;
+  }
 }
 
 body aside .ui-paginator {

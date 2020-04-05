@@ -11,3 +11,6 @@ export class Player {
   public Health: number;
 }
 
+export class PlayerWithStatus extends Player {
+  online: boolean;
+}

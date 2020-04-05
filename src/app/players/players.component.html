@@ -1,7 +1,7 @@
 <p-table #dt [value]="playerList" [columns]="playerCols"  [paginator]="true" [rows]="15"  [resizableColumns]="true"  [(contextMenuSelection)]="selectedPlayer" [contextMenu]="cm">
   <ng-template pTemplate="caption">
     <div style="vertical-align: middle;float: left;">
-      Online <p-inputSwitch [(ngModel)]="onlyOnline"></p-inputSwitch>
+      Online <p-inputSwitch [(ngModel)]="onlyOnline" (onChange)="handleChange($event)"></p-inputSwitch>
     </div>
     <div style="display: inline-block;text-align: right">
       <input type="text" pInputText size="50" placeholder="Search Players" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
@@ -16,16 +16,16 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-player let-columns="columns">
-      <tr> <!-- (click)="openUserPopup(player, $event)" -->
+      <tr [class.offline]="!player.online"> <!-- (click)="openUserPopup(player, $event)" -->
           <td *ngFor="let col of columns" [pContextMenuRow]="player">
-            <span class="time" *ngIf="col.field == 'ConnectedSeconds'">{{player.ConnectedSeconds | uptimeFixed}}</span>
+            <span class="time" *ngIf="col.field == 'ConnectedSeconds' && player.online">{{player.ConnectedSeconds | uptimeFixed}}</span>
             <span class="hp" *ngIf="col.field == 'Health'" [class.greenText]="player.Health > 50" [class.yellowText]="player.Health <= 50 && player.Health >= 20" [class.redText]="player.Health < 20">
               {{player.Health | number:'1.0-0'}}
             </span>
             <span class="ip" *ngIf="col.field == 'Address'">
               {{player.Address | portRemove}}
             </span>
-            <span class="ping" *ngIf="col.field == 'Ping'" [class.greenText]="player.Ping < 75" [class.yellowText]="player.Ping <= 170 && player.Ping >= 75" [class.redText]="player.Ping > 170">
+            <span class="ping" *ngIf="col.field == 'Ping' && player.online" [class.greenText]="player.Ping < 75" [class.yellowText]="player.Ping <= 170 && player.Ping >= 75" [class.redText]="player.Ping > 170">
               {{player.Ping}}
             </span>
             <span class="username" *ngIf="col.field == 'DisplayName'" style="color:#55aaff">{{player.DisplayName}}</span>

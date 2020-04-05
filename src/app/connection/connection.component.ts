@@ -1,9 +1,10 @@
-import { Player } from './../rustRCON/Player';
+import { Player, PlayerWithStatus } from './../rustRCON/Player';
 import { REType } from './../rustRCON/RustEvent';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { RustService } from '../rustRCON/rust.service';
 import { ServerInfo } from '../rustRCON/ServerInfo';
 import { ChatMessage } from '../rustRCON/ChatMessage';
+import { PlayerStorageService } from '../rustRCON/player-storage.service';
 
 @Component({
   selector: 'app-connection',
@@ -18,16 +19,16 @@ export class ConnectionComponent implements OnInit {
 
   // login?
   public loginLoading: boolean;
-  public isLogged: boolean = false;
+  public isLogged = false;
 
   // getted values?
-  public hasInfo: boolean = false;
-  public hasStack: boolean = false;
+  public hasInfo = false;
+  public hasStack = false;
 
   // data variable
   public serverInfo: ServerInfo;
   public chatMessages: ChatMessage[];
-  public playerList: Player[];
+  public playerList: PlayerWithStatus[];
 
   public consoleMessages: string[] = [];
 
@@ -38,7 +39,7 @@ export class ConnectionComponent implements OnInit {
   @ViewChild('chat', {static: false}) chatBox;
   @ViewChild('console', {static: false}) consoleBox;
 
-  constructor(private rustSrv: RustService) { }
+  constructor(private rustSrv: RustService, private psSrv: PlayerStorageService) { }
 
   ngOnInit() {
     if (localStorage.getItem('rcon-server')) {
@@ -77,7 +78,8 @@ export class ConnectionComponent implements OnInit {
         }, 100);
       }
       if (d.type === REType.PLAYERS) {
-        this.playerList = d.data;
+        // this.playerList = d.data;
+        this.playerList = this.psSrv.savePlayerList(d.data);
       }
       if (d.rawtype === 'Chat') {
         this.chatMessages.push(d.data);

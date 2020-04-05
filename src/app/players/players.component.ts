@@ -1,3 +1,4 @@
+import { PlayerWithStatus } from './../rustRCON/Player';
 import { Component, OnInit, Input } from '@angular/core';
 import { Player } from '../rustRCON/Player';
 import { RustService } from '../rustRCON/rust.service';
@@ -11,10 +12,10 @@ import {MessageService, ConfirmationService} from 'primeng/api';
 })
 export class PlayersComponent implements OnInit {
 
-  @Input() playerList: Player[];
+  @Input() playerList: PlayerWithStatus[];
   public selctedUser: Player;
   public userPopup = { x: 0, y: 0, opened: false };
-  public onlyOnline: boolean = true;
+  @Input() onlyOnline: boolean;
 
   public playerCols = [
     { field: 'ConnectedSeconds', header: 'Time', width: '72px' },
@@ -24,7 +25,7 @@ export class PlayersComponent implements OnInit {
     { field: 'Ping', header: 'Ping', width: '61px' }
   ];
 
-  public selectedPlayer: Player;
+  public selectedPlayer: PlayerWithStatus;
   ctxMenu: MenuItem[] = [
     { label: 'Owner?', command: (event) => this.ctxOwner(this.selectedPlayer) }, //, icon: 'pi pi-search'
     { label: 'Mod?', command: (event) => this.ctxMod(this.selectedPlayer) },
@@ -39,7 +40,7 @@ export class PlayersComponent implements OnInit {
   ngOnInit() {
   }
 
-  ctxOwner(player: Player) {
+  ctxOwner(player: PlayerWithStatus) {
     this.confirmationService.confirm({
       header: 'Action selection',
       message: 'What do you want?',
@@ -56,7 +57,7 @@ export class PlayersComponent implements OnInit {
     });
   }
 
-  ctxMod(player: Player) {
+  ctxMod(player: PlayerWithStatus) {
     this.confirmationService.confirm({
       message: 'What do you want?',
       acceptLabel: 'Add mod',
@@ -72,21 +73,21 @@ export class PlayersComponent implements OnInit {
     });
   }
 
-  ctxBan(player: Player) {
+  ctxBan(player: PlayerWithStatus) {
     this.ban(player.SteamID, player.DisplayName);
     this.messageService.add({severity: 'success', summary: 'Banned', detail: player.SteamID + ' | ' + player.DisplayName});
   }
 
-  ctxKick(player: Player) {
+  ctxKick(player: PlayerWithStatus) {
     this.kick(player.SteamID);
     this.messageService.add({severity: 'success', summary: 'Kicked', detail: player.SteamID + ' | ' + player.DisplayName});
   }
 
-  ctxSteamProfile(player: Player) {
+  ctxSteamProfile(player: PlayerWithStatus) {
     window.open('https://steamcommunity.com/profiles/' + player.SteamID, '_blank');
   }
 
-  ctxSteamID(player: Player) {
+  ctxSteamID(player: PlayerWithStatus) {
     navigator.clipboard.writeText(player.SteamID);
     this.messageService.add({severity: 'success', summary: 'Copied to clipboard.', detail: player.SteamID + ' | ' + player.DisplayName});
   }
