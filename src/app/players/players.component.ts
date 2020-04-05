@@ -106,13 +106,11 @@ export class PlayersComponent implements OnInit {
   doOwner(steamID: string, name: string) {
     this.userPopup.opened = false;
     this.rustSrv.sendCommand('ownerid ' + steamID + ' ' + name);
-    // alert('El usuario debe reloguear para que impacten los cambios.');
   }
 
   doMod(steamID: string, name: string) {
     this.userPopup.opened = false;
     this.rustSrv.sendCommand('moderatorid ' + steamID + ' ' + name);
-    // alert('El usuario debe reloguear para que impacten los cambios.');
   }
 
   ban(steamID: string, name: string) {
@@ -137,11 +135,6 @@ export class PlayersComponent implements OnInit {
 
   unMod(steamID: string) {
     this.rustSrv.sendCommand('removemoderator ' + steamID);
-  }
-
-  testToast() {
-    alert();
-    this.messageService.add({severity: 'success', summary: 'Kicked', detail: 'Probando'});
   }
 
   changeOnlineFilter(evt) {
