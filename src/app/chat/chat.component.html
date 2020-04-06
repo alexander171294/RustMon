@@ -9,7 +9,7 @@
   <ng-template pTemplate>
       Channel:
       <span *ngIf="clickedMessage.Channel == 0">Global Chat</span>
-      <span *ngIf="clickedMessage.Channel > 0">Team Chat</span><br />
+      <span *ngIf="clickedMessage.Channel > 0">Team Chat ({{clickedMessage.Channel}})</span><br />
       SteamID: {{clickedMessage.UserId}}
   </ng-template>
 </p-overlayPanel>
