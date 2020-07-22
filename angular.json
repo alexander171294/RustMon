@@ -127,6 +127,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "rustmon"
+    }
+  },
+  "defaultProject": "rustmon",
+  "cli": {
+    "analytics": "6eb16052-e669-4c12-b32d-d9c945a519c1"
+  }
 }
