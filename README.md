@@ -28,4 +28,4 @@ docker run -p 8086:80 -itd alexander171294/rustmon:latest
 
 Or see live instance in:
 
-http://irc.tandilserver.com:8086/
+https://rustmon.tandilserver.com/
