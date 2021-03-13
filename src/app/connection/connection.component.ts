@@ -192,4 +192,8 @@ export class ConnectionComponent implements OnInit {
     this.onlineFilter = onlineFilter;
     this.players();
   }
+
+  github() {
+    window.open('https://github.com/alexander171294/RustMon', "__blank");
+  }
 }

@@ -20,7 +20,11 @@ Build redist package:
 
 ![Login](https://i.imgur.com/S8nmgMC.png)
 
-![Lobby](https://i.imgur.com/lwtGSQc.png)
+![Lobby](https://i.imgur.com/vdlTYxw.png)
+
+![options](https://i.imgur.com/zxmGds5.png)
+
+![server](https://i.imgur.com/U0WbD0T.png)
 
 # run with docker in server:
 

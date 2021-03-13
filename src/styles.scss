@@ -16,6 +16,10 @@ button {
   padding: 5px 25px;
   outline: none;
   position: relative;
+  svg {
+    width: 15px;
+    vertical-align: bottom;
+  }
   &:hover {
     background-color: #c23e29;
     border-color: rgba(0,0,0,0);
