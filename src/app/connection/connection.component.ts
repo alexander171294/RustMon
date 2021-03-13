@@ -135,6 +135,13 @@ export class ConnectionComponent implements OnInit {
   testCommand() {
     this.rustSrv.sendCommand(this.command);
     this.command = '';
+    document.getElementById('commandInput').focus();
+  }
+
+  kp(evt) {
+    if(evt.keyCode == 13) {
+      this.testCommand();
+    }
   }
 
   restart() {

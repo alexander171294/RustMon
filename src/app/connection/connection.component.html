@@ -87,7 +87,7 @@
         </li>
       </ul>
       <div class="boxy">
-        <input type="text" placeholder="Execute command" [(ngModel)]="command"/> <button (click)="testCommand()">exec</button>
+        <input type="text" placeholder="Execute command" [(ngModel)]="command" id="commandInput" (keypress)="kp($event)"/> <button (click)="testCommand()">exec</button>
       </div>
     </aside>
   </section>
