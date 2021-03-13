@@ -38,6 +38,7 @@ export class ConnectionComponent implements OnInit {
   public command: string;
 
   public onlineFilter = true;
+  public openedConfig = false;
 
   @ViewChild('chatCompo', {static: false}) chatCompo: ChatComponent;
   @ViewChild('console', {static: false}) consoleBox;
@@ -145,14 +146,14 @@ export class ConnectionComponent implements OnInit {
   }
 
   restart() {
-    const time = prompt('Segundos antes del reinicio');
+    const time = prompt('Seconds before restart.');
     if (time) {
-      this.rustSrv.sendCommand('restart');
+      this.rustSrv.sendCommand('restart ' + time);
     }
   }
 
   unban() {
-    const steamID = prompt('Ingrese el steamID');
+    const steamID = prompt('Put the steamID');
     if (steamID) {
       this.rustSrv.sendCommand('unban ' + steamID);
     }
@@ -174,11 +175,17 @@ export class ConnectionComponent implements OnInit {
   }
 
   config() {
-    alert('proximamente');
+    this.openedConfig = true;
   }
 
   help() {
-    alert('proximamente');
+    window.open('https://www.corrosionhour.com/rust-admin-commands/', "__blank");
+  }
+
+  kpConn(evt) {
+    if(evt.keyCode == 13) {
+      this.connect();
+    }
   }
 
   changeFilterOnline(onlineFilter: boolean) {

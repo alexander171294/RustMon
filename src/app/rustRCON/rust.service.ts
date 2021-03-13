@@ -37,6 +37,10 @@ export class RustService {
     return this.evtRust;
   }
 
+  public getEvtRust() {
+    return this.evtRust;
+  }
+
   getInfo() {
     this.sendCommand('serverinfo', REType.GET_INFO);
   }

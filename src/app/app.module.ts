@@ -19,6 +19,7 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ChatComponent } from './chat/chat.component';
 import {OverlayPanelModule} from 'primeng/overlaypanel';
+import { ConfigComponent } from './config/config.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {OverlayPanelModule} from 'primeng/overlaypanel';
     UptimeFixedPipe,
     PortRemovePipe,
     PlayersComponent,
-    ChatComponent
+    ChatComponent,
+    ConfigComponent
   ],
   imports: [
     BrowserModule,
