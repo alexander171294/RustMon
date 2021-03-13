@@ -1,6 +1,6 @@
 <ul #chat>
   <li *ngFor="let message of chatMessages" (click)="showData($event, message, op)" [class.teamChat]="message.Channel > 0">
-    <span class="time">[{{message.Time | date:'d/M/yy, h:mm'}}]</span>
+    <span class="time">[{{message.Time * 1000  | date:'d/M/yy, h:mm'}}]</span>
     <span class="username" [style.color]="message.Color">{{message.Username}}</span>
     {{message.Message}}
   </li>
