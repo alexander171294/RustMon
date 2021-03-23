@@ -131,6 +131,12 @@ main {
             position: absolute;
             top: 10px;
             right: 10px;
+            // &.fa-question-circle {
+            //   color: #007ad9;
+            // }
+            &:hover {
+              color: #cd412b;
+            }
           }
         }
         ul {
