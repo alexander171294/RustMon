@@ -84,8 +84,9 @@
       <app-players [playerList]="playerList" (onlyOnlineEvt)="changeFilterOnline($event)" [onlyOnline]="onlineFilter"></app-players>
       <div class="boxy" style="background: #181818;">
         <button (click)="unban()">Unban</button>
-        <button (click)="skipQueue()">Skip Queue</button>
         <button (click)="banlist()">Banlist</button>
+        <button (click)="skipQueue()">Skip Queue</button>
+        <button (click)="sendCMD('queue')">Queue</button>
       </div>
     </aside>
     <aside id="players">
