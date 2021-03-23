@@ -28,10 +28,12 @@ export class PromptComponent implements OnInit {
 
   cancel() {
     this.pSrv.close();
+    this.visible = false;
   }
 
   ok() {
     this.pSrv.close(this.promptInput);
+    this.visible = false;
   }
 
 }

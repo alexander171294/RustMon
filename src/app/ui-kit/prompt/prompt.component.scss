@@ -2,7 +2,7 @@ section {
   position: fixed;
   width: 100vw;
   height: 100vh;
-  background: #00000054;
+  background: #0000007d;
   top: 0px;
   z-index: 9;
   display: flex;
@@ -14,6 +14,9 @@ section {
     background: #2b2924;
     header {
       background: #181818;
+      font-size: 18px;
+      color: #6e6f70;
+      padding: 5px;
     }
     main {
       input {
