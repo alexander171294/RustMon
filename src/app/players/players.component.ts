@@ -80,12 +80,10 @@ export class PlayersComponent implements OnInit {
 
   ctxBan(player: PlayerWithStatus) {
     this.ban(player.SteamID, player.DisplayName);
-    this.messageService.add({severity: 'success', summary: 'Banned', detail: player.SteamID + ' | ' + player.DisplayName});
   }
 
   ctxKick(player: PlayerWithStatus) {
     this.kick(player.SteamID);
-    this.messageService.add({severity: 'success', summary: 'Kicked', detail: player.SteamID + ' | ' + player.DisplayName});
   }
 
   ctxSteamProfile(player: PlayerWithStatus) {
@@ -121,6 +119,7 @@ export class PlayersComponent implements OnInit {
     this.userPopup.opened = false;
     this.promptSrv.openPrompt(new PromptData('Write the reason:')).then(reason => {
       this.rustSrv.sendCommand('banid ' + steamID + ' ' + name + ' ' + reason);
+      this.messageService.add({severity: 'success', summary: 'Banned', detail: steamID + ' | ' + name});
     });
   }
 
@@ -128,6 +127,7 @@ export class PlayersComponent implements OnInit {
     this.userPopup.opened = false;
     this.promptSrv.openPrompt(new PromptData('Write the reason:')).then(reason => {
       this.rustSrv.sendCommand('kick ' + steamID + ' ' + reason);
+      this.messageService.add({severity: 'success', summary: 'Kicked', detail: steamID + ' | ' + name});
     });
   }
 
