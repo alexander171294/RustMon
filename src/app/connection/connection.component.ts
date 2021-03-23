@@ -42,7 +42,7 @@ export class ConnectionComponent implements OnInit {
   public onlineFilter = true;
   public openedConfig = false;
 
-  commandsOpened: boolean = true;
+  cogMenu: boolean = false;
 
   @ViewChild('chatCompo', {static: false}) chatCompo: ChatComponent;
   @ViewChild('console', {static: false}) consoleBox;
@@ -137,6 +137,16 @@ export class ConnectionComponent implements OnInit {
     }
   }
 
+  sendCMD(cmd: string) {
+    this.rustSrv.sendCommand(cmd);
+    document.getElementById('commandInput').focus();
+  }
+
+  writeCMD(cmd: string) {
+    this.command = cmd;
+    document.getElementById('commandInput').focus();
+  }
+
   testCommand() {
     this.rustSrv.sendCommand(this.command);
     this.command = '';
@@ -155,6 +165,12 @@ export class ConnectionComponent implements OnInit {
       this.rustSrv.sendCommand('restart ' + time);
     }).catch(e => {
       // cancelled
+    });
+  }
+
+  skipQueue() {
+    this.promptSrv.openPrompt(new PromptData('Put the 64 steamID', '76561100000000000')).then(steamID => {
+      this.rustSrv.sendCommand('skipqueue ' + steamID);
     });
   }
 
