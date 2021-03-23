@@ -6,7 +6,7 @@ import { RustService } from '../rustRCON/rust.service';
 import { ServerInfo } from '../rustRCON/ServerInfo';
 import { ChatMessage } from '../rustRCON/ChatMessage';
 import { PlayerStorageService } from '../rustRCON/player-storage.service';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { PromptData, PromptService } from '../ui-kit/prompt/prompt.service';
 
 @Component({
@@ -47,7 +47,7 @@ export class ConnectionComponent implements OnInit {
   @ViewChild('chatCompo', {static: false}) chatCompo: ChatComponent;
   @ViewChild('console', {static: false}) consoleBox;
 
-  constructor(private rustSrv: RustService, private psSrv: PlayerStorageService, private promptSrv: PromptService) { }
+  constructor(private rustSrv: RustService, private psSrv: PlayerStorageService, private promptSrv: PromptService, private messageService: MessageService) { }
 
   ngOnInit() {
     if (localStorage.getItem('rcon-server')) {
@@ -108,7 +108,11 @@ export class ConnectionComponent implements OnInit {
           this.consoleBox.nativeElement.scrollTop = this.consoleBox.nativeElement.scrollHeight;
         }, 100);
       }
-      // if (d.type === REType.)
+      if (d.type === REType.DISCONNECT || d.type == REType.ERROR) {
+        this.isLogged = false;
+        this.messageService.add({severity: 'error', summary: 'Disconnected', detail: 'Disconnected from server.'});
+      }
+      
     });
   }
 
@@ -160,6 +164,7 @@ export class ConnectionComponent implements OnInit {
   }
 
   restart() {
+    this.messageService.add({severity: 'error', summary: 'Disconnected', detail: 'Disconnected from server.'});
     this.promptSrv.openPrompt(new PromptData('Seconds before restart.', '15')).then(time => {
       console.log('TIME', time);
       this.rustSrv.sendCommand('restart ' + time);
