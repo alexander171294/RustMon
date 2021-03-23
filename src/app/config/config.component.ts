@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { RustService } from '../rustRCON/rust.service';
 import { REType, RustEvent } from '../rustRCON/RustEvent';
@@ -54,15 +55,19 @@ export class ConfigComponent implements OnInit, OnDestroy {
     // server.motd
     // server.playertimeout
     // server.pve
-    // 
+    //
   }
 
   ngOnDestroy() {
     this.subCfg.unsubscribe();
   }
 
-  save() {
+  writeCFG() {
+    this.rustSrv.sendCommand('server.writecfg');
+    this.close.emit();
+  }
 
+  save() {
     this.serverName = this.serverName.split('"').join('');
     this.serverDescription = this.serverDescription.split('"').join('');
     this.serverImage = this.serverImage.split('"').join('');
@@ -73,7 +78,7 @@ export class ConfigComponent implements OnInit, OnDestroy {
     this.rustSrv.sendCommand('server.url "'+this.serverUrl+'"');
     this.rustSrv.sendCommand('server.headerimage "'+this.serverImage+'"');
 
-    this.rustSrv.sendCommand('server.writecfg');
+    this.writeCFG();
     this.close.emit();
   }
 

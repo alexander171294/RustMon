@@ -20,7 +20,7 @@ export class ConnectionComponent implements OnInit {
 
   // login?
   public loginLoading: boolean;
-  public isLogged = false;
+  public isLogged = true;
 
   // getted values?
   public hasInfo = false;
