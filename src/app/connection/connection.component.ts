@@ -7,6 +7,7 @@ import { ServerInfo } from '../rustRCON/ServerInfo';
 import { ChatMessage } from '../rustRCON/ChatMessage';
 import { PlayerStorageService } from '../rustRCON/player-storage.service';
 import { MenuItem } from 'primeng/api';
+import { PromptData, PromptService } from '../ui-kit/prompt/prompt.service';
 
 @Component({
   selector: 'app-connection',
@@ -46,7 +47,7 @@ export class ConnectionComponent implements OnInit {
   @ViewChild('chatCompo', {static: false}) chatCompo: ChatComponent;
   @ViewChild('console', {static: false}) consoleBox;
 
-  constructor(private rustSrv: RustService, private psSrv: PlayerStorageService) { }
+  constructor(private rustSrv: RustService, private psSrv: PlayerStorageService, private promptSrv: PromptService) { }
 
   ngOnInit() {
     if (localStorage.getItem('rcon-server')) {
@@ -149,17 +150,18 @@ export class ConnectionComponent implements OnInit {
   }
 
   restart() {
-    const time = prompt('Seconds before restart.');
-    if (time) {
+    this.promptSrv.openPrompt(new PromptData('Seconds before restart.', '15')).then(time => {
+      console.log('TIME', time);
       this.rustSrv.sendCommand('restart ' + time);
-    }
+    }).catch(e => {
+      // cancelled
+    });
   }
 
   unban() {
-    const steamID = prompt('Put the steamID');
-    if (steamID) {
+    this.promptSrv.openPrompt(new PromptData('Put the steamID')).then(steamID => {
       this.rustSrv.sendCommand('unban ' + steamID);
-    }
+    });
   }
 
   banlist() {

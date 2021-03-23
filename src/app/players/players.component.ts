@@ -4,6 +4,7 @@ import { Player } from '../rustRCON/Player';
 import { RustService } from '../rustRCON/rust.service';
 import { MenuItem } from 'primeng/api/menuitem';
 import {MessageService, ConfirmationService} from 'primeng/api';
+import { PromptData, PromptService } from '../ui-kit/prompt/prompt.service';
 
 @Component({
   selector: 'app-players',
@@ -36,7 +37,10 @@ export class PlayersComponent implements OnInit {
     { label: 'Copy STEAMID', command: (event) => this.ctxSteamID(this.selectedPlayer)}
   ];
 
-  constructor(private rustSrv: RustService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
+  constructor(private rustSrv: RustService,
+              private messageService: MessageService,
+              private confirmationService: ConfirmationService,
+              private promptSrv: PromptService) { }
 
   ngOnInit() {
   }
@@ -115,18 +119,16 @@ export class PlayersComponent implements OnInit {
 
   ban(steamID: string, name: string) {
     this.userPopup.opened = false;
-    const reason = prompt('Ingrese la razon');
-    if (reason) {
+    this.promptSrv.openPrompt(new PromptData('Write the reason:')).then(reason => {
       this.rustSrv.sendCommand('banid ' + steamID + ' ' + name + ' ' + reason);
-    }
+    });
   }
 
   kick(steamID: string) {
     this.userPopup.opened = false;
-    const reason = prompt('Ingrese la razon');
-    if (reason) {
+    this.promptSrv.openPrompt(new PromptData('Write the reason:')).then(reason => {
       this.rustSrv.sendCommand('kick ' + steamID + ' ' + reason);
-    }
+    });
   }
 
   unOwner(steamID: string) {

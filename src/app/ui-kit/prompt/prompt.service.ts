@@ -34,4 +34,8 @@ export class PromptService {
 export class PromptData {
   promptName: string;
   promptPlaceholder?: string;
+  constructor(name: string, placeholder?: string) {
+    this.promptName = name;
+    this.promptPlaceholder = placeholder;
+  }
 }
