@@ -1,0 +1,12 @@
+<section *ngIf="visible">
+  <article>
+    <header>{{promptName}}</header>
+    <main>
+      <input type="text" [placeholder]="promptPlaceholder" [(ngModel)]="promptInput" id="input_popup_prompt"/>
+    </main>
+    <footer>
+      <button (click)="cancel()">cancel</button>
+      <button (click)="ok()">ok</button>
+    </footer>
+  </article>
+</section>

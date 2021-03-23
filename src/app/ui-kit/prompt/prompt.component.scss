@@ -1,0 +1,33 @@
+section {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: #00000054;
+  top: 0px;
+  z-index: 9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  article {
+    width: 25vw;
+    background: #2b2924;
+    header {
+      background: #181818;
+    }
+    main {
+      input {
+        margin: 5px;
+        width: calc(100% - 10px);
+      }
+    }
+    footer {
+      background: #181818;
+      text-align: right;
+      padding: 5px;
+      button {
+        margin: 0px 3px;
+      }
+    }
+  }
+}

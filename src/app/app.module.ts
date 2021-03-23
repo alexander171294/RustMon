@@ -18,8 +18,10 @@ import {ToastModule} from 'primeng/toast';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ChatComponent } from './chat/chat.component';
+import {SidebarModule} from 'primeng/sidebar';
 import {OverlayPanelModule} from 'primeng/overlaypanel';
 import { ConfigComponent } from './config/config.component';
+import { PromptModule } from './ui-kit/prompt/prompt.module';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { ConfigComponent } from './config/config.component';
     ContextMenuModule,
     ToastModule,
     ConfirmDialogModule,
-    OverlayPanelModule
+    OverlayPanelModule,
+    SidebarModule,
+    PromptModule
   ],
   providers: [
     MessageService,

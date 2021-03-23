@@ -6,6 +6,7 @@ import { RustService } from '../rustRCON/rust.service';
 import { ServerInfo } from '../rustRCON/ServerInfo';
 import { ChatMessage } from '../rustRCON/ChatMessage';
 import { PlayerStorageService } from '../rustRCON/player-storage.service';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-connection',
@@ -39,6 +40,8 @@ export class ConnectionComponent implements OnInit {
 
   public onlineFilter = true;
   public openedConfig = false;
+
+  commandsOpened: boolean = true;
 
   @ViewChild('chatCompo', {static: false}) chatCompo: ChatComponent;
   @ViewChild('console', {static: false}) consoleBox;
