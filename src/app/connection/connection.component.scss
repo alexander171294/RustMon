@@ -166,6 +166,37 @@ main {
           }
         }
       }
+
+      footer {
+        height: 35px;
+        position: fixed;
+        bottom: 0px;
+        left: 0px;
+        background: #181818;
+        width: 100vw;
+        padding: 8px;
+        color: #5a5a5a;
+        font-size: 14px;
+        svg {
+          width: 20px;
+          vertical-align: text-top;
+        }
+        a {
+          color: #cd412b;
+        }
+        .right {
+          position: absolute;
+          right: 7px;
+          top: 7px;
+          label {
+            color: #007ad9;
+            padding: 3px;
+            border: 1px solid;
+            border-radius: 5px;
+            margin: 0px 3px;
+          }
+        }
+      }
     }
   }
 }
