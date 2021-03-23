@@ -112,7 +112,6 @@ export class ConnectionComponent implements OnInit {
         this.isLogged = false;
         this.messageService.add({severity: 'error', summary: 'Disconnected', detail: 'Disconnected from server.'});
       }
-      
     });
   }
 
@@ -164,7 +163,6 @@ export class ConnectionComponent implements OnInit {
   }
 
   restart() {
-    this.messageService.add({severity: 'error', summary: 'Disconnected', detail: 'Disconnected from server.'});
     this.promptSrv.openPrompt(new PromptData('Seconds before restart.', '15')).then(time => {
       console.log('TIME', time);
       this.rustSrv.sendCommand('restart ' + time);
