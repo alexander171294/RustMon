@@ -2,7 +2,7 @@
   <article>
     <header>{{promptName}}</header>
     <main>
-      <input type="text" [placeholder]="promptPlaceholder" [(ngModel)]="promptInput" id="input_popup_prompt"/>
+      <input type="text" [placeholder]="promptPlaceholder" [(ngModel)]="promptInput" id="input_popup_prompt" (keypress)="kp($event)"/>
     </main>
     <footer>
       <button (click)="cancel()">cancel</button>

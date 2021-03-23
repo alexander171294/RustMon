@@ -23,6 +23,9 @@ export class PromptComponent implements OnInit {
       this.promptPlaceholder = d.promptPlaceholder ? d.promptPlaceholder : '';
       this.visible = true;
       this.promptInput = '';
+      setTimeout(() => {
+        document.getElementById('input_popup_prompt').focus();
+      }, 50);
     });
   }
 
@@ -34,6 +37,12 @@ export class PromptComponent implements OnInit {
   ok() {
     this.pSrv.close(this.promptInput);
     this.visible = false;
+  }
+
+  kp(evt) {
+    if(evt.keyCode == 13) {
+      this.ok();
+    }
   }
 
 }
