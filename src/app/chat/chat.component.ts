@@ -84,14 +84,14 @@ export class ChatComponent implements OnInit {
 
   ban(steamID: string, name: string) {
     this.promptSrv.openPrompt(new PromptData('ban('+name+') Write the reason:')).then(reason => {
-      this.rustSrv.sendCommand('banid ' + steamID + ' ' + name + ' ' + reason);
+      this.rustSrv.sendCommand('banid ' + steamID + ' "' + name + '" "' + reason + '"');
       this.messageService.add({severity: 'success', summary: 'Banned', detail: this.contextMessage.UserId + ' | ' + this.contextMessage.Username});
     });
   }
 
   kick(steamID: string, name: string) {
     this.promptSrv.openPrompt(new PromptData('kick('+name+') Write the reason:')).then(reason => {
-      this.rustSrv.sendCommand('kick ' + steamID + ' ' + reason);
+      this.rustSrv.sendCommand('kick ' + steamID + ' "' + reason + '"');
       this.messageService.add({severity: 'success', summary: 'Banned', detail: this.contextMessage.UserId + ' | ' + this.contextMessage.Username});
     });
   }

@@ -118,7 +118,7 @@ export class PlayersComponent implements OnInit {
   ban(steamID: string, name: string) {
     this.userPopup.opened = false;
     this.promptSrv.openPrompt(new PromptData('Write the reason:')).then(reason => {
-      this.rustSrv.sendCommand('banid ' + steamID + ' ' + name + ' ' + reason);
+      this.rustSrv.sendCommand('banid ' + steamID + ' "' + name + '" "' + reason + '"');
       this.messageService.add({severity: 'success', summary: 'Banned', detail: steamID + ' | ' + name});
     });
   }
@@ -126,7 +126,7 @@ export class PlayersComponent implements OnInit {
   kick(steamID: string) {
     this.userPopup.opened = false;
     this.promptSrv.openPrompt(new PromptData('Write the reason:')).then(reason => {
-      this.rustSrv.sendCommand('kick ' + steamID + ' ' + reason);
+      this.rustSrv.sendCommand('kick ' + steamID + ' "' + reason + '"');
       this.messageService.add({severity: 'success', summary: 'Kicked', detail: steamID + ' | ' + name});
     });
   }
