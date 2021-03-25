@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  steamApiKey: 'FBE6A5C249453A8516A55AAD5F87973F'
 };
 
 /*
