@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  steamApiKey: ''
+  steamApiKey: '',
+  ipstackApiKey: '',
 };

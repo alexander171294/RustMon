@@ -8,13 +8,13 @@ import { environment } from 'src/environments/environment';
 })
 export class ValveApiService {
 
-  private static readonly steamUserApi = 'https://api.steampowered.com/ISteamUser/GetPlayerBans/v1?key=' + environment.steamApiKey + '&steamids=${STEAM_ID}&format=json';
+  public readonly steamUserApi = 'https://api.steampowered.com/ISteamUser/GetPlayerBans/v1?key=' + environment.steamApiKey + '&steamids=${STEAM_ID}&format=json';
 
   constructor(private httpC: HttpClient) { }
 
   public getVacs(uid64: string): Observable<PlayerVacsResponse> {
     return this.httpC.get<PlayerVacsResponse>(
-      ValveApiService.steamUserApi.replace('${STEAM_ID}', uid64)
+      this.steamUserApi.replace('${STEAM_ID}', uid64)
     );
   }
 }
