@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  steamApiKey: 'FBE6A5C249453A8516A55AAD5F87973F',
+  steamApiKey: 'FBE6A5C249453A8516A55AAD5F87973F', // https://steamcommunity.com/dev/apikey
   ipstackApiKey: '', // https://ipstack.com/signup/free
 };
 

@@ -8,12 +8,19 @@ import { Observable } from 'rxjs';
 })
 export class IPGeocodeService {
 
-  public readonly geocodeApi = 'https://api.ipstack.com/${IP}?access_key=' + environment.ipstackApiKey;
+  public readonly geocodeIpstackApi = 'https://api.ipstack.com/${IP}?access_key=' + environment.ipstackApiKey;
+  public readonly geocodeIPApi = 'http://ip-api.com/json/${IP}';
 
   constructor(private httpC: HttpClient) { }
 
-  public getIpGeo(ip: string): Observable<IPData> {
-    return this.httpC.get<IPData>(this.geocodeApi.replace('${IP}', ip));
+  // ipstack.com
+  public getIpStack(ip: string): Observable<IPData> {
+    return this.httpC.get<IPData>(this.geocodeIpstackApi.replace('${IP}', ip));
+  }
+
+  // ip-api.com (free)
+  public getIpApi(ip: string): Observable<IPApiData> {
+    return this.httpC.get<IPApiData>(this.geocodeIPApi.replace('${IP}', ip));
   }
 }
 
@@ -85,4 +92,22 @@ export class IPSecurity {
   public is_toor: boolean;
   public threat_level: string;
   public threat_types?: string;
+}
+
+
+export class IPApiData {
+  public query: string;
+  public status?: string;
+  public country?: string;
+  public countryCode?: string;
+  public region?: string;
+  public regionName?: string;
+  public city?: string;
+  public zip?: string;
+  public lat?: number;
+  public long?: number;
+  public timezone?: string;
+  public isp?: number;
+  public org?: string;
+  public as?: string;
 }
