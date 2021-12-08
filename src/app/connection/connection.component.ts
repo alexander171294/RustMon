@@ -8,6 +8,7 @@ import { ChatMessage } from '../rustRCON/ChatMessage';
 import { PlayerStorageService } from '../rustRCON/player-storage.service';
 import { MenuItem, MessageService } from 'primeng/api';
 import { PromptData, PromptService } from '../ui-kit/prompt/prompt.service';
+import { HashParser } from '../utils/hasParser';
 
 @Component({
   selector: 'app-connection',
@@ -54,6 +55,19 @@ export class ConnectionComponent implements OnInit {
       this.serverIP = localStorage.getItem('rcon-server');
       this.rconPort = parseInt(localStorage.getItem('rcon-port'), 10);
       this.rconPasswd = localStorage.getItem('rcon-password');
+    }
+    if (window.location.hash) {
+      const params = HashParser.getHashParams();
+      if(params.server) {
+        this.serverIP = params.server;
+      }
+      if(params.rport) {
+        this.rconPort = parseInt(params.rport);
+      }
+      if(params.password) {
+        this.rconPasswd = params.password;
+      }
+      console.log('hash: ', );
     }
   }
 

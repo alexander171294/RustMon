@@ -26,6 +26,10 @@
                 <input type="text" placeholder="http://rustmon.tandilserver.com" [(ngModel)]="serverUrl"/>
             </div>
             <div>
+                <label>Tags</label>
+                <input type="text" placeholder="Softcore, Vanilla, Weekly" [(ngModel)]="serverTags"/>
+            </div>
+            <div>
                 <img [src]="serverImage" />
                 <label>Server Banner (1024px x 512px jpg/png)</label>
                 <input type="text" placeholder="https://i.imgur.com/2Bmq0jD.jpg"  [(ngModel)]="serverImage"/>

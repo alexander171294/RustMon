@@ -40,6 +40,8 @@ export class ConfigComponent implements OnInit, OnDestroy {
           this.serverUrl = d.raw.split(' ').slice(1).join(' ').split('"').join('');
         } else if(d.raw.indexOf('server.headerimage:') >= 0) {
           this.serverImage = d.raw.split(' ').slice(1).join(' ').split('"').join('');
+        } else if(d.raw.indexOf('server.tags:') >= 0) {
+          this.serverImage = d.raw.split(' ').slice(1).join(' ').split('"').join('');
         }
       }
     });
