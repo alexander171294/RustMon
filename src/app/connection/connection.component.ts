@@ -67,7 +67,6 @@ export class ConnectionComponent implements OnInit {
       if(params.password) {
         this.rconPasswd = params.password;
       }
-      console.log('hash: ', );
     }
   }
 

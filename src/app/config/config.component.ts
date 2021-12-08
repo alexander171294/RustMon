@@ -20,6 +20,7 @@ export class ConfigComponent implements OnInit, OnDestroy {
   public serverDescription: string;
   public serverUrl: string;
   public serverImage: string;
+  public serverTags: string;
 
   private subCfg: Subscription;
 
@@ -41,7 +42,7 @@ export class ConfigComponent implements OnInit, OnDestroy {
         } else if(d.raw.indexOf('server.headerimage:') >= 0) {
           this.serverImage = d.raw.split(' ').slice(1).join(' ').split('"').join('');
         } else if(d.raw.indexOf('server.tags:') >= 0) {
-          this.serverImage = d.raw.split(' ').slice(1).join(' ').split('"').join('');
+          this.serverTags = d.raw.split(' ').slice(1).join(' ').split('"').join('');
         }
       }
     });
@@ -50,6 +51,7 @@ export class ConfigComponent implements OnInit, OnDestroy {
     this.rustSrv.sendCommand('server.hostname');
     this.rustSrv.sendCommand('server.description');
     this.rustSrv.sendCommand('server.url');
+    this.rustSrv.sendCommand('server.tags');
     this.rustSrv.sendCommand('server.headerimage');
 
     // server.idlekick
@@ -78,6 +80,7 @@ export class ConfigComponent implements OnInit, OnDestroy {
     this.rustSrv.sendCommand('server.hostname "'+this.serverName+'"');
     this.rustSrv.sendCommand('server.description "'+this.serverDescription+'"');
     this.rustSrv.sendCommand('server.url "'+this.serverUrl+'"');
+    this.rustSrv.sendCommand('server.tags "'+this.serverTags+'"');
     this.rustSrv.sendCommand('server.headerimage "'+this.serverImage+'"');
 
     this.writeCFG();
