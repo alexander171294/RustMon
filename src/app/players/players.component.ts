@@ -5,6 +5,7 @@ import { RustService } from '../rustRCON/rust.service';
 import { MenuItem } from 'primeng/api/menuitem';
 import {MessageService, ConfirmationService} from 'primeng/api';
 import { PromptData, PromptService } from '../ui-kit/prompt/prompt.service';
+import { Clipboard } from '../utils/clipboard';
 
 @Component({
   selector: 'app-players',
@@ -91,8 +92,11 @@ export class PlayersComponent implements OnInit {
   }
 
   ctxSteamID(player: PlayerWithStatus) {
-    navigator.clipboard.writeText(player.SteamID);
-    this.messageService.add({severity: 'success', summary: 'Copied to clipboard.', detail: player.SteamID + ' | ' + player.DisplayName});
+    if(Clipboard.writeText(player.SteamID)) {
+      this.messageService.add({severity: 'success', summary: 'Copied to clipboard.', detail: player.SteamID + ' | ' + player.DisplayName});
+    } else {
+      this.messageService.add({severity: 'info', summary: 'Clipboard disabled :(', detail: player.SteamID + ' | ' + player.DisplayName});
+    }
   }
 
   openUserPopup(user, event) {

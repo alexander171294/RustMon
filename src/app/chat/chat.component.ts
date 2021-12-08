@@ -4,6 +4,7 @@ import { OverlayPanel } from 'primeng/overlaypanel';
 import { MenuItem, MessageService } from 'primeng/api';
 import { RustService } from '../rustRCON/rust.service';
 import { PromptData, PromptService } from '../ui-kit/prompt/prompt.service';
+import { Clipboard } from '../utils/clipboard';
 
 @Component({
   selector: 'app-chat',
@@ -63,8 +64,11 @@ export class ChatComponent implements OnInit {
 
   ctxSteamID(evt) {
     if(this.contextMessage) {
-      navigator.clipboard.writeText(this.contextMessage.UserId);
-      this.messageService.add({severity: 'success', summary: 'Copied to clipboard.', detail: this.contextMessage.UserId + ' | ' + this.contextMessage.Username});
+      if(Clipboard.writeText(this.contextMessage.UserId)) {
+        this.messageService.add({severity: 'success', summary: 'Copied to clipboard.', detail: this.contextMessage.UserId + ' | ' + this.contextMessage.Username});
+      } else {
+        this.messageService.add({severity: 'info', summary: 'Clipboard disabled :(.', detail: this.contextMessage.UserId + ' | ' + this.contextMessage.Username});
+      }
     }
     this.contextMessage = undefined;
   }
@@ -72,8 +76,11 @@ export class ChatComponent implements OnInit {
   ctxMessage(evt) {
     if(this.contextMessage) {
       const message = '['+this.contextMessage.UserId+']('+this.contextMessage.Username+'): ' + this.contextMessage.Message;
-      navigator.clipboard.writeText(message);
-      this.messageService.add({severity: 'success', summary: 'Copied to clipboard.', detail: message});
+      if(Clipboard.writeText(message)) {
+        this.messageService.add({severity: 'success', summary: 'Copied to clipboard.', detail: message});
+      } else {
+        this.messageService.add({severity: 'info', summary: 'Clipboard disabled :(', detail: message});
+      }
     }
     this.contextMessage = undefined;
   }
