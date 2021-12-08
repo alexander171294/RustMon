@@ -12,5 +12,6 @@ export class Player {
 }
 
 export class PlayerWithStatus extends Player {
-  online: boolean;
+  public online: boolean;
+  public country: string;
 }

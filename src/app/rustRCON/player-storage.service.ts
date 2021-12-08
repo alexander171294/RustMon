@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { IPGeocodeService } from '../Api/ipgeocode.service';
 import { Player, PlayerWithStatus } from './Player';
 
 @Injectable({
@@ -6,7 +7,9 @@ import { Player, PlayerWithStatus } from './Player';
 })
 export class PlayerStorageService {
 
-  constructor() { }
+  public ipsCountryAssoc: {[key: string]: string} = {};
+
+  constructor(private ipGeo: IPGeocodeService) { }
 
   savePlayerList(players: Player[], onlyOnline: boolean): PlayerWithStatus[] {
     const playersWS = [];
@@ -20,6 +23,11 @@ export class PlayerStorageService {
     localStorage.setItem('players', JSON.stringify(oldPlayers));
     Object.entries(oldPlayers).forEach(t => {
       console.log('Only online: ', onlyOnline);
+      const addr = (t[1] as Player).Address.split(':')[0];
+      if(!this.ipsCountryAssoc[addr]) {
+        this.ipsCountryAssoc[addr] = this.getCountryFrom(addr);
+      }
+      (t[1] as PlayerWithStatus).country = this.ipsCountryAssoc[addr];
       if (onlyOnline) {
         if (oPl.indexOf(t[0]) >= 0) {
           (t[1] as PlayerWithStatus).online = true;
@@ -32,4 +40,20 @@ export class PlayerStorageService {
     });
     return playersWS;
   }
+
+
+  public getCountryFrom(addr) {
+    if(localStorage.getItem('IP-'+addr)) {
+      return localStorage.getItem('IP-'+addr);
+    }
+    this.ipGeo.getIpApi(addr).subscribe(data => {
+      this.ipsCountryAssoc[addr] = data.countryCode.toLowerCase();
+      localStorage.setItem('IP-'+addr,  data.countryCode.toLowerCase());
+    }, e => {
+      setTimeout(() => {
+        this.ipsCountryAssoc[addr] = undefined;
+      }, 1000)
+    });
+    return 'N/D';
+  } 
 }

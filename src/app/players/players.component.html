@@ -28,7 +28,10 @@
             <span class="ping" *ngIf="col.field == 'Ping' && player.online" [class.greenText]="player.Ping < 75" [class.yellowText]="player.Ping <= 170 && player.Ping >= 75" [class.redText]="player.Ping > 170">
               {{player.Ping}}
             </span>
-            <span class="username" *ngIf="col.field == 'DisplayName'" style="color:#55aaff">{{player.DisplayName}}</span>
+            <span class="username" *ngIf="col.field == 'DisplayName'" style="color:#55aaff">
+              <img *ngIf="player.country && player.country != 'N/D'" [src]="'https://flagpedia.net/data/flags/w580/' + player.country + '.png'" style="width: 25px;" />
+              {{player.DisplayName}}
+            </span>
           </td>
       </tr>
   </ng-template>

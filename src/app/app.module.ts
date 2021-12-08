@@ -22,6 +22,7 @@ import {SidebarModule} from 'primeng/sidebar';
 import {OverlayPanelModule} from 'primeng/overlaypanel';
 import { ConfigComponent } from './config/config.component';
 import { PromptModule } from './ui-kit/prompt/prompt.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { PromptModule } from './ui-kit/prompt/prompt.module';
     ConfirmDialogModule,
     OverlayPanelModule,
     SidebarModule,
-    PromptModule
+    PromptModule,
+    HttpClientModule
   ],
   providers: [
     MessageService,
