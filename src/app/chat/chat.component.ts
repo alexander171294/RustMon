@@ -14,11 +14,19 @@ import { Clipboard } from '../utils/clipboard';
 export class ChatComponent implements OnInit {
 
   ctxMenu: MenuItem[] = [
-    { label: 'Ban', command: (event) => this.ctxBan(event) },
-    { label: 'Kick', command: (event) => this.ctxKick(event) },
+    { label: 'Chat', items: [
+      { label: 'Mute', command: (event) => this.ctxMute(event) },
+      { label: 'Unmute', command: (event) => this.ctxUnmute(event) },
+    ]},
+    { label: 'Moderation', items: [
+      { label: 'Ban', command: (event) => this.ctxBan(event) },
+      { label: 'Kick', command: (event) => this.ctxKick(event) },
+    ]},
     { label: 'TeamInfo', command: (event) => this.ctxTeamInfo(event) },
-    { label: 'Steam Profile', command: (event) => this.ctxSteamProfile(event) },
-    { label: 'Copy STEAMID', command: (event) => this.ctxSteamID(event)},
+    { label: 'Steam', items: [
+      { label: 'Steam Profile', command: (event) => this.ctxSteamProfile(event) },
+      { label: 'Copy STEAMID', command: (event) => this.ctxSteamID(event)},
+    ]},
     { label: 'Copy Message', command: (event) => this.ctxMessage(event)}
   ];
 
@@ -52,6 +60,23 @@ export class ChatComponent implements OnInit {
   ctxKick(evt) {
     if(this.contextMessage) {
       this.kick(this.contextMessage.UserId, this.contextMessage.Username);
+    }
+    this.contextMessage = undefined;
+  }
+
+  ctxMute(evt) {
+    if(this.contextMessage) {
+      this.rustSrv.sendCommand('mute ' + this.contextMessage.UserId);
+      this.messageService.add({severity: 'success', summary: 'Muted', detail: this.contextMessage.UserId + ' | ' + this.contextMessage.Username});
+    }
+    this.contextMessage = undefined;
+  }
+
+
+  ctxUnmute(evt) {
+    if(this.contextMessage) {
+      this.rustSrv.sendCommand('unmute ' + this.contextMessage.UserId);
+      this.messageService.add({severity: 'success', summary: 'Unmuted', detail: this.contextMessage.UserId + ' | ' + this.contextMessage.Username});
     }
     this.contextMessage = undefined;
   }
