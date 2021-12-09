@@ -31,6 +31,7 @@ export class ChatComponent implements OnInit {
   ];
 
   @Input() chatMessages: ChatMessage[];
+  @Input() showTeamMessages: boolean;
   clickedMessage: ChatMessage;
   contextMessage: ChatMessage;
 

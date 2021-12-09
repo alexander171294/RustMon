@@ -42,6 +42,7 @@ export class ConnectionComponent implements OnInit {
 
   public onlineFilter = true;
   public openedConfig = false;
+  public showTeamMessages = true;
 
   cogMenu: boolean = false;
 

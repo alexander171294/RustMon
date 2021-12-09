@@ -32,6 +32,9 @@ ul {
         color: #cd412b!important;
       }
     }
+    &.hide {
+      display: none;
+    }
   }
 }
 #players {

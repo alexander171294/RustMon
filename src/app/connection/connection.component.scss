@@ -138,6 +138,21 @@ main {
               color: #cd412b;
             }
           }
+          .optionChat {
+            position: absolute;
+            top: 0px;
+            right: 10px;
+            span {
+              display: inline-block;
+              margin-right: 5px;
+              font-size: 12px;
+            }
+            p-inputswitch {
+              display: inline-block;
+              height: 30px;
+              vertical-align: middle;
+            }
+          }
         }
         ul {
           list-style: none;
