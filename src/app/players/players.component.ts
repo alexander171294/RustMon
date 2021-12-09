@@ -30,13 +30,22 @@ export class PlayersComponent implements OnInit {
 
   public selectedPlayer: PlayerWithStatus;
   ctxMenu: MenuItem[] = [
-    { label: 'Owner?', command: (event) => this.ctxOwner(this.selectedPlayer) }, //, icon: 'pi pi-search'
-    { label: 'Mod?', command: (event) => this.ctxMod(this.selectedPlayer) },
-    { label: 'Ban', command: (event) => this.ctxBan(this.selectedPlayer) },
-    { label: 'Kick', command: (event) => this.ctxKick(this.selectedPlayer) },
+    { label: 'Admin/Mod', items: [
+      { label: 'Make moderator', command: (event) => this.ctxAddMod(this.selectedPlayer) },
+      { label: 'Remove moderation', command: (event) => this.ctxRemMod(this.selectedPlayer) },
+      { label: 'Make Owner', command: (event) => this.ctxAddOwner(this.selectedPlayer) },
+      { label: 'Remove Owner', command: (event) => this.ctxRemOwner(this.selectedPlayer) },
+    ]},
+    { label: 'Moderation', items: [
+      { label: 'Ban', command: (event) => this.ctxBan(this.selectedPlayer) },
+      { label: 'Kick', command: (event) => this.ctxKick(this.selectedPlayer) },
+    ]},
     { label: 'TeamInfo', command: (event) => this.ctxTeamInfo(this.selectedPlayer.SteamID) },
-    { label: 'Steam Profile', command: (event) => this.ctxSteamProfile(this.selectedPlayer) },
-    { label: 'Copy STEAMID', command: (event) => this.ctxSteamID(this.selectedPlayer)}
+    { label: 'Steam', items: [
+      { label: 'Open Profile', command: (event) => this.ctxSteamProfile(this.selectedPlayer) },
+      { label: 'Copy SteamID', command: (event) => this.ctxSteamID(this.selectedPlayer)}
+    ]},
+
   ];
 
   constructor(private rustSrv: RustService,
@@ -47,33 +56,41 @@ export class PlayersComponent implements OnInit {
   ngOnInit() {
   }
 
-  ctxOwner(player: PlayerWithStatus) {
+
+  ctxAddOwner(player: PlayerWithStatus) {
     this.confirmationService.confirm({
-      header: 'Action selection',
-      message: 'What do you want?',
-      acceptLabel: 'Add admin',
-      rejectLabel: 'Remove admin',
+      message: `Converting ${player.DisplayName} in owner, Are you sure?`,
       accept: () => {
         this.doOwner(player.SteamID, player.DisplayName);
-        this.messageService.add({severity: 'success', summary: 'Added moderator', detail: player.SteamID + ' | ' + player.DisplayName});
-      },
-      reject: () => {
-        this.unOwner(player.SteamID);
-        this.messageService.add({severity: 'success', summary: 'Removed moderator', detail: player.SteamID + ' | ' + player.DisplayName});
+        this.messageService.add({severity: 'success', summary: 'Added admin', detail: player.SteamID + ' | ' + player.DisplayName});
       }
     });
   }
 
-  ctxMod(player: PlayerWithStatus) {
+  ctxRemOwner(player: PlayerWithStatus) {
     this.confirmationService.confirm({
-      message: 'What do you want?',
-      acceptLabel: 'Add mod',
-      rejectLabel: 'Remove mod',
+      message: `Are you sure that you want to remove ownership from ${player.DisplayName}?`,
+      accept: () => {
+        this.unOwner(player.SteamID);
+        this.messageService.add({severity: 'success', summary: 'Removed owner', detail: player.SteamID + ' | ' + player.DisplayName});
+      }
+    });
+  }
+
+  ctxAddMod(player: PlayerWithStatus) {
+    this.confirmationService.confirm({
+      message: `Converting ${player.DisplayName} in moderator, Are you sure?`,
       accept: () => {
         this.doMod(player.SteamID, player.DisplayName);
         this.messageService.add({severity: 'success', summary: 'Added admin', detail: player.SteamID + ' | ' + player.DisplayName});
-      },
-      reject: () => {
+      }
+    });
+  }
+
+  ctxRemMod(player: PlayerWithStatus) {
+    this.confirmationService.confirm({
+      message: `Are you sure that you want to remove moderator ${player.DisplayName}?`,
+      accept: () => {
         this.unMod(player.SteamID);
         this.messageService.add({severity: 'success', summary: 'Removed admin', detail: player.SteamID + ' | ' + player.DisplayName});
       }
