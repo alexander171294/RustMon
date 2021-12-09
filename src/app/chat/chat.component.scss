@@ -26,6 +26,12 @@ ul {
       color: rgb(170, 255, 85);
       opacity: 0.7;
     }
+    &.adminChat {
+      color: #f9998a;
+      .username {
+        color: #cd412b!important;
+      }
+    }
   }
 }
 #players {
