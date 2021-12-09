@@ -34,6 +34,7 @@ export class PlayersComponent implements OnInit {
     { label: 'Mod?', command: (event) => this.ctxMod(this.selectedPlayer) },
     { label: 'Ban', command: (event) => this.ctxBan(this.selectedPlayer) },
     { label: 'Kick', command: (event) => this.ctxKick(this.selectedPlayer) },
+    { label: 'TeamInfo', command: (event) => this.ctxTeamInfo(this.selectedPlayer.SteamID) },
     { label: 'Steam Profile', command: (event) => this.ctxSteamProfile(this.selectedPlayer) },
     { label: 'Copy STEAMID', command: (event) => this.ctxSteamID(this.selectedPlayer)}
   ];
@@ -133,6 +134,10 @@ export class PlayersComponent implements OnInit {
       this.rustSrv.sendCommand('kick ' + steamID + ' "' + reason + '"');
       this.messageService.add({severity: 'success', summary: 'Kicked', detail: steamID + ' | ' + name});
     });
+  }
+
+  ctxTeamInfo(steamID: string) {
+    this.rustSrv.sendCommand('teaminfo ' + steamID);
   }
 
   unOwner(steamID: string) {
