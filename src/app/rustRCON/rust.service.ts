@@ -63,7 +63,7 @@ export class RustService {
   }
 
   banList() {
-    this.sendCommand('banlist', REType.BAN_LIST);
+    this.sendCommand('banlistex', REType.BAN_LIST);
   }
 
   processMessage(message: MessageEvent, body: any) {
