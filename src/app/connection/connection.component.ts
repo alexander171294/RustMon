@@ -42,6 +42,7 @@ export class ConnectionComponent implements OnInit {
 
   public onlineFilter = true;
   public openedConfig = false;
+  public showTeamMessages = true;
 
   cogMenu: boolean = false;
 
@@ -109,7 +110,7 @@ export class ConnectionComponent implements OnInit {
         }, 100);
       }
       if (d.type === REType.UNKOWN) {
-        this.consoleMessages.push(d.raw);
+        this.consoleMessages.push(d.raw.trim());
         setTimeout(() => {
           this.consoleBox.nativeElement.scrollTop = this.consoleBox.nativeElement.scrollHeight;
         }, 100);

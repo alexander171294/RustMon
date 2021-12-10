@@ -33,7 +33,7 @@ import { HttpClientModule } from '@angular/common/http';
     PortRemovePipe,
     PlayersComponent,
     ChatComponent,
-    ConfigComponent
+    ConfigComponent,
   ],
   imports: [
     BrowserModule,
