@@ -35,6 +35,7 @@ export class AppController {
         if((result.userData.communityvisibilitystate != SteamVisibleStates.PUBLIC || !result.userData.loccountrycode) && ip) {
           this.logger.warn('Geocoding ip ' + ip)
           this.geocode.getIpApi(ip).subscribe((d: AxiosResponse<IPApiData>) => {
+            this.logger.warn('Geocoded ok ' + JSON.stringify(d.data))
             result.countryCode = d.data.countryCode;
             this.saveInCache(steamID, result);
             res.set({ 'x-cached': 'No', 'x-geo': 'Yes' }).json(result);
