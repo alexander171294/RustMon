@@ -104,7 +104,14 @@ export class ConnectionComponent implements OnInit {
         this.playerList = this.psSrv.savePlayerList(d.data, this.onlineFilter);
       }
       if (d.rawtype === 'Chat') {
-        this.chatMessages.push(d.data);
+        const betterChatPlugin = /\[([^\]]+)\]\s([^:]+):(.*)/gi.exec(d.data.Message);
+        if(betterChatPlugin) {
+          d.data.Message = betterChatPlugin[3].trim();
+          d.data.Username = `[${betterChatPlugin[1]}] ${betterChatPlugin[2]}`;
+          this.chatMessages.push(d.data);
+        } else {
+          this.chatMessages.push(d.data);
+        }
         setTimeout(() => {
           this.chatCompo.goToDown();
         }, 100);
