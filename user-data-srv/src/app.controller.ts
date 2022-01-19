@@ -27,9 +27,9 @@ export class AppController {
       const result = new UserDataDTO();
       this.valveApi.getUserData(steamID).subscribe((d: AxiosResponse<PlayerDataResponse>) => {
         this.logger.warn('Response of steam' + JSON.stringify(d.data));
-        result.userData = d.data.players[0];
+        result.userData = d.data.response.players[0];
         this.valveApi.getVacs(steamID).subscribe((d: AxiosResponse<PlayerVacsResponse>) => {
-          result.vacData = d.data.players[0];
+          result.vacData = d.data.response.players[0];
           if((result.userData.communityvisibilitystate != SteamVisibleStates.PUBLIC || !result.userData.loccountrycode) && ip) {
             this.geocode.getIpApi(ip).subscribe((d: AxiosResponse<IPApiData>) => {
               result.countryCode = d.data.countryCode;
