@@ -26,6 +26,7 @@ export class AppController {
       }
       const result = new UserDataDTO();
       this.valveApi.getUserData(steamID).subscribe((d: AxiosResponse<PlayerDataResponse>) => {
+        this.logger.warn('Response of steam' + JSON.stringify(d.data));
         result.userData = d.data.players[0];
         this.valveApi.getVacs(steamID).subscribe((d: AxiosResponse<PlayerVacsResponse>) => {
           result.vacData = d.data.players[0];

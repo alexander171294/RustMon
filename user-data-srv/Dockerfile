@@ -3,5 +3,5 @@ WORKDIR /app
 COPY . .
 RUN npm i
 RUn npm run build
-# EXPOSE 8181
+EXPOSE 3000
 CMD ["npm", "run", "start:prod"]
