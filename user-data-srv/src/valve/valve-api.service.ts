@@ -32,7 +32,7 @@ export class PlayerVacsResponse {
 
 
 export class PlayerDataResponse {
-  public response: {players: DataResponse};
+  public response: {players: DataResponse[]};
 }
 
 
