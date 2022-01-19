@@ -37,16 +37,16 @@ export class AppController {
           this.geocode.getIpApi(ip).subscribe((d: AxiosResponse<IPApiData>) => {
             result.countryCode = d.data.countryCode;
             this.saveInCache(steamID, result);
-            res.set({ 'x-cached': 'No', 'x-geo': 'Yes' }).json(udata);
+            res.set({ 'x-cached': 'No', 'x-geo': 'Yes' }).json(result);
           }, e => {
             this.logger.error("Error getting geoip", e);
             this.saveInCache(steamID, result);
-            res.set({ 'x-cached': 'No', 'x-geo': 'Err' }).json(udata);
+            res.set({ 'x-cached': 'No', 'x-geo': 'Err' }).json(result);
           })
         } else {
           result.countryCode = result.userData.loccountrycode;
           this.saveInCache(steamID, result);
-          res.set({ 'x-cached': 'No', 'x-geo': 'No' }).json(udata);
+          res.set({ 'x-cached': 'No', 'x-geo': 'No' }).json(result);
         }
       }, e => {
         this.logger.error("Error getting vac", e)
