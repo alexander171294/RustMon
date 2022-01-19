@@ -46,12 +46,12 @@ export class PlayerStorageService {
   }
 
   public getUserData(addr, id64): UserDataDTO {
-    if(localStorage.getItem('USRV-' + id64)) {
-      return JSON.parse(localStorage.getItem('USRV-' + id64));
-    }
+    // if(localStorage.getItem('USRV-' + id64)) {
+    //   return JSON.parse(localStorage.getItem('USRV-' + id64));
+    // }
     this.userDataSrv.getUserData(id64, addr).subscribe(data => {
       this.userDataSteam[id64] = data;
-      localStorage.setItem('USRV-' + id64, JSON.stringify(data));
+      // localStorage.setItem('USRV-' + id64, JSON.stringify(data));
     }, e => {
       setTimeout(() => {
         this.userDataSteam[addr] = undefined;
