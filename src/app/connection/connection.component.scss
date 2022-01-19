@@ -15,6 +15,10 @@ main {
   //   left: 0px;
   // }
   section {
+    .mainContainer {
+      display: flex;
+      flex-direction: row;
+    }
     .footLink {
       margin-top: 15px;
       font-size: 14px;
@@ -112,10 +116,9 @@ main {
         }
       }
       aside {
-        width: 31%;
-        float: left;
-        margin: 2vh 1%;
-        padding: 0.5%;
+        width: 100%;
+        margin: 1vh 5px;
+        padding: 5px;
         background: rgba(0, 0, 0, 0.3);
         border-radius: 7px;
         height: calc(90vh - 30px);
@@ -318,5 +321,11 @@ app-players {
   color: wheat;
   table {
     width: 100%;
+  }
+}
+
+@media (max-width: 1400px) {
+  .labelEntityCount {
+    display: none;
   }
 }

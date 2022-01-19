@@ -11,12 +11,14 @@ span {
     position: relative;
     width: 100%;
     display: block;
-    .vacIcon {
+    .warns {
       position: absolute;
       right: 0px;
       top: 3px;
-      width: 18px;
-      color: #cd412b;
+      .vacIcon {
+        width: 16px;
+        color: #ed3214;
+      }
     }
   }
   &.ping {
