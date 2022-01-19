@@ -100,7 +100,6 @@ export class ConnectionComponent implements OnInit {
         }, 100);
       }
       if (d.type === REType.PLAYERS) {
-        // this.playerList = d.data;
         this.playerList = this.psSrv.savePlayerList(d.data, this.onlineFilter);
       }
       if (d.rawtype === 'Chat') {
