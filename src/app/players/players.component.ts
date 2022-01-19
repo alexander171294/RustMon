@@ -6,6 +6,7 @@ import { MenuItem } from 'primeng/api/menuitem';
 import {MessageService, ConfirmationService} from 'primeng/api';
 import { PromptData, PromptService } from '../ui-kit/prompt/prompt.service';
 import { Clipboard } from '../utils/clipboard';
+import { OverlayPanel } from 'primeng';
 
 @Component({
   selector: 'app-players',
@@ -18,7 +19,9 @@ export class PlayersComponent implements OnInit {
   public selctedUser: Player;
   public userPopup = { x: 0, y: 0, opened: false };
   @Input() onlyOnline: boolean;
-  @Output() onlyOnlineEvt: EventEmitter<boolean> = new EventEmitter<boolean>();;
+  @Output() onlyOnlineEvt: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  public playerClicked: PlayerWithStatus;
 
   public playerCols = [
     { field: 'ConnectedSeconds', header: 'Time', width: '72px' },
@@ -167,6 +170,11 @@ export class PlayersComponent implements OnInit {
 
   changeOnlineFilter(evt) {
     this.onlyOnlineEvt.emit(evt.checked);
+  }
+
+  showPlayerData(evt, player: PlayerWithStatus, op: OverlayPanel) {
+    this.playerClicked = player;
+    op.toggle(evt);
   }
 
 }

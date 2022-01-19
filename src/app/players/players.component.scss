@@ -15,8 +15,18 @@ span {
       position: absolute;
       right: 0px;
       top: 3px;
+      width: 40px;
+      text-align: right;
+      svg {
+        display: inline-block;
+      }
+      .privateIcon {
+        width: 20px;
+        color: #cda32b;
+      }
       .vacIcon {
         width: 16px;
+        margin-left: 3px;
         color: #ed3214;
       }
     }
@@ -47,4 +57,15 @@ span {
 }
 p-inputSwitch {
   vertical-align: middle;
+}
+
+p-overlaypanel {
+  label {
+    font-weight: bold;
+    color: grey;
+  }
+  .yes {
+    font-weight: bolder;
+    color: red;
+  }
 }
