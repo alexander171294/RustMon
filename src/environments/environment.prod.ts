@@ -1,5 +1,4 @@
 export const environment = {
   production: true,
-  steamApiKey: '',
-  ipstackApiKey: '',
+  uDataApi: 'https://udata-steam.core.tandilserver.com'
 };

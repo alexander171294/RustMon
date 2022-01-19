@@ -1,3 +1,5 @@
+import { DataResponse, VacResponse } from "../api/UserDataDto";
+
 export class Player {
   public SteamID: string;
   public OwnerSteamID: string;
@@ -14,4 +16,6 @@ export class Player {
 export class PlayerWithStatus extends Player {
   public online: boolean;
   public country: string;
+  public vac: VacResponse;
+  public steamData: DataResponse;
 }

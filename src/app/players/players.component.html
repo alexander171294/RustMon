@@ -31,6 +31,7 @@
             <span class="username" *ngIf="col.field == 'DisplayName'" style="color:#55aaff">
               <img *ngIf="player.country && player.country != 'N/D'" [src]="'https://flagpedia.net/data/flags/w580/' + player.country + '.png'" style="width: 20px;" [title]="player.country" />
               {{player.DisplayName}}
+              {{player.vac.VACBanned}}
             </span>
           </td>
       </tr>

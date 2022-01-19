@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { IPGeocodeService } from '../Api/ipgeocode.service';
+import { UserDataService } from '../api/user-data.service';
+import { UserDataDTO } from '../api/UserDataDto';
 import { Player, PlayerWithStatus } from './Player';
 
 @Injectable({
@@ -7,9 +8,9 @@ import { Player, PlayerWithStatus } from './Player';
 })
 export class PlayerStorageService {
 
-  public ipsCountryAssoc: {[key: string]: string} = {};
+  public userDataSteam: {[key: string]: UserDataDTO} = {};
 
-  constructor(private ipGeo: IPGeocodeService) { }
+  constructor(private userDataSrv: UserDataService) { }
 
   savePlayerList(players: Player[], onlyOnline: boolean): PlayerWithStatus[] {
     const playersWS = [];
@@ -24,10 +25,13 @@ export class PlayerStorageService {
     Object.entries(oldPlayers).forEach(t => {
       console.log('Only online: ', onlyOnline);
       const addr = (t[1] as Player).Address.split(':')[0];
-      if(!this.ipsCountryAssoc[addr]) {
-        this.ipsCountryAssoc[addr] = this.getCountryFrom(addr);
+      const id64 = (t[1] as Player).SteamID;
+      if(!this.userDataSteam[id64]) {
+        this.userDataSteam[id64] = this.getUserData(addr, id64);
       }
-      (t[1] as PlayerWithStatus).country = this.ipsCountryAssoc[addr];
+      (t[1] as PlayerWithStatus).country = this.userDataSteam[id64].countryCode;
+      (t[1] as PlayerWithStatus).vac = this.userDataSteam[id64].vacData;
+      (t[1] as PlayerWithStatus).steamData = this.userDataSteam[id64].userData;
       if (onlyOnline) {
         if (oPl.indexOf(t[0]) >= 0) {
           (t[1] as PlayerWithStatus).online = true;
@@ -41,19 +45,19 @@ export class PlayerStorageService {
     return playersWS;
   }
 
-
-  public getCountryFrom(addr) {
-    if(localStorage.getItem('IP-'+addr)) {
-      return localStorage.getItem('IP-'+addr);
+  public getUserData(addr, id64): UserDataDTO {
+    if(localStorage.getItem('USRV-' + id64)) {
+      return JSON.parse(localStorage.getItem('USRV-' + id64));
     }
-    this.ipGeo.getIpApi(addr).subscribe(data => {
-      this.ipsCountryAssoc[addr] = data.countryCode.toLowerCase();
-      localStorage.setItem('IP-'+addr,  data.countryCode.toLowerCase());
+    this.userDataSrv.getUserData(id64, addr).subscribe(data => {
+      this.userDataSteam[id64] = data;
+      localStorage.setItem('USRV-' + id64, JSON.stringify(data));
     }, e => {
       setTimeout(() => {
-        this.ipsCountryAssoc[addr] = undefined;
+        this.userDataSteam[addr] = undefined;
       }, 1000)
     });
-    return 'N/D';
-  } 
+    return new UserDataDTO();
+  }
+
 }

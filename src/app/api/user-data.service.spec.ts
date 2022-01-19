@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { IPGeocodeService } from './ipgeocode.service';
+import { UserDataService } from './user-data.service';
 
-describe('IPGeocodeService', () => {
+describe('UserDataService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: IPGeocodeService = TestBed.get(IPGeocodeService);
+    const service: UserDataService = TestBed.get(UserDataService);
     expect(service).toBeTruthy();
   });
 });
