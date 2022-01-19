@@ -29,7 +29,7 @@ export class PlayerStorageService {
       if(!this.userDataSteam[id64]) {
         this.userDataSteam[id64] = this.getUserData(addr, id64);
       }
-      (t[1] as PlayerWithStatus).country = this.userDataSteam[id64].countryCode;
+      (t[1] as PlayerWithStatus).country = this.userDataSteam[id64].countryCode ? this.userDataSteam[id64].countryCode.toLowerCase() : undefined;
       (t[1] as PlayerWithStatus).vac = this.userDataSteam[id64].vacData;
       (t[1] as PlayerWithStatus).steamData = this.userDataSteam[id64].userData;
       if (onlyOnline) {

@@ -33,6 +33,7 @@ export class AppController {
       this.valveApi.getVacs(steamID).subscribe((d: AxiosResponse<PlayerVacsResponse>) => {
         result.vacData = d.data.players[0];
         if((result.userData.communityvisibilitystate != SteamVisibleStates.PUBLIC || !result.userData.loccountrycode) && ip) {
+          this.logger.warn('Geocoding ip ' + ip)
           this.geocode.getIpApi(ip).subscribe((d: AxiosResponse<IPApiData>) => {
             result.countryCode = d.data.countryCode;
             this.saveInCache(steamID, result);
@@ -59,5 +60,10 @@ export class AppController {
 
   private saveInCache(id64: string, result: UserDataDTO) {
     this.redis.saveInCache(id64, environment.secondsCacheUsers, result);
+  }
+
+  @Get('invalidate')
+  async invalidateCache(@Query('steamID') steamID: string) {
+    return this.redis.invalidate(steamID) ? 'OK' : 'NOK';
   }
 }
