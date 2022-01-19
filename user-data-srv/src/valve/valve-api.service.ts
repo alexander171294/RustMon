@@ -27,7 +27,7 @@ export class ValveApiService {
 }
 
 export class PlayerVacsResponse {
-  public response: {players: VacResponse[]};
+  public players: VacResponse[];
 }
 
 
