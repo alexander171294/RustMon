@@ -91,6 +91,13 @@ export class ConnectionComponent implements OnInit {
       if (d.type === REType.CHAT_STACK) {
         console.log('Chat Stack: ', d.data);
         this.hasStack = true;
+        d.data.forEach(msg => {
+          const betterChatPlugin = /\[([^\]]+)\]\s([^:]+):(.*)/gi.exec(msg.Message);
+          if(betterChatPlugin) {
+            msg.Message = betterChatPlugin[3].trim();
+            msg.Username = `[${betterChatPlugin[1]}] ${betterChatPlugin[2]}`;
+          }
+        });
         this.chatMessages = d.data;
         if (this.hasInfo && !this.isLogged) {
           this.logIn();
