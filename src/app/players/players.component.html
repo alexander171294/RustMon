@@ -61,7 +61,7 @@
     </p>
     <p>
       <label>Created account</label>
-      {{playerClicked.steamData.timecreated}}
+      {{playerClicked.steamData.timecreated * 1000 | date:'d/M/yy'}}
     </p>
     <p *ngIf="playerClicked.vac">
       <label>Community Banned</label>

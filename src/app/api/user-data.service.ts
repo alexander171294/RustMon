@@ -16,6 +16,6 @@ export class UserDataService {
   }
   
   public clearCache(steamId: string): Observable<string> {
-    return this.http.get<string>(`${environment.uDataApi}/invalidate?steamID=${steamId}`);
+    return this.http.get(`${environment.uDataApi}/invalidate?steamID=${steamId}`, {responseType: 'text'});
   }
 }
