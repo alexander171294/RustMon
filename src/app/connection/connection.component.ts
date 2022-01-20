@@ -201,7 +201,7 @@ export class ConnectionComponent implements OnInit {
   restart() {
     this.promptSrv.openPrompt(new PromptData('Seconds before restart.', '15')).then(time => {
       this.promptSrv.openPrompt(new PromptData('Reason for restart.', 'restart for update')).then(reason => {
-        this.rustSrv.sendCommand(`restart ${time} ${reason}`);
+        this.rustSrv.sendCommand(`restart ${time} "${reason}"`);
       }).catch(e => {
         // cancelled
       });
