@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   // uDataApi: 'http://localhost:3000',
   uDataApi: 'https://udata-steam.core.tandilserver.com',
+  version: 'development'
 };
 
 /*

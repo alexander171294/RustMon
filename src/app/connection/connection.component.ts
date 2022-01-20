@@ -9,6 +9,7 @@ import { PlayerStorageService } from '../rustRCON/player-storage.service';
 import { MenuItem, MessageService } from 'primeng/api';
 import { PromptData, PromptService } from '../ui-kit/prompt/prompt.service';
 import { HashParser } from '../utils/hasParser';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-connection',
@@ -43,6 +44,8 @@ export class ConnectionComponent implements OnInit {
   public onlineFilter = true;
   public openedConfig = false;
   public showTeamMessages = true;
+
+  public version = environment.version;
 
   cogMenu: boolean = false;
 
