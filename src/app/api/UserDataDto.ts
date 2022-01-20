@@ -7,7 +7,7 @@ export class UserDataDTO {
 
 // https://developer.valvesoftware.com/wiki/Steam_Web_API#GetPlayerSummaries_.28v0002.29
 export class DataResponse {
-    public SteamId: string;
+    public steamid: string;
     public communityvisibilitystate: SteamVisibleStates;
     public profilestate?: 1;
     public personaname: string;

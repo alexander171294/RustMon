@@ -174,6 +174,7 @@ export class PlayersComponent implements OnInit {
 
   showPlayerData(evt, player: PlayerWithStatus, op: OverlayPanel) {
     this.playerClicked = player;
+    console.log(this.playerClicked);
     op.toggle(evt);
   }
 
