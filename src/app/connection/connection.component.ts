@@ -99,6 +99,12 @@ export class ConnectionComponent implements OnInit {
           if(betterChatPlugin) {
             msg.Message = betterChatPlugin[3].trim();
             msg.Username = `[${betterChatPlugin[1]}] ${betterChatPlugin[2]}`;
+          } else {
+            const betterChatPlugin2 = /([^:]+):(.*)/gi.exec(msg.Message);
+            if(betterChatPlugin2 && betterChatPlugin2[1].trim() == msg.Username.trim()) {
+              msg.Message = betterChatPlugin2[2].trim();
+              msg.Username = `${betterChatPlugin2[1]}`;
+            }
           }
         });
         this.chatMessages = d.data;
