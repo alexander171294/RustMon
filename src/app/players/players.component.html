@@ -46,7 +46,10 @@
 
 <p-overlayPanel #opPlayer>
   <ng-template pTemplate>
-    <img [src]="playerClicked.steamData.avatar" class="avatar"/>
+    <p>
+      <img [src]="playerClicked.steamData.avatar" class="avatar"/>
+      <button class="clearCacheButton" (click)="clearCache(playerClicked.SteamID)">Clear Cache</button>
+    </p>
     <p>
       <label>SteamID</label>
       {{playerClicked.steamData.steamid}}

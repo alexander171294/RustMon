@@ -14,5 +14,8 @@ export class UserDataService {
   public getUserData(steamId: string, ip: string): Observable<UserDataDTO> {
     return this.http.get<UserDataDTO>(`${environment.uDataApi}/udata?steamID=${steamId}&ip=${ip}`);
   }
-
+  
+  public clearCache(steamId: string): Observable<string> {
+    return this.http.get<string>(`${environment.uDataApi}/invalidate?steamID=${steamId}`);
+  }
 }

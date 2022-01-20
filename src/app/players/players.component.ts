@@ -7,6 +7,7 @@ import {MessageService, ConfirmationService} from 'primeng/api';
 import { PromptData, PromptService } from '../ui-kit/prompt/prompt.service';
 import { Clipboard } from '../utils/clipboard';
 import { OverlayPanel } from 'primeng';
+import { UserDataService } from '../api/user-data.service';
 
 @Component({
   selector: 'app-players',
@@ -54,7 +55,8 @@ export class PlayersComponent implements OnInit {
   constructor(private rustSrv: RustService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
-              private promptSrv: PromptService) { }
+              private promptSrv: PromptService,
+              private userDataSrv: UserDataService) { }
 
   ngOnInit() {
   }
@@ -178,4 +180,13 @@ export class PlayersComponent implements OnInit {
     op.toggle(evt);
   }
 
+  clearCache(steamID: string) {
+    this.userDataSrv.clearCache(steamID).subscribe(result => {
+      if(result == 'OK') {
+        this.messageService.add({severity: 'success', summary: 'Cleared cache', detail: steamID});
+      } else {
+        this.messageService.add({severity: 'warning', summary: 'Error clearing cache', detail: result + ' - ' + steamID});
+      }
+    });
+  }
 }
