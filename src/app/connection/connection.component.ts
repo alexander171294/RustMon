@@ -125,7 +125,14 @@ export class ConnectionComponent implements OnInit {
           d.data.Username = `[${betterChatPlugin[1]}] ${betterChatPlugin[2]}`;
           this.chatMessages.push(d.data);
         } else {
-          this.chatMessages.push(d.data);
+          const betterChatPlugin2 = /([^:]+):(.*)/gi.exec(d.data.Message);
+          if(betterChatPlugin2 && betterChatPlugin2[1].trim() == d.data.Username.trim()) {
+            d.data.Message = betterChatPlugin2[2].trim();
+            d.data.Username = `${betterChatPlugin2[1]}`;
+            this.chatMessages.push(d.data);
+          } else {
+            this.chatMessages.push(d.data);
+          }
         }
         setTimeout(() => {
           this.chatCompo.goToDown();
