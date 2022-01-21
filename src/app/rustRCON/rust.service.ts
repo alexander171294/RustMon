@@ -2,6 +2,7 @@ import { SocketService } from './../socket/socket.service';
 import { Injectable, EventEmitter } from '@angular/core';
 import { EventTypeSck } from '../socket/EventSck';
 import { RustEvent, REType } from './RustEvent';
+import { RustEventsService } from './rust-events.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class RustService {
 
   private readonly CONNAME = 'RustMon';
 
-  constructor(private sck: SocketService) { }
+  constructor(private sck: SocketService, private rustEvents: RustEventsService) { }
 
   connect(serverIP: string, rconPort: number, rconPasswd: string): EventEmitter<RustEvent> {
     this.sck.connect('ws://' + serverIP + ':' + rconPort + '/' + rconPasswd).subscribe(evt => {
@@ -79,6 +80,7 @@ export class RustService {
     re.raw = body.Message;
     re.type = body.Identifier;
     re.rawtype = body.Type;
+    this.rustEvents.process(re);
     this.evtRust.emit(re);
   }
 }
