@@ -21,6 +21,7 @@ export class ConfigComponent implements OnInit, OnDestroy {
   public serverUrl: string;
   public serverImage: string;
   public serverTags: string;
+  public serverMaxPlayers: number;
 
   private subCfg: Subscription;
 
@@ -43,6 +44,8 @@ export class ConfigComponent implements OnInit, OnDestroy {
           this.serverImage = d.raw.split(' ').slice(1).join(' ').split('"').join('');
         } else if(d.raw.indexOf('server.tags:') >= 0) {
           this.serverTags = d.raw.split(' ').slice(1).join(' ').split('"').join('');
+        } else if(d.raw.indexOf('server.maxplayers:') >= 0) {
+          this.serverMaxPlayers = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
         }
       }
     });
@@ -53,6 +56,7 @@ export class ConfigComponent implements OnInit, OnDestroy {
     this.rustSrv.sendCommand('server.url');
     this.rustSrv.sendCommand('server.tags');
     this.rustSrv.sendCommand('server.headerimage');
+    this.rustSrv.sendCommand('server.maxplayers');
 
     // server.idlekick
     // server.ip
@@ -82,6 +86,7 @@ export class ConfigComponent implements OnInit, OnDestroy {
     this.rustSrv.sendCommand('server.url "'+this.serverUrl+'"');
     this.rustSrv.sendCommand('server.tags "'+this.serverTags+'"');
     this.rustSrv.sendCommand('server.headerimage "'+this.serverImage+'"');
+    this.rustSrv.sendCommand('server.maxplayers '+this.serverMaxPlayers);
 
     this.writeCFG();
     this.close.emit();

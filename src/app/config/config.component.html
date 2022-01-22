@@ -22,6 +22,10 @@
                 <textarea rows="5"  [(ngModel)]="serverDescription"></textarea>
             </div>
             <div>
+                <label>MaxPlayers</label>
+                <textarea rows="5" type="number" [(ngModel)]="serverMaxPlayers"></textarea>
+            </div>
+            <div>
                 <label>Server url</label>
                 <input type="text" placeholder="http://rustmon.tandilserver.com" [(ngModel)]="serverUrl"/>
             </div>
@@ -37,7 +41,7 @@
         </section>
         <footer>
           <button (click)="writeCFG()" style="margin-right: 3px;">WriteCFG</button>
-          <button (click)="save()">Save & WriteCFG</button>
+          <button (click)="save()">Apply & WriteCFG</button>
         </footer>
     </article>
 </div>
