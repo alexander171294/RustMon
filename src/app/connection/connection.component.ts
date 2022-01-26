@@ -1,15 +1,16 @@
 import { ChatComponent } from './../chat/chat.component';
-import { Player, PlayerWithStatus } from './../rustRCON/Player';
+import { PlayerWithStatus } from './../rustRCON/Player';
 import { REType } from './../rustRCON/RustEvent';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { RustService } from '../rustRCON/rust.service';
 import { ServerInfo } from '../rustRCON/ServerInfo';
 import { ChatMessage } from '../rustRCON/ChatMessage';
 import { PlayerStorageService } from '../rustRCON/player-storage.service';
-import { MenuItem, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { PromptData, PromptService } from '../ui-kit/prompt/prompt.service';
 import { HashParser } from '../utils/hasParser';
 import { environment } from 'src/environments/environment';
+import { ConectionData, ConnectionHistoryService } from './connection-history.service';
 
 @Component({
   selector: 'app-connection',
@@ -47,18 +48,25 @@ export class ConnectionComponent implements OnInit {
 
   public version = environment.version;
 
+  private connections: ConectionData[];
+  private connectionSelected: number;
+
   cogMenu: boolean = false;
 
   @ViewChild('chatCompo', {static: false}) chatCompo: ChatComponent;
   @ViewChild('console', {static: false}) consoleBox;
 
-  constructor(private rustSrv: RustService, private psSrv: PlayerStorageService, private promptSrv: PromptService, private messageService: MessageService) { }
+  constructor(private rustSrv: RustService, private psSrv: PlayerStorageService, private promptSrv: PromptService, private messageService: MessageService, private connectionHistory: ConnectionHistoryService) { }
 
   ngOnInit() {
+    this.connections = this.connectionHistory.getServerList();
     if (localStorage.getItem('rcon-server')) {
+      // TODO: remove this in future versions.
       this.serverIP = localStorage.getItem('rcon-server');
       this.rconPort = parseInt(localStorage.getItem('rcon-port'), 10);
       this.rconPasswd = localStorage.getItem('rcon-password');
+    } else {
+      this.previousSessionLoad(null, 0);
     }
     if (window.location.hash) {
       const params = HashParser.getHashParams();
@@ -74,11 +82,18 @@ export class ConnectionComponent implements OnInit {
     }
   }
 
+  previousSessionLoad(evt, idConn: number) {
+    const conection = this.connections[idConn];
+    if(conection) {
+      this.serverIP = conection.server;
+      this.rconPort = parseInt(conection.port);
+      this.rconPasswd = conection.password;
+    }
+  }
+
   connect() {
     this.loginLoading = true;
-    localStorage.setItem('rcon-server', this.serverIP);
-    localStorage.setItem('rcon-port', this.rconPort.toString());
-    localStorage.setItem('rcon-password', this.rconPasswd);
+    this.connectionHistory.save(this.serverIP, this.rconPort.toString(), this.rconPasswd);
     this.rustSrv.connect(this.serverIP, this.rconPort, this.rconPasswd).subscribe(d => {
       if (d.type === REType.UNKOWN) {
         // show in console.
