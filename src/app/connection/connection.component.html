@@ -7,7 +7,7 @@
       </div>
       <div class="icon">
         <label>Previous session</label>
-        <select (change)="previousSessionLoad($evt, connectionSelected)" [(ngModel)]="connectionSelected">
+        <select (change)="previousSessionLoad($event, connectionSelected)" [(ngModel)]="connectionSelected">
           <option selected>Select an option</option>
           <option *ngFor="let connection of connections; let idx = index" [value]="idx">{{connection.server}}:{{connection.port}}</option>
         </select>

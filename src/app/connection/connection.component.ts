@@ -48,8 +48,8 @@ export class ConnectionComponent implements OnInit {
 
   public version = environment.version;
 
-  private connections: ConectionData[];
-  private connectionSelected: number;
+  public connections: ConectionData[];
+  public connectionSelected: number;
 
   cogMenu: boolean = false;
 
