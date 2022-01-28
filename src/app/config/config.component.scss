@@ -62,7 +62,9 @@
             &::-webkit-scrollbar-thumb:hover {
                 background: #555;
             }
-
+            p, h3 {
+                color: wheat;
+            }
             div {
                 &.splitted {
                     display: flex;

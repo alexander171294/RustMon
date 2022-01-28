@@ -4,8 +4,15 @@
             Player Tools
             <svg (click)="close.emit()" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512" class="svg-inline--fa fa-times fa-w-11"><path fill="currentColor" d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z" class=""></path></svg>
         </header>
-        <!-- TODO: agregar header -->
-        <section>
+        <nav>
+            <div [class.active]="tab==0" (click)="tab=0">
+                Auto-Kick
+            </div>
+            <div [class.active]="tab==1" (click)="tab=1">
+                Allowed players
+            </div>
+        </nav>
+        <section [hidden]="tab!=0">
             <div>
                 <label>Max ping allowed</label>
                 <input type="number" placeholder="500 or 0 for no limits" [(ngModel)]="maxPingAllowed"/>
@@ -15,8 +22,14 @@
                 <input type="text" placeholder="you have too much ping (%ping), try reconnect later" [(ngModel)]="message"/>
             </div>
         </section>
-        <!-- Allow private profile -->
-        <!-- Vac Bans filter -->
+        <section [hidden]="tab!=1">
+            <h3>Coming soon!</h3>
+            <p>
+                kick players with private profile <br />
+                kick players with vac bans <br />
+
+            </p>
+        </section>
         <footer>
           <button (click)="save()">Apply</button>
         </footer>

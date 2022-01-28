@@ -14,6 +14,8 @@ export class PlayerToolsComponent implements OnInit {
   public maxPingAllowed: number;
   public message: string;
 
+  public tab = 0;
+
   constructor(private playerTool: PlayerToolsService) { }
 
   ngOnInit() {

@@ -59,6 +59,29 @@
                 <input type="number" disabled placeholder="4000" [(ngModel)]="worldSize"/>
             </div>
         </section>
+        <section [hidden]="tab!=2">
+            <h3>Coming soon!</h3>
+            <p>
+                server.globalchat 0 <br />
+                airdrop.min_players <br />
+                server.woundedrecoverchance "0.2" <br />
+                server.saveinterval <br />
+                server.idlekick <br />
+                server.idlekickmode <br />
+                server.pve<br/>
+                server.radiation<br/>
+                craft.instant<br/>
+                ai.think (animals performance)<br/> 
+                ai.npc_enable (scientist enabled)<br/> 
+                <br/>
+                -- populations<br/>
+                horse.population<br/>
+                chicken.population<br/>
+                boar.population<br/>
+                stag.population<br/>
+                https://www.corrosionhour.com/rust-decay-upkeep-variable/
+            </p>
+        </section>
         <footer>
           <button (click)="writeCFG()" style="margin-right: 3px;">WriteCFG</button>
           <button (click)="save()">Apply & WriteCFG</button>
