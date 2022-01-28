@@ -140,7 +140,7 @@ export class ConnectionComponent implements OnInit {
       if (d.type === REType.PLAYERS) {
         this.playerList = this.psSrv.savePlayerList(d.data, this.onlineFilter);
         const autokick = this.playerTool.getAutoKick();
-        if(autokick) {
+        if(autokick && autokick.ping > 0) {
           this.playerList.forEach(user => {
             if(user.Ping > autokick.ping) {
               this.rustSrv.sendCommand('kick ' + user.SteamID + ' "' + autokick.message.replace('%ping', user.Ping.toString()) + '"');
