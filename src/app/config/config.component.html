@@ -4,19 +4,18 @@
             Server configurations
             <svg (click)="close.emit()" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512" class="svg-inline--fa fa-times fa-w-11"><path fill="currentColor" d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z" class=""></path></svg>
         </header>
-        <section>
-            <div>
-                <label>Seed</label>
-                <input type="number" disabled placeholder="55480" [(ngModel)]="serverSeed"/>
+        <nav>
+            <div [class.active]="tab==0" (click)="tab=0">
+                Server
             </div>
-            <div>
-                <label>World Size</label>
-                <input type="number" disabled placeholder="4000" [(ngModel)]="worldSize"/>
+            <div [class.active]="tab==1" (click)="tab=1">
+                Map
             </div>
-            <div>
-                <label>MaxPlayers</label>
-                <input type="number" placeholder="5" [(ngModel)]="serverMaxPlayers" />
+            <div [class.active]="tab==2" (click)="tab=2">
+                Misc
             </div>
+        </nav>
+        <section [hidden]="tab!=0">
             <div>
                 <label>Server name</label>
                 <input type="text" placeholder="Test server name" [(ngModel)]="serverName"/>
@@ -29,14 +28,35 @@
                 <label>Server url</label>
                 <input type="text" placeholder="http://rustmon.tandilserver.com" [(ngModel)]="serverUrl"/>
             </div>
-            <div>
-                <label>Tags</label>
-                <input type="text" placeholder="Softcore, Vanilla, Weekly" [(ngModel)]="serverTags"/>
+            <div class="splitted">
+                <div>
+                    <label>Tags</label>
+                    <input type="text" placeholder="Softcore, Vanilla, Weekly" [(ngModel)]="serverTags"/>
+                </div>
+                <div>
+                    <label>MaxPlayers</label>
+                    <input type="number" placeholder="5" [(ngModel)]="serverMaxPlayers" />
+                </div>
             </div>
             <div>
-                <img [src]="serverImage" />
                 <label>Server Banner (1024px x 512px jpg/png)</label>
                 <input type="text" placeholder="https://i.imgur.com/2Bmq0jD.jpg"  [(ngModel)]="serverImage"/>
+                <label>Preview</label>
+                <div class="preview">
+                    <img [src]="serverImage" />
+                    <h2>{{serverName}}</h2>
+                    <h3>Procedural Map - 0/{{serverMaxPlayers}} - 35ms</h3>
+                </div>
+            </div>
+        </section>
+        <section [hidden]="tab!=1">
+            <div>
+                <label>Seed</label>
+                <input type="number" disabled placeholder="55480" [(ngModel)]="serverSeed"/>
+            </div>
+            <div>
+                <label>World Size</label>
+                <input type="number" disabled placeholder="4000" [(ngModel)]="worldSize"/>
             </div>
         </section>
         <footer>

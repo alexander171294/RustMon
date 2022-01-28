@@ -25,6 +25,8 @@ export class ConfigComponent implements OnInit, OnDestroy {
 
   private subCfg: Subscription;
 
+  public tab = 0;
+
   constructor(private rustSrv: RustService) { }
 
   ngOnInit() {

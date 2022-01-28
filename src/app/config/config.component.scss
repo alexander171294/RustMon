@@ -31,6 +31,21 @@
                 display: block;
             }
         }
+        nav {
+            background: #181818;
+            border-top: 1px solid #312f2a;
+            display: flex;
+            div {
+                color: #d6ccc3;
+                padding: 3px 15px;
+                border-right: 1px solid #312f2a;
+                cursor: pointer;
+                &:hover, &.active {
+                    background: #cd412b;
+                    color: wheat;
+                }
+            }
+        }
         section {
             max-height: calc(100vh - 120px);
             overflow-y: auto;
@@ -49,6 +64,41 @@
             }
 
             div {
+                &.splitted {
+                    display: flex;
+                    >div {
+                        width: 50%;
+                    }
+                }
+                .preview {
+                    position: relative;
+                    &::after{
+                        content: "";
+                        display: block;
+                        width: 100%;
+                        height: 50%;
+                        background: linear-gradient(transparent, #2a2823b3);
+                        position: absolute;
+                        bottom: 0px;
+                    }
+                    h2 {
+                        position: absolute;
+                        bottom: 20px;
+                        color: white;
+                        text-align: center;
+                        height: 35px;
+                        overflow: hidden;
+                        z-index: 1;
+                    }
+                    h3 {
+                        position: absolute;
+                        bottom: -5px;
+                        color: #d7d7d7e8;
+                        width: 100%;
+                        text-align: center;
+                        z-index: 1;
+                    }
+                }
                 padding: 5px;
                 label {
                     display: block;
