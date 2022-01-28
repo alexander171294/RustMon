@@ -23,6 +23,7 @@ import {OverlayPanelModule} from 'primeng/overlaypanel';
 import { ConfigComponent } from './config/config.component';
 import { PromptModule } from './ui-kit/prompt/prompt.module';
 import { HttpClientModule } from '@angular/common/http';
+import { PlayerToolsComponent } from './player-tools/player-tools.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { HttpClientModule } from '@angular/common/http';
     PlayersComponent,
     ChatComponent,
     ConfigComponent,
+    PlayerToolsComponent,
   ],
   imports: [
     BrowserModule,

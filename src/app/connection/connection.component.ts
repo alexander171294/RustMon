@@ -11,6 +11,7 @@ import { PromptData, PromptService } from '../ui-kit/prompt/prompt.service';
 import { HashParser } from '../utils/hasParser';
 import { environment } from 'src/environments/environment';
 import { ConectionData, ConnectionHistoryService } from './connection-history.service';
+import { PlayerToolsService } from '../player-tools/player-tools.service';
 
 @Component({
   selector: 'app-connection',
@@ -50,13 +51,19 @@ export class ConnectionComponent implements OnInit {
 
   public connections: ConectionData[];
   public connectionSelected: number;
+  public playerToolsOpened: boolean = false;
 
   cogMenu: boolean = false;
 
   @ViewChild('chatCompo', {static: false}) chatCompo: ChatComponent;
   @ViewChild('console', {static: false}) consoleBox;
 
-  constructor(private rustSrv: RustService, private psSrv: PlayerStorageService, private promptSrv: PromptService, private messageService: MessageService, private connectionHistory: ConnectionHistoryService) { }
+  constructor(private rustSrv: RustService,
+              private psSrv: PlayerStorageService,
+              private promptSrv: PromptService,
+              private messageService: MessageService,
+              private connectionHistory: ConnectionHistoryService,
+              private playerTool: PlayerToolsService) { }
 
   ngOnInit() {
     this.connections = this.connectionHistory.getServerList();
@@ -132,6 +139,14 @@ export class ConnectionComponent implements OnInit {
       }
       if (d.type === REType.PLAYERS) {
         this.playerList = this.psSrv.savePlayerList(d.data, this.onlineFilter);
+        const autokick = this.playerTool.getAutoKick();
+        if(autokick) {
+          this.playerList.forEach(user => {
+            if(user.Ping > autokick.ping) {
+              this.rustSrv.sendCommand('kick ' + user.SteamID + ' "' + autokick.message.replace('%ping', user.Ping.toString()) + '"');
+            }
+          });
+        }
       }
       if (d.rawtype === 'Chat') {
         const betterChatPlugin = /\[([^\]]+)\]\s([^:]+):(.*)/gi.exec(d.data.Message);
@@ -281,4 +296,5 @@ export class ConnectionComponent implements OnInit {
   github() {
     window.open('https://github.com/alexander171294/RustMon', "__blank");
   }
+
 }
