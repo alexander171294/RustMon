@@ -5,7 +5,20 @@ export class Clipboard {
             navigator.clipboard.writeText(textToCopy);
             return true;
         } else {
-            return false;
+            const el = document.createElement('textarea');
+            el.value = textToCopy;
+            el.setAttribute('readonly', '');
+            el.style.position = 'absolute';
+            el.style.left = '-9999px';
+            document.body.appendChild(el);
+            el.select();
+            try {
+                document.execCommand('copy');
+            } catch(e) {
+                return false;
+            }
+            document.body.removeChild(el);
+            return true;
         }
     }
 
