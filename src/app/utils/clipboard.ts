@@ -15,6 +15,7 @@ export class Clipboard {
             try {
                 document.execCommand('copy');
             } catch(e) {
+                document.body.removeChild(el);
                 return false;
             }
             document.body.removeChild(el);
