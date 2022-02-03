@@ -47,8 +47,9 @@
             }
         }
         section {
-            max-height: calc(100vh - 120px);
+            height: calc(75vh);
             overflow-y: auto;
+            width: 550px;
             &::-webkit-scrollbar {
                 width: 10px;
             }
@@ -72,6 +73,12 @@
                         width: 50%;
                     }
                 }
+                &.splitted3 {
+                    display: flex;
+                    >div {
+                        width: 33%;
+                    }
+                }
                 .preview {
                     position: relative;
                     &::after{
@@ -91,6 +98,7 @@
                         height: 35px;
                         overflow: hidden;
                         z-index: 1;
+                        width: 100%;
                     }
                     h3 {
                         position: absolute;
@@ -125,6 +133,9 @@
                     height: 256px;
                     margin: 0 auto;
                     display: block;
+                    &.fullMap {
+                        height: 512px;
+                    }
                 }
             }
         }
@@ -132,6 +143,56 @@
             text-align: right;
             background-color: #181818;
             padding: 3px;
+        }
+    }
+}
+
+iframe.map {
+    width: 100%;
+    height: calc(100% - 90px);
+    border: none;
+}
+
+.warning {
+    background: #ffccc4;
+    border: 1px solid #cd412b;
+    color: #cd412b;
+    margin: 5px;
+    font-weight: bold;
+}
+
+.mapTextDetail {
+    white-space: pre-wrap;
+}
+
+
+label.withDetail {
+    position: relative;
+    margin-bottom: 5px;
+    margin-top: 10px!important;
+    svg {
+        width: 18px;
+        color: #e9472d;
+        margin-left: 5px;
+        background: #181818;
+        padding: 3px;
+        border-radius: 5px;
+        vertical-align: sub;
+    }
+    .detail {
+        width: 200px;
+        background: #181818;
+        position: absolute;
+        margin-top: 12px;
+        border: 1px solid gray;
+        font-size: 14px;
+        line-height: 18px;
+        display: none;
+        z-index: 1;
+    }
+    &:hover {
+        .detail {
+            display: block;
         }
     }
 }

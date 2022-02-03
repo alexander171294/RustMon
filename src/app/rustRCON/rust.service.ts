@@ -1,6 +1,6 @@
-import { SocketService } from './../socket/socket.service';
+import { SocketService } from '../utils/socket/socket.service';
 import { Injectable, EventEmitter } from '@angular/core';
-import { EventTypeSck } from '../socket/EventSck';
+import { EventTypeSck } from '../utils/socket/EventSck';
 import { RustEvent, REType } from './RustEvent';
 import { RustEventsService } from './rust-events.service';
 
@@ -13,13 +13,21 @@ export class RustService {
 
   private readonly CONNAME = 'RustMon';
 
+  private connected: boolean = false; 
+  private connectionString: string;
+
   constructor(private sck: SocketService, private rustEvents: RustEventsService) { }
 
   connect(serverIP: string, rconPort: number, rconPasswd: string): EventEmitter<RustEvent> {
+    this.connectionString = `${serverIP}`;
     this.sck.connect('ws://' + serverIP + ':' + rconPort + '/' + rconPasswd).subscribe(evt => {
       if (evt.eventType === EventTypeSck.CONNECTED) {
         this.getInfo();
         this.chatTail(50);
+        const re = new RustEvent();
+        re.type = REType.CONNECTED;
+        this.connected = true;
+        this.evtRust.emit(re);
       }
       if (evt.eventType === EventTypeSck.MESSAGE) {
         this.processMessage(evt.eventData, JSON.parse(evt.eventData.data));
@@ -28,11 +36,13 @@ export class RustService {
         const re = new RustEvent();
         re.type = REType.DISCONNECT;
         this.evtRust.emit(re);
+        this.connected = false;
       }
       if (evt.eventType === EventTypeSck.ERROR) {
         const re = new RustEvent();
         re.type = REType.ERROR;
         this.evtRust.emit(re);
+        this.connected = false;
       }
     });
     return this.evtRust;
@@ -82,5 +92,13 @@ export class RustService {
     re.rawtype = body.Type;
     this.rustEvents.process(re);
     this.evtRust.emit(re);
+  }
+
+  isConnected() {
+    return this.connected;
+  }
+
+  public getConnectionString() {
+    return this.connectionString;
   }
 }

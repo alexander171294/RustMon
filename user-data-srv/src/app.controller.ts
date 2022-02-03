@@ -6,13 +6,17 @@ import { AxiosResponse } from 'axios';
 import { CacheRedisService } from './redis/redis.service';
 import { environment } from './environment';
 import { Response as Res } from 'express';
+import { RustMapService } from './rustmap/rustmap.service';
 
 @Controller()
 export class AppController {
 
   private readonly logger = new Logger(AppController.name);
 
-  constructor(private valveApi: ValveApiService, private geocode: IPGeocodeService, private redis: CacheRedisService) {}
+  constructor(private valveApi: ValveApiService,
+              private geocode: IPGeocodeService,
+              private redis: CacheRedisService,
+              private rustMap: RustMapService) {}
 
   @Get('udata')
   async getUserData(@Query('steamID') steamID: string, @Query('ip') ip: string, @Response() res: Res) {
@@ -66,5 +70,18 @@ export class AppController {
   @Get('invalidate')
   async invalidateCache(@Query('steamID') steamID: string) {
     return this.redis.invalidate(steamID) ? 'OK' : 'NOK';
+  }
+
+  @Get('mapdata')
+  async getMapData(@Query('seed') seed: number, @Query('size') worldSize: number) {
+    const mapKey = `map-${seed}-${worldSize}`;
+    const map = await this.redis.getFromCache(mapKey, true);
+    if(map) {
+      return map;
+    } else {
+      const mapDetails = await this.rustMap.getRustData(worldSize.toString(), seed.toString());
+      this.redis.saveInCache(mapKey, 260000, mapDetails); // 3 dias de ttl
+      return mapDetails;
+    }
   }
 }
