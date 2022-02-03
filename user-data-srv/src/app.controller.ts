@@ -7,7 +7,6 @@ import { CacheRedisService } from './redis/redis.service';
 import { environment } from './environment';
 import { Response as Res } from 'express';
 import { RustMapService } from './rustmap/rustmap.service';
-
 @Controller()
 export class AppController {
 
@@ -80,8 +79,13 @@ export class AppController {
       return map;
     } else {
       const mapDetails = await this.rustMap.getRustData(worldSize.toString(), seed.toString());
-      this.redis.saveInCache(mapKey, 260000, mapDetails); // 3 dias de ttl
       return mapDetails;
     }
+  }
+
+  @Get('mapdata/invalidate')
+  async invalidateMapCache(@Query('seed') seed: number, @Query('size') worldSize: number) {
+    const mapKey = `map-${seed}-${worldSize}`;
+    return this.redis.invalidate(mapKey) ? 'OK' : 'NOK';
   }
 }

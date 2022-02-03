@@ -14,6 +14,8 @@ export class ConfigComponent implements OnInit, OnDestroy {
 
   @Output() close = new EventEmitter<void>();
 
+  public retryLoading: boolean;
+
   public serverSeed: number;
   public worldSize: number;
 
@@ -190,8 +192,16 @@ export class ConfigComponent implements OnInit, OnDestroy {
     if(!this.mapData) {
       this.userDataSrv.getMap(this.serverSeed.toString(), this.worldSize.toString()).subscribe(r => {
         this.mapData = r;
+        this.retryLoading = false;
       });
     }
+  }
+
+  mapRetry() {
+    this.retryLoading = true;
+    this.userDataSrv.mapInvalidateCache(this.serverSeed.toString(), this.worldSize.toString()).subscribe(r => {
+      this.getMap();
+    });
   }
 
   applyMisc() {

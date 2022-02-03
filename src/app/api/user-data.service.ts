@@ -23,4 +23,8 @@ export class UserDataService {
   public getMap(seed: string, size: string) {
     return this.http.get<MapData>(`${environment.uDataApi}/mapdata?seed=${seed}&size=${size}`);
   }
+
+  public mapInvalidateCache(seed: string, size: string) {
+    return this.http.get<MapData>(`${environment.uDataApi}/mapdata/invalidate?seed=${seed}&size=${size}`);
+  }
 }
