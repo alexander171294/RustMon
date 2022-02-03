@@ -24,6 +24,29 @@ export class ConfigComponent implements OnInit, OnDestroy {
   public serverTags: string;
   public serverMaxPlayers: number;
 
+  // misc configs:
+  public globalChat;
+  public airdropMinplayers: number;
+  public idlekick: number;
+  public idlekickMode;
+  public idlekickAdmins;
+  public motd;
+  public pve;
+  public radiation;
+  public instantCraft;
+  public aiThink;
+  public npcEnable;
+  public stability;
+  public aiMove;
+  public chatEnabled;
+  public itemDespawn;
+  public respawnResetRange;
+
+  // security
+  public saveinterval: number;
+  public fpsLimit: number;
+  public serverSecure;
+
   public mapData: MapData;
 
   private subCfg: Subscription;
@@ -58,7 +81,47 @@ export class ConfigComponent implements OnInit, OnDestroy {
           this.serverTags = d.raw.split(' ').slice(1).join(' ').split('"').join('');
         } else if(d.raw.indexOf('server.maxplayers:') >= 0) {
           this.serverMaxPlayers = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
+        } else if(d.raw.indexOf('server.globalchat:') >= 0) {
+          this.globalChat = d.raw.split(' ').slice(1).join(' ').split('"').join('');
+        } else if(d.raw.indexOf('airdrop.min_players:') >= 0) {
+          this.airdropMinplayers = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
+        } else if(d.raw.indexOf('server.saveinterval:') >= 0) {
+          this.saveinterval = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
+        } else if(d.raw.indexOf('server.idlekick:') >= 0) {
+          this.idlekick = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
+        } else if(d.raw.indexOf('server.idlekickmode:') >= 0) {
+          this.idlekickMode = d.raw.split(' ').slice(1).join(' ').split('"').join('');
+        } else if(d.raw.indexOf('server.idlekickadmins:') >= 0) {
+          this.idlekickAdmins = d.raw.split(' ').slice(1).join(' ').split('"').join('');
+        } else if(d.raw.indexOf('server.motd:') >= 0) {
+          this.motd = d.raw.split(' ').slice(1).join(' ').split('"').join('');
+        } else if(d.raw.indexOf('server.pve:') >= 0) {
+          this.pve = d.raw.split(' ').slice(1).join(' ').split('"').join('');
+        } else if(d.raw.indexOf('server.radiation:') >= 0) {
+          this.radiation = d.raw.split(' ').slice(1).join(' ').split('"').join('');
+        } else if(d.raw.indexOf('craft.instant:') >= 0) {
+          this.instantCraft = d.raw.split(' ').slice(1).join(' ').split('"').join('');
+        } else if(d.raw.indexOf('ai.think:') >= 0) {
+          this.aiThink = d.raw.split(' ').slice(1).join(' ').split('"').join('');
+        } else if(d.raw.indexOf('ai.npc_enable:') >= 0) {
+          this.npcEnable = d.raw.split(' ').slice(1).join(' ').split('"').join('');
+        } else if(d.raw.indexOf('ai.move:') >= 0) {
+          this.aiMove = d.raw.split(' ').slice(1).join(' ').split('"').join('');
+        } else if(d.raw.indexOf('server.stability:') >= 0) {
+          this.stability = d.raw.split(' ').slice(1).join(' ').split('"').join('');
+        } else if(d.raw.indexOf('chat.enabled:') >= 0) {
+          this.chatEnabled = d.raw.split(' ').slice(1).join(' ').split('"').join('');
+        } else if(d.raw.indexOf('server.itemdespawn:') >= 0) {
+          this.itemDespawn = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
+        } else if(d.raw.indexOf('server.respawnresetrange:') >= 0) {
+          this.respawnResetRange = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
+        } else if(d.raw.indexOf('fps.limit:') >= 0) {
+          this.fpsLimit = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
+        } else if(d.raw.indexOf('server.secure:') >= 0) {
+          this.serverSecure = d.raw.split(' ').slice(1).join(' ').split('"').join('');
         }
+        
+        
       }
     });
     this.rustSrv.sendCommand('server.seed', REType.SRV_INFO);
@@ -70,12 +133,28 @@ export class ConfigComponent implements OnInit, OnDestroy {
     this.rustSrv.sendCommand('server.headerimage', REType.SRV_INFO);
     this.rustSrv.sendCommand('server.maxplayers', REType.SRV_INFO);
 
-    // server.idlekick
-    // server.ip
-    // server.motd
-    // server.playertimeout
-    // server.pve
-    //
+    // misc data
+    this.rustSrv.sendCommand('server.globalchat', REType.SRV_INFO);
+    this.rustSrv.sendCommand('server.idlekick', REType.SRV_INFO);
+    this.rustSrv.sendCommand('server.idlekickmode', REType.SRV_INFO);
+    this.rustSrv.sendCommand('server.idlekickadmins', REType.SRV_INFO);
+    this.rustSrv.sendCommand('server.motd', REType.SRV_INFO);
+    this.rustSrv.sendCommand('server.pve', REType.SRV_INFO);
+    this.rustSrv.sendCommand('server.radiation', REType.SRV_INFO);
+    this.rustSrv.sendCommand('craft.instant', REType.SRV_INFO);
+    this.rustSrv.sendCommand('ai.think', REType.SRV_INFO);
+    this.rustSrv.sendCommand('ai.npc_enable', REType.SRV_INFO);
+    this.rustSrv.sendCommand('ai.move', REType.SRV_INFO);
+    this.rustSrv.sendCommand('server.stability', REType.SRV_INFO);
+    this.rustSrv.sendCommand('chat.enabled', REType.SRV_INFO);
+    this.rustSrv.sendCommand('server.itemdespawn', REType.SRV_INFO);
+    this.rustSrv.sendCommand('server.respawnresetrange', REType.SRV_INFO);
+
+    // security
+    this.rustSrv.sendCommand('server.saveinterval', REType.SRV_INFO);
+    this.rustSrv.sendCommand('fps.limit', REType.SRV_INFO);
+    this.rustSrv.sendCommand('server.secure', REType.SRV_INFO);
+
   }
 
   ngOnDestroy() {
@@ -93,7 +172,7 @@ export class ConfigComponent implements OnInit, OnDestroy {
     this.serverImage = this.serverImage.split('"').join('');
     this.serverUrl = this.serverUrl.split('"').join('');
 
-    this.rustSrv.sendCommand('server.hostname "'+this.serverName+'"');
+    this.rustSrv.sendCommand('"'+this.serverName+'"');
     this.rustSrv.sendCommand('server.description "'+this.serverDescription+'"');
     this.rustSrv.sendCommand('server.url "'+this.serverUrl+'"');
     this.rustSrv.sendCommand('server.tags "'+this.serverTags+'"');
@@ -113,6 +192,41 @@ export class ConfigComponent implements OnInit, OnDestroy {
         this.mapData = r;
       });
     }
+  }
+
+  applyMisc() {
+    this.rustSrv.sendCommand(`server.hostname "${this.globalChat}"`);
+    this.rustSrv.sendCommand(`server.idlekick "${this.idlekick}"`);
+    this.rustSrv.sendCommand(`server.idlekickmode "${this.idlekickMode}"`);
+    this.rustSrv.sendCommand(`server.idlekickadmins "${this.idlekickAdmins}"`);
+    this.rustSrv.sendCommand(`server.motd "${this.motd}"`);
+    this.rustSrv.sendCommand(`server.pve "${this.pve}"`);
+    this.rustSrv.sendCommand(`server.radiation "${this.radiation}"`);
+    this.rustSrv.sendCommand(`craft.instant "${this.instantCraft}"`);
+    this.rustSrv.sendCommand(`ai.think "${this.aiThink}"`);
+    this.rustSrv.sendCommand(`ai.npc_enable "${this.npcEnable}"`);
+    this.rustSrv.sendCommand(`ai.move "${this.aiMove}"`);
+    this.rustSrv.sendCommand(`server.stability "${this.stability}"`);
+    this.rustSrv.sendCommand(`chat.enabled "${this.chatEnabled}"`);
+    this.rustSrv.sendCommand(`server.itemdespawn "${this.itemDespawn}"`);
+    this.rustSrv.sendCommand(`server.respawnresetrange "${this.respawnResetRange}"`);
+    this.doClose();
+  }
+
+  saveMisc() {
+    this.applyMisc();
+    this.rustSrv.sendCommand('server.writecfg');
+  }
+
+  applySec() {
+    this.rustSrv.sendCommand(`fps.limit "${this.fpsLimit}"`);
+    this.rustSrv.sendCommand(`server.saveinterval "${this.saveinterval}"`);
+    this.rustSrv.sendCommand(`server.secure "${this.serverSecure}"`);
+  }
+
+  saveSec() {
+    this.applySec();
+    this.doClose();
   }
 
 }

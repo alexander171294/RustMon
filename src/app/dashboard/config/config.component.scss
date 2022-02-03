@@ -73,6 +73,12 @@
                         width: 50%;
                     }
                 }
+                &.splitted3 {
+                    display: flex;
+                    >div {
+                        width: 33%;
+                    }
+                }
                 .preview {
                     position: relative;
                     &::after{
@@ -157,4 +163,36 @@ iframe.map {
 
 .mapTextDetail {
     white-space: pre-wrap;
+}
+
+
+label.withDetail {
+    position: relative;
+    margin-bottom: 5px;
+    margin-top: 10px!important;
+    svg {
+        width: 18px;
+        color: #e9472d;
+        margin-left: 5px;
+        background: #181818;
+        padding: 3px;
+        border-radius: 5px;
+        vertical-align: sub;
+    }
+    .detail {
+        width: 200px;
+        background: #181818;
+        position: absolute;
+        margin-top: 12px;
+        border: 1px solid gray;
+        font-size: 14px;
+        line-height: 18px;
+        display: none;
+        z-index: 1;
+    }
+    &:hover {
+        .detail {
+            display: block;
+        }
+    }
 }
