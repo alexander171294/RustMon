@@ -33,6 +33,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public showTeamMessages = true;
   public playerToolsOpened = false;
   public cogMenu = false;
+  public ready = false;
 
   // grid filter:
   public onlineFilter = true;
@@ -95,6 +96,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             }
           });
         }
+        this.ready = true;
       }
       if (d.rawtype === 'Chat') {
         const betterChatPlugin = /\[([^\]]+)\]\s([^:]+):(.*)/gi.exec(d.data.Message);
@@ -129,11 +131,23 @@ export class DashboardComponent implements OnInit, OnDestroy {
           this.consoleBox.nativeElement.scrollTop = this.consoleBox.nativeElement.scrollHeight;
         }, 100);
       }
-      if (d.type === REType.DISCONNECT || d.type == REType.ERROR) {
+      if (d.type === REType.DISCONNECT || d.type === REType.ERROR) {
+        console.log('ERROR', d);
         this.messageService.add({severity: 'error', summary: 'Disconnected', detail: 'Disconnected from server.'});
         this.router.navigateByUrl('/login');
       }
     });
+    this.setRefreshCommands();
+  }
+
+  setRefreshCommands() {
+    setInterval(() => {
+      this.info();
+    }, 1000);
+    this.players();
+    setInterval(() => {
+      this.players();
+    }, 3500);
   }
 
   players() {
@@ -142,16 +156,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   info() {
     this.rustSrv.getInfo();
-  }
-
-  logIn() {
-    setInterval(() => {
-      this.info();
-    }, 1000);
-    this.players();
-    setInterval(() => {
-      this.players();
-    }, 3500);
   }
 
   ngOnDestroy() {
@@ -170,7 +174,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   chatKp(evt) {
-    console.log(evt);
     if (evt.keyCode === 13) {
       this.sendMessage();
     }

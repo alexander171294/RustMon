@@ -30,7 +30,7 @@ export class ConfigComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subCfg = this.rustSrv.getEvtRust().subscribe((d: RustEvent) => {
-      if(d.type == REType.UNKOWN) {
+      if(d.type == REType.SRV_INFO) {
         if(d.raw.indexOf('server.seed:') >= 0) {
           this.serverSeed = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
         } else if(d.raw.indexOf('server.worldsize:') >= 0) {
@@ -50,14 +50,14 @@ export class ConfigComponent implements OnInit, OnDestroy {
         }
       }
     });
-    this.rustSrv.sendCommand('server.seed');
-    this.rustSrv.sendCommand('server.worldsize');
-    this.rustSrv.sendCommand('server.hostname');
-    this.rustSrv.sendCommand('server.description');
-    this.rustSrv.sendCommand('server.url');
-    this.rustSrv.sendCommand('server.tags');
-    this.rustSrv.sendCommand('server.headerimage');
-    this.rustSrv.sendCommand('server.maxplayers');
+    this.rustSrv.sendCommand('server.seed', REType.SRV_INFO);
+    this.rustSrv.sendCommand('server.worldsize', REType.SRV_INFO);
+    this.rustSrv.sendCommand('server.hostname', REType.SRV_INFO);
+    this.rustSrv.sendCommand('server.description', REType.SRV_INFO);
+    this.rustSrv.sendCommand('server.url', REType.SRV_INFO);
+    this.rustSrv.sendCommand('server.tags', REType.SRV_INFO);
+    this.rustSrv.sendCommand('server.headerimage', REType.SRV_INFO);
+    this.rustSrv.sendCommand('server.maxplayers', REType.SRV_INFO);
 
     // server.idlekick
     // server.ip
@@ -71,12 +71,12 @@ export class ConfigComponent implements OnInit, OnDestroy {
     this.subCfg.unsubscribe();
   }
 
-  writeCFG() {
+  save() {
+    this.apply();
     this.rustSrv.sendCommand('server.writecfg');
-    this.close.emit();
   }
 
-  save() {
+  apply() {
     this.serverName = this.serverName.split('"').join('');
     this.serverDescription = this.serverDescription.split('"').join('');
     this.serverImage = this.serverImage.split('"').join('');
@@ -88,8 +88,11 @@ export class ConfigComponent implements OnInit, OnDestroy {
     this.rustSrv.sendCommand('server.tags "'+this.serverTags+'"');
     this.rustSrv.sendCommand('server.headerimage "'+this.serverImage+'"');
     this.rustSrv.sendCommand('server.maxplayers '+this.serverMaxPlayers);
+    
+    this.doClose();
+  }
 
-    this.writeCFG();
+  doClose() {
     this.close.emit();
   }
 

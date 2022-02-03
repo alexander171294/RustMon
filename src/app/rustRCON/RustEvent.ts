@@ -6,12 +6,13 @@ export class RustEvent {
 }
 
 export enum REType {
-  CONNECTED = -3,
-  ERROR = -2,
-  DISCONNECT = -1,
+  CONNECTED = -3000,
+  ERROR = -2000,
+  DISCONNECT = -1000,
   UNKOWN = 0,
   GET_INFO = 1000,
   CHAT_STACK = 1001,
   PLAYERS = 1002,
-  BAN_LIST = 1003
+  BAN_LIST = 1003,
+  SRV_INFO = 1004,
 }

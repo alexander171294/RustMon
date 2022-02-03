@@ -15,6 +15,7 @@
                 Misc
             </div>
         </nav>
+        <!-- FIRST TAB -->
         <section [hidden]="tab!=0">
             <div>
                 <label>Server name</label>
@@ -49,16 +50,30 @@
                 </div>
             </div>
         </section>
+        <footer *ngIf="tab == 0">
+            <button (click)="apply()" style="margin-right: 3px;">Apply</button>
+            <button (click)="save()">Apply & WriteCFG</button>
+        </footer>
+        <!-- end FIRST TAB -->
+
         <section [hidden]="tab!=1">
-            <div>
-                <label>Seed</label>
-                <input type="number" disabled placeholder="55480" [(ngModel)]="serverSeed"/>
+            <div class="splitted">
+                <div>
+                    <label>Seed</label>
+                    <input type="number" disabled placeholder="55480" [(ngModel)]="serverSeed"/>
+                </div>
+                <div>
+                    <label>World Size</label>
+                    <input type="number" disabled placeholder="4000" [(ngModel)]="worldSize"/>
+                </div>
             </div>
-            <div>
-                <label>World Size</label>
-                <input type="number" disabled placeholder="4000" [(ngModel)]="worldSize"/>
-            </div>
+            <iframe src="https://rustmaps.com/map/2200_1524959088?embed=i" class="map"></iframe>
         </section>
+        <footer *ngIf="tab == 1">
+            <button (click)="doClose()">Close</button>
+        </footer>
+        <!-- END SECOND TAB -->
+
         <section [hidden]="tab!=2">
             <h3>Coming soon!</h3>
             <p>
@@ -82,9 +97,6 @@
                 https://www.corrosionhour.com/rust-decay-upkeep-variable/
             </p>
         </section>
-        <footer>
-          <button (click)="writeCFG()" style="margin-right: 3px;">WriteCFG</button>
-          <button (click)="save()">Apply & WriteCFG</button>
-        </footer>
+
     </article>
 </div>

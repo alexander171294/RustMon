@@ -47,8 +47,9 @@
             }
         }
         section {
-            max-height: calc(100vh - 120px);
+            height: calc(75vh);
             overflow-y: auto;
+            width: 550px;
             &::-webkit-scrollbar {
                 width: 10px;
             }
@@ -91,6 +92,7 @@
                         height: 35px;
                         overflow: hidden;
                         z-index: 1;
+                        width: 100%;
                     }
                     h3 {
                         position: absolute;
@@ -134,4 +136,10 @@
             padding: 3px;
         }
     }
+}
+
+iframe.map {
+    width: 100%;
+    height: calc(100% - 90px);
+    border: none;
 }
