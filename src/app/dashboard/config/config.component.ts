@@ -1,8 +1,7 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
-import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
-import { RustService } from '../rustRCON/rust.service';
-import { REType, RustEvent } from '../rustRCON/RustEvent';
+import { RustService } from 'src/app/rustRCON/rust.service';
+import { REType, RustEvent } from 'src/app/rustRCON/RustEvent';
 
 @Component({
   selector: 'app-config',

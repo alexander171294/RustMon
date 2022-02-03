@@ -1,117 +1,68 @@
-import { ChatComponent } from './../chat/chat.component';
-import { PlayerWithStatus } from './../rustRCON/Player';
-import { REType } from './../rustRCON/RustEvent';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { RustService } from '../rustRCON/rust.service';
-import { ServerInfo } from '../rustRCON/ServerInfo';
-import { ChatMessage } from '../rustRCON/ChatMessage';
-import { PlayerStorageService } from '../rustRCON/player-storage.service';
-import { MessageService } from 'primeng/api';
-import { PromptData, PromptService } from '../ui-kit/prompt/prompt.service';
-import { HashParser } from '../utils/hasParser';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { MessageService } from 'primeng';
+import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { ConectionData, ConnectionHistoryService } from './connection-history.service';
-import { PlayerToolsService } from '../player-tools/player-tools.service';
+import { ChatMessage } from '../rustRCON/ChatMessage';
+import { PlayerWithStatus } from '../rustRCON/Player';
+import { PlayerStorageService } from '../rustRCON/player-storage.service';
+import { RustService } from '../rustRCON/rust.service';
+import { REType } from '../rustRCON/RustEvent';
+import { ServerInfo } from '../rustRCON/ServerInfo';
+import { ChatComponent } from './chat/chat.component';
+import { PlayerToolsService } from './player-tools/player-tools.service';
+import { PromptData, PromptService } from './prompt/prompt.service';
 
 @Component({
-  selector: 'app-connection',
-  templateUrl: './connection.component.html',
-  styleUrls: ['./connection.component.scss']
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.scss']
 })
-export class ConnectionComponent implements OnInit {
-
-  public serverIP: string;
-  public rconPort: number;
-  public rconPasswd: string;
-
-  // login?
-  public loginLoading: boolean;
-  public isLogged = false;
-
-  // getted values?
-  public hasInfo = false;
-  public hasStack = false;
+export class DashboardComponent implements OnInit, OnDestroy {
 
   // data variable
   public serverInfo: ServerInfo;
   public chatMessages: ChatMessage[];
   public playerList: PlayerWithStatus[];
-
   public consoleMessages: string[] = [];
+  
+  // flags variables
+  public hasInfo = false;
+  public hasStack = false;
+  public openedConfig = false;
+  public showTeamMessages = true;
+  public playerToolsOpened = false;
+  public cogMenu = false;
 
+  // grid filter:
+  public onlineFilter = true;
+  
   // form variables.
   public message: string;
   public command: string;
 
-  public onlineFilter = true;
-  public openedConfig = false;
-  public showTeamMessages = true;
-
   public version = environment.version;
 
-  public connections: ConectionData[];
-  public connectionSelected: number;
-  public playerToolsOpened: boolean = false;
-
-  cogMenu: boolean = false;
+  private subscription: Subscription;
 
   @ViewChild('chatCompo', {static: false}) chatCompo: ChatComponent;
   @ViewChild('console', {static: false}) consoleBox;
 
   constructor(private rustSrv: RustService,
               private psSrv: PlayerStorageService,
-              private promptSrv: PromptService,
+              private playerTool: PlayerToolsService,
               private messageService: MessageService,
-              private connectionHistory: ConnectionHistoryService,
-              private playerTool: PlayerToolsService) { }
+              private router: Router,
+              private promptSrv: PromptService) { }
 
   ngOnInit() {
-    this.connections = this.connectionHistory.getServerList();
-    if (localStorage.getItem('rcon-server')) {
-      // TODO: remove this in future versions.
-      this.serverIP = localStorage.getItem('rcon-server');
-      this.rconPort = parseInt(localStorage.getItem('rcon-port'), 10);
-      this.rconPasswd = localStorage.getItem('rcon-password');
-    } else {
-      this.previousSessionLoad(null, 0);
-    }
-    if (window.location.hash) {
-      const params = HashParser.getHashParams();
-      if(params.server) {
-        this.serverIP = params.server;
-      }
-      if(params.rport) {
-        this.rconPort = parseInt(params.rport);
-      }
-      if(params.password) {
-        this.rconPasswd = params.password;
-      }
-    }
-  }
-
-  previousSessionLoad(evt, idConn: number) {
-    const conection = this.connections[idConn];
-    if(conection) {
-      this.serverIP = conection.server;
-      this.rconPort = parseInt(conection.port);
-      this.rconPasswd = conection.password;
-    }
-  }
-
-  connect() {
-    this.loginLoading = true;
-    this.connectionHistory.save(this.serverIP, this.rconPort.toString(), this.rconPasswd);
-    this.rustSrv.connect(this.serverIP, this.rconPort, this.rconPasswd).subscribe(d => {
+    this.subscription = this.rustSrv.getEvtRust().subscribe(d => {
       if (d.type === REType.UNKOWN) {
         // show in console.
       }
       if (d.type === REType.GET_INFO) {
-        // console.log('Information: ', d.data);
         this.hasInfo = true;
         this.serverInfo = d.data;
-        if (this.hasStack && !this.isLogged) {
-          this.logIn();
-        }
       }
       if (d.type === REType.CHAT_STACK) {
         console.log('Chat Stack: ', d.data);
@@ -130,9 +81,6 @@ export class ConnectionComponent implements OnInit {
           }
         });
         this.chatMessages = d.data;
-        if (this.hasInfo && !this.isLogged) {
-          this.logIn();
-        }
         setTimeout(() => {
           this.chatCompo.goToDown();
         }, 100);
@@ -182,23 +130,38 @@ export class ConnectionComponent implements OnInit {
         }, 100);
       }
       if (d.type === REType.DISCONNECT || d.type == REType.ERROR) {
-        this.isLogged = false;
         this.messageService.add({severity: 'error', summary: 'Disconnected', detail: 'Disconnected from server.'});
+        this.router.navigateByUrl('/login');
       }
     });
+  }
+
+  players() {
+    this.rustSrv.players();
   }
 
   info() {
     this.rustSrv.getInfo();
   }
 
+  logIn() {
+    setInterval(() => {
+      this.info();
+    }, 1000);
+    this.players();
+    setInterval(() => {
+      this.players();
+    }, 3500);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+
   send() {
     this.rustSrv.sendCommand(this.command);
     this.command = '';
-  }
-
-  players() {
-    this.rustSrv.players();
   }
 
   sendMessage() {
@@ -263,16 +226,7 @@ export class ConnectionComponent implements OnInit {
     this.rustSrv.banList();
   }
 
-  logIn() {
-    this.isLogged = true;
-    setInterval(() => {
-      this.info();
-    }, 1000);
-    this.players();
-    setInterval(() => {
-      this.players();
-    }, 3500);
-  }
+
 
   config() {
     this.openedConfig = true;
@@ -280,12 +234,6 @@ export class ConnectionComponent implements OnInit {
 
   help() {
     window.open('https://www.corrosionhour.com/rust-admin-commands/', "__blank");
-  }
-
-  kpConn(evt) {
-    if(evt.keyCode == 13) {
-      this.connect();
-    }
   }
 
   changeFilterOnline(onlineFilter: boolean) {

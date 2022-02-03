@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { ChatMessage } from '../rustRCON/ChatMessage';
 import { OverlayPanel } from 'primeng/overlaypanel';
 import { MenuItem, MessageService } from 'primeng/api';
-import { RustService } from '../rustRCON/rust.service';
-import { PromptData, PromptService } from '../ui-kit/prompt/prompt.service';
-import { Clipboard } from '../utils/clipboard';
+import { ChatMessage } from 'src/app/rustRCON/ChatMessage';
+import { RustService } from 'src/app/rustRCON/rust.service';
+import { Clipboard } from 'src/app/utils/clipboard';
+import { PromptData, PromptService } from '../prompt/prompt.service';
 
 @Component({
   selector: 'app-chat',

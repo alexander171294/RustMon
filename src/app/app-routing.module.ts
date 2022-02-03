@@ -1,22 +1,27 @@
-import { ConnectionComponent } from './connection/connection.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ConnectedGuard } from './utils/connected.guard';
 
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/connector',
+    redirectTo: '/login',
     pathMatch: 'full'
   },
   {
-    path: 'connector',
-    component: ConnectionComponent
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
+  },
+  {
+    path: 'dashboard',
+    loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
+    canActivate: [ConnectedGuard]
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {useHash: true})],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

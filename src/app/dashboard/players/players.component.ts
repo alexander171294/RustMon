@@ -1,13 +1,12 @@
-import { PlayerWithStatus } from './../rustRCON/Player';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { Player } from '../rustRCON/Player';
-import { RustService } from '../rustRCON/rust.service';
 import { MenuItem } from 'primeng/api/menuitem';
 import {MessageService, ConfirmationService} from 'primeng/api';
-import { PromptData, PromptService } from '../ui-kit/prompt/prompt.service';
-import { Clipboard } from '../utils/clipboard';
 import { OverlayPanel } from 'primeng';
-import { UserDataService } from '../api/user-data.service';
+import { Player, PlayerWithStatus } from 'src/app/rustRCON/Player';
+import { RustService } from 'src/app/rustRCON/rust.service';
+import { PromptData, PromptService } from '../prompt/prompt.service';
+import { UserDataService } from 'src/app/api/user-data.service';
+import { Clipboard } from 'src/app/utils/clipboard';
 
 @Component({
   selector: 'app-players',
