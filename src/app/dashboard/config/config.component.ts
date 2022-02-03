@@ -174,12 +174,12 @@ export class ConfigComponent implements OnInit, OnDestroy {
     this.serverImage = this.serverImage.split('"').join('');
     this.serverUrl = this.serverUrl.split('"').join('');
 
-    this.rustSrv.sendCommand('"'+this.serverName+'"');
-    this.rustSrv.sendCommand('server.description "'+this.serverDescription+'"');
-    this.rustSrv.sendCommand('server.url "'+this.serverUrl+'"');
-    this.rustSrv.sendCommand('server.tags "'+this.serverTags+'"');
-    this.rustSrv.sendCommand('server.headerimage "'+this.serverImage+'"');
-    this.rustSrv.sendCommand('server.maxplayers '+this.serverMaxPlayers);
+    this.rustSrv.sendCommand(`server.hostname ${this.serverName}`);
+    this.rustSrv.sendCommand(`server.description ${this.serverDescription}`);
+    this.rustSrv.sendCommand(`server.url ${this.serverUrl}`);
+    this.rustSrv.sendCommand(`server.tags ${this.serverTags}`);
+    this.rustSrv.sendCommand(`server.headerimage ${this.serverImage}`);
+    this.rustSrv.sendCommand(`server.maxplayers ${this.serverMaxPlayers}`);
     
     this.doClose();
   }
