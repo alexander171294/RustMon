@@ -17,6 +17,44 @@ body {
   position: absolute;
 }
 
+.spinner {
+  position: relative;
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: transparent;
+    top: 0px;
+    border-left: 2px solid #c23e29;
+    border-right: 2px solid #c23e29;
+    border-radius: 50%;
+    border-top: 2px solid transparent;
+    border-bottom: 2px solid transparent;
+    margin-top: 9px;
+    margin-left: 11px;
+    left: calc(50% - 13px);
+    animation: rotate 1s linear infinite reverse;
+  }
+  &::before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    background: transparent;
+    top: 0px;
+    border-top: 2px solid #c23e29b0;
+    border-bottom: 2px solid #c23e29b0;
+    border-radius: 50%;
+    border-left: 2px solid transparent;
+    border-right: 2px solid transparent;
+    left: calc(50% - 12px);
+    animation: rotate 1s linear infinite;
+  }
+}
+
 button {
   background-color: #cd412b;
   border-color: rgba(0,0,0,0);

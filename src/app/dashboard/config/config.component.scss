@@ -127,6 +127,9 @@
                     height: 256px;
                     margin: 0 auto;
                     display: block;
+                    &.fullMap {
+                        height: 512px;
+                    }
                 }
             }
         }
@@ -142,4 +145,16 @@ iframe.map {
     width: 100%;
     height: calc(100% - 90px);
     border: none;
+}
+
+.warning {
+    background: #ffccc4;
+    border: 1px solid #cd412b;
+    color: #cd412b;
+    margin: 5px;
+    font-weight: bold;
+}
+
+.mapTextDetail {
+    white-space: pre-wrap;
 }

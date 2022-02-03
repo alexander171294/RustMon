@@ -67,7 +67,20 @@
                     <input type="number" disabled placeholder="4000" [(ngModel)]="worldSize"/>
                 </div>
             </div>
-            <iframe src="https://rustmaps.com/map/2200_1524959088?embed=i" class="map"></iframe>
+            <div class="mapData" *ngIf="mapData">
+                <div class="details" *ngIf="mapData.mapExists">
+                    <p [innerHtml]="mapData.mapDetails" class="mapTextDetail">
+                    </p>
+                    <img [src]="mapData.mapImage" class="fullMap"/>
+                </div>
+                <label>Map details powered by <a [href]="mapData.mapURL" target="__blank">Rustmap.com</a></label>
+                <div class="warning" *ngIf="!mapData.mapExists">
+                    This map doesn't exists on Rustmap.com, please go to rustmap.com and generate the map. <a [href]="mapData.mapURL" target="__blank">Here</a>
+                </div>
+            </div>
+            <div class="loadingMapData" *ngIf="!mapData">
+                <div class="spinner"></div>
+            </div>
         </section>
         <footer *ngIf="tab == 1">
             <button (click)="doClose()">Close</button>

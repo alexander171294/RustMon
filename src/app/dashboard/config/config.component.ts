@@ -1,5 +1,7 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { MapData } from 'src/app/api/MapDataDto';
+import { UserDataService } from 'src/app/api/user-data.service';
 import { RustService } from 'src/app/rustRCON/rust.service';
 import { REType, RustEvent } from 'src/app/rustRCON/RustEvent';
 
@@ -22,19 +24,28 @@ export class ConfigComponent implements OnInit, OnDestroy {
   public serverTags: string;
   public serverMaxPlayers: number;
 
+  public mapData: MapData;
+
   private subCfg: Subscription;
 
   public tab = 0;
 
-  constructor(private rustSrv: RustService) { }
+  constructor(private rustSrv: RustService,
+              private userDataSrv: UserDataService) { }
 
   ngOnInit() {
     this.subCfg = this.rustSrv.getEvtRust().subscribe((d: RustEvent) => {
       if(d.type == REType.SRV_INFO) {
         if(d.raw.indexOf('server.seed:') >= 0) {
           this.serverSeed = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
+          if(this.worldSize) {
+            this.getMap();
+          }
         } else if(d.raw.indexOf('server.worldsize:') >= 0) {
           this.worldSize = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
+          if(this.serverSeed) {
+            this.getMap();
+          }
         } else if(d.raw.indexOf('server.hostname:') >= 0) {
           this.serverName = d.raw.split(' ').slice(1).join(' ').split('"').join('');
         } else if(d.raw.indexOf('server.description:') >= 0) {
@@ -94,6 +105,14 @@ export class ConfigComponent implements OnInit, OnDestroy {
 
   doClose() {
     this.close.emit();
+  }
+
+  getMap() {
+    if(!this.mapData) {
+      this.userDataSrv.getMap(this.serverSeed.toString(), this.worldSize.toString()).subscribe(r => {
+        this.mapData = r;
+      });
+    }
   }
 
 }
