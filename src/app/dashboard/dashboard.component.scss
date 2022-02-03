@@ -30,6 +30,19 @@
         left: 7px;
         top: 7px;
       }
+      &.hostname {
+        .ip {
+          display: none;
+        }
+        &:hover, &.active {
+          .ip {
+            display: inline-block;
+          }
+          .name {
+            display: none;
+          }
+        }
+      }
     }
     .actions {
       float: right;

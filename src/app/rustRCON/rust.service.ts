@@ -14,10 +14,12 @@ export class RustService {
   private readonly CONNAME = 'RustMon';
 
   private connected: boolean = false; 
+  private connectionString: string;
 
   constructor(private sck: SocketService, private rustEvents: RustEventsService) { }
 
   connect(serverIP: string, rconPort: number, rconPasswd: string): EventEmitter<RustEvent> {
+    this.connectionString = `${serverIP}`;
     this.sck.connect('ws://' + serverIP + ':' + rconPort + '/' + rconPasswd).subscribe(evt => {
       if (evt.eventType === EventTypeSck.CONNECTED) {
         this.getInfo();
@@ -94,5 +96,9 @@ export class RustService {
 
   isConnected() {
     return this.connected;
+  }
+
+  public getConnectionString() {
+    return this.connectionString;
   }
 }

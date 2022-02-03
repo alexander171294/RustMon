@@ -25,6 +25,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public chatMessages: ChatMessage[];
   public playerList: PlayerWithStatus[];
   public consoleMessages: string[] = [];
+  public connectionString;
   
   // flags variables
   public hasInfo = false;
@@ -57,6 +58,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
               private promptSrv: PromptService) { }
 
   ngOnInit() {
+    this.connectionString = this.rustSrv.getConnectionString();
     this.subscription = this.rustSrv.getEvtRust().subscribe(d => {
       if (d.type === REType.UNKOWN) {
         // show in console.
