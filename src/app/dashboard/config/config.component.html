@@ -89,6 +89,7 @@
                 <div class="warning" *ngIf="!mapData.mapExists">
                     This map doesn't exists on Rustmap.com, please go to rustmap.com and generate the map. <a
                         [href]="mapData.mapURL" target="__blank">Here</a>
+                    <button (click)="mapRetry()" [class.loading]="retryLoading">Retry</button>
                 </div>
             </div>
             <div class="loadingMapData" *ngIf="!mapData">
@@ -371,7 +372,7 @@
                 https://www.corrosionhour.com/rust-decay-upkeep-variable/
             </p>
         </section>
-        <footer *ngIf="tab == 1">
+        <footer *ngIf="tab == 4">
             <button (click)="doClose()">Close</button>
         </footer>
     </article>
