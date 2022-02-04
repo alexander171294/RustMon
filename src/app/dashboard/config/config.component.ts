@@ -205,7 +205,7 @@ export class ConfigComponent implements OnInit, OnDestroy {
   }
 
   applyMisc() {
-    this.rustSrv.sendCommand(`server.hostname "${this.globalChat}"`);
+    this.rustSrv.sendCommand(`server.globalchat "${this.globalChat}"`);
     this.rustSrv.sendCommand(`server.idlekick "${this.idlekick}"`);
     this.rustSrv.sendCommand(`server.idlekickmode "${this.idlekickMode}"`);
     this.rustSrv.sendCommand(`server.idlekickadmins "${this.idlekickAdmins}"`);
