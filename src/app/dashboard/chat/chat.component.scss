@@ -20,6 +20,8 @@ ul {
   color: wheat;
   li {
     font-size: 14px;
+    max-width: 33vw;
+    overflow: hidden;
     &.teamChat {
       font-size: 13px;
       padding-left: 5%;
@@ -52,5 +54,12 @@ span {
     width: 90px;
     display: inline-block;
     color: gray;
+    text-align: center;
   }
+}
+
+img.avatar {
+  width: 25px;
+  vertical-align: middle;
+  margin-right: 5px;
 }

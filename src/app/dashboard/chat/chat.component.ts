@@ -5,6 +5,7 @@ import { ChatMessage } from 'src/app/rustRCON/ChatMessage';
 import { RustService } from 'src/app/rustRCON/rust.service';
 import { Clipboard } from 'src/app/utils/clipboard';
 import { PromptData, PromptService } from '../prompt/prompt.service';
+import { PlayerStorageService } from 'src/app/rustRCON/player-storage.service';
 
 @Component({
   selector: 'app-chat',
@@ -37,9 +38,17 @@ export class ChatComponent implements OnInit {
 
   @ViewChild('chat', {static: true}) chatBox;
 
-  constructor(private rustSrv: RustService, private messageService: MessageService, private promptSrv: PromptService) { }
+  constructor(private rustSrv: RustService,
+              private messageService: MessageService,
+              private promptSrv: PromptService,
+              private playerStrg: PlayerStorageService) { }
 
   ngOnInit() {
+  }
+
+  getAvatar(id: string) {
+    const user = this.playerStrg.getCachedUData(id);
+    return user.userData && user.userData.avatarmedium ? user.userData.avatarmedium : '/favicon.png';
   }
 
   showData(evt, message: ChatMessage, overlaypanel: OverlayPanel) {

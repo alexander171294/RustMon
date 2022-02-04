@@ -1,6 +1,7 @@
 <ul #chat>
   <li *ngFor="let message of chatMessages" (click)="showData($event, message, op)" [class.teamChat]="message.Channel == 1" [class.adminChat]="message.Channel == 2" [class.hide]="message.Channel == 1 && !showTeamMessages" (contextmenu)="ctxSelect(message, $event)">
     <span class="time">[{{message.Time * 1000  | date:'d/M/yy, h:mm'}}]</span>
+    <img [src]="getAvatar(message.UserId)" class="avatar"/>
     <span class="username" [style.color]="message.Color">{{message.Username}}</span>
     {{message.Message}}
   </li>

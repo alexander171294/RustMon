@@ -45,6 +45,14 @@ export class PlayerStorageService {
     return playersWS;
   }
 
+  public getCachedUData(id64): UserDataDTO {
+    if(this.userDataSteam[id64]) {
+      return this.userDataSteam[id64];
+    } else {
+      return new UserDataDTO();
+    }
+  }
+
   public getUserData(addr, id64): UserDataDTO {
     // if(localStorage.getItem('USRV-' + id64)) {
     //   return JSON.parse(localStorage.getItem('USRV-' + id64));
