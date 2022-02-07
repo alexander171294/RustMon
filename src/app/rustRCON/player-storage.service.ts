@@ -23,7 +23,6 @@ export class PlayerStorageService {
     });
     localStorage.setItem('players', JSON.stringify(oldPlayers));
     Object.entries(oldPlayers).forEach(t => {
-      console.log('Only online: ', onlyOnline);
       const addr = (t[1] as Player).Address.split(':')[0];
       const id64 = (t[1] as Player).SteamID;
       if(!this.userDataSteam[id64]) {

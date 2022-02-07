@@ -21,7 +21,7 @@ import { PromptData, PromptService } from './prompt/prompt.service';
 export class DashboardComponent implements OnInit, OnDestroy {
 
   // data variable
-  public serverInfo: ServerInfo;
+  public serverInfo: ServerInfo = new ServerInfo();
   public chatMessages: ChatMessage[];
   public playerList: PlayerWithStatus[];
   public consoleMessages: string[] = [];
@@ -139,6 +139,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.router.navigateByUrl('/login');
       }
     });
+    this.rustSrv.frontThreadReady();
     this.setRefreshCommands();
   }
 

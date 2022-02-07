@@ -63,9 +63,12 @@ export class LoginComponent implements OnInit {
     this.connectionHistory.save(this.serverIP, this.rconPort.toString(), this.rconPasswd);
     const subscription = this.rustSrv.connect(this.serverIP, this.rconPort, this.rconPasswd).subscribe(d => {
       if(d.type === REType.CONNECTED) {
-        this.loginLoading = false;
         subscription.unsubscribe();
-        this.router.navigateByUrl('/dashboard');
+        this.router.navigateByUrl('/dashboard').then(navigated => {
+          if(navigated) {
+            this.loginLoading = false;
+          }
+        });
       } else if (d.type === REType.DISCONNECT || d.type == REType.ERROR) {
         this.messageService.add({severity: 'error', summary: 'Error', detail: 'Can\'t connect to server.'});
         this.loginLoading = false;

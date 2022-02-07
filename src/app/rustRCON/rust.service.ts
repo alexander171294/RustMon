@@ -22,8 +22,6 @@ export class RustService {
     this.connectionString = `${serverIP}`;
     this.sck.connect('ws://' + serverIP + ':' + rconPort + '/' + rconPasswd).subscribe(evt => {
       if (evt.eventType === EventTypeSck.CONNECTED) {
-        this.getInfo();
-        this.chatTail(50);
         const re = new RustEvent();
         re.type = REType.CONNECTED;
         this.connected = true;
@@ -46,6 +44,11 @@ export class RustService {
       }
     });
     return this.evtRust;
+  }
+
+  public frontThreadReady() {
+    this.getInfo();
+    this.chatTail(50);
   }
 
   public getEvtRust() {
