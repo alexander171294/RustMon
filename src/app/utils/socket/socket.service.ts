@@ -33,7 +33,6 @@ export class SocketService {
       this.socketEvent.emit(event);
     };
     this.ws.onopen = (d) => {
-      console.log('opened');
       const event = new EventSck();
       event.eventType = EventTypeSck.CONNECTED;
       event.eventData = d;
