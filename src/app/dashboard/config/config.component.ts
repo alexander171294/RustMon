@@ -50,23 +50,23 @@ export class ConfigComponent implements OnInit, OnDestroy {
   public serverSecure;
 
   public populations = {
-    wolf: '', // wolf.population
-    zombie: '', // zombie.population
-    bear: '', // bear.population
-    polarbear: '', // polarbear.population
-    boar: '', // boar.population
-    chicken: '', // chicken.population
-    stag: '', // stag.population
-    horse: '',
-    rideablehorse: '', // horse.population
-    minicopter: '', // minicopter.population
-    modulecar: '', // modulecar.population
-    motorrowboat: '', // motorrowboat.population
-    rhib: '', // rhib.rhibpopulation
-    scraptransporthelicopter: '', // scraptransporthelicopter.population
-    halloweenmurderer: '', // halloween.murdererpopulation
-    halloweenscarecrow: '', // halloween.scarecrowpopulation
-    hotairballoon: '', // hotairballoon.population
+    wolf: undefined, // wolf.population
+    zombie: undefined, // zombie.population
+    bear: undefined, // bear.population
+    polarbear: undefined, // polarbear.population
+    boar: undefined, // boar.population
+    chicken: undefined, // chicken.population
+    stag: undefined, // stag.population
+    horse: undefined, // horse.population
+    ridablehorse: undefined, // ridablehorse.population
+    minicopter: undefined, // minicopter.population
+    modulecar: undefined, // modulecar.population
+    motorrowboat: undefined, // motorrowboat.population
+    rhib: undefined, // rhib.rhibpopulation
+    scraptransporthelicopter: undefined, // scraptransporthelicopter.population
+    halloweenmurderer: undefined, // halloween.murdererpopulation
+    halloweenscarecrow: undefined, // halloween.scarecrowpopulation
+    hotairballoon: undefined, // hotairballoon.population
   }
 
   public mapData: MapData;
@@ -81,66 +81,102 @@ export class ConfigComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subCfg = this.rustSrv.getEvtRust().subscribe((d: RustEvent) => {
       if(d.type == REType.SRV_INFO) {
-        if(d.raw.indexOf('server.seed:') >= 0) {
+        if(d.raw.indexOf('server.seed:') === 0) {
           this.serverSeed = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
           if(this.worldSize) {
             this.getMap();
           }
-        } else if(d.raw.indexOf('server.worldsize:') >= 0) {
+        } else if(d.raw.indexOf('server.worldsize:') === 0) {
           this.worldSize = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
           if(this.serverSeed) {
             this.getMap();
           }
-        } else if(d.raw.indexOf('server.hostname:') >= 0) {
+        } else if(d.raw.indexOf('server.hostname:') === 0) {
           this.serverName = d.raw.split(' ').slice(1).join(' ').split('"').join('');
-        } else if(d.raw.indexOf('server.description:') >= 0) {
+        } else if(d.raw.indexOf('server.description:') === 0) {
           this.serverDescription = d.raw.split(' ').slice(1).join(' ').split('"').join('');
-        } else if(d.raw.indexOf('server.url:') >= 0) {
+        } else if(d.raw.indexOf('server.url:') === 0) {
           this.serverUrl = d.raw.split(' ').slice(1).join(' ').split('"').join('');
-        } else if(d.raw.indexOf('server.headerimage:') >= 0) {
+        } else if(d.raw.indexOf('server.headerimage:') === 0) {
           this.serverImage = d.raw.split(' ').slice(1).join(' ').split('"').join('');
-        } else if(d.raw.indexOf('server.tags:') >= 0) {
+        } else if(d.raw.indexOf('server.tags:') === 0) {
           this.serverTags = d.raw.split(' ').slice(1).join(' ').split('"').join('');
-        } else if(d.raw.indexOf('server.maxplayers:') >= 0) {
+        } else if(d.raw.indexOf('server.maxplayers:') === 0) {
           this.serverMaxPlayers = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
-        } else if(d.raw.indexOf('server.globalchat:') >= 0) {
+        } else if(d.raw.indexOf('server.globalchat:') === 0) {
           this.globalChat = d.raw.split(' ').slice(1).join(' ').split('"').join('');
-        } else if(d.raw.indexOf('airdrop.min_players:') >= 0) {
+        } else if(d.raw.indexOf('airdrop.min_players:') === 0) {
           this.airdropMinplayers = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
-        } else if(d.raw.indexOf('server.saveinterval:') >= 0) {
+        } else if(d.raw.indexOf('server.saveinterval:') === 0) {
           this.saveinterval = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
-        } else if(d.raw.indexOf('server.idlekick:') >= 0) {
+        } else if(d.raw.indexOf('server.idlekick:') === 0) {
           this.idlekick = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
-        } else if(d.raw.indexOf('server.idlekickmode:') >= 0) {
+        } else if(d.raw.indexOf('server.idlekickmode:') === 0) {
           this.idlekickMode = d.raw.split(' ').slice(1).join(' ').split('"').join('');
-        } else if(d.raw.indexOf('server.idlekickadmins:') >= 0) {
+        } else if(d.raw.indexOf('server.idlekickadmins:') === 0) {
           this.idlekickAdmins = d.raw.split(' ').slice(1).join(' ').split('"').join('');
-        } else if(d.raw.indexOf('server.motd:') >= 0) {
+        } else if(d.raw.indexOf('server.motd:') === 0) {
           this.motd = d.raw.split(' ').slice(1).join(' ').split('"').join('');
-        } else if(d.raw.indexOf('server.pve:') >= 0) {
+        } else if(d.raw.indexOf('server.pve:') === 0) {
           this.pve = d.raw.split(' ').slice(1).join(' ').split('"').join('');
-        } else if(d.raw.indexOf('server.radiation:') >= 0) {
+        } else if(d.raw.indexOf('server.radiation:') === 0) {
           this.radiation = d.raw.split(' ').slice(1).join(' ').split('"').join('');
-        } else if(d.raw.indexOf('craft.instant:') >= 0) {
+        } else if(d.raw.indexOf('craft.instant:') === 0) {
           this.instantCraft = d.raw.split(' ').slice(1).join(' ').split('"').join('');
-        } else if(d.raw.indexOf('ai.think:') >= 0) {
+        } else if(d.raw.indexOf('ai.think:') === 0) {
           this.aiThink = d.raw.split(' ').slice(1).join(' ').split('"').join('');
-        } else if(d.raw.indexOf('ai.npc_enable:') >= 0) {
+        } else if(d.raw.indexOf('ai.npc_enable:') === 0) {
           this.npcEnable = d.raw.split(' ').slice(1).join(' ').split('"').join('');
-        } else if(d.raw.indexOf('ai.move:') >= 0) {
+        } else if(d.raw.indexOf('ai.move:') === 0) {
           this.aiMove = d.raw.split(' ').slice(1).join(' ').split('"').join('');
-        } else if(d.raw.indexOf('server.stability:') >= 0) {
+        } else if(d.raw.indexOf('server.stability:') === 0) {
           this.stability = d.raw.split(' ').slice(1).join(' ').split('"').join('');
-        } else if(d.raw.indexOf('chat.enabled:') >= 0) {
+        } else if(d.raw.indexOf('chat.enabled:') === 0) {
           this.chatEnabled = d.raw.split(' ').slice(1).join(' ').split('"').join('');
-        } else if(d.raw.indexOf('server.itemdespawn:') >= 0) {
+        } else if(d.raw.indexOf('server.itemdespawn:') === 0) {
           this.itemDespawn = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
-        } else if(d.raw.indexOf('server.respawnresetrange:') >= 0) {
+        } else if(d.raw.indexOf('server.respawnresetrange:') === 0) {
           this.respawnResetRange = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
-        } else if(d.raw.indexOf('fps.limit:') >= 0) {
+        } else if(d.raw.indexOf('fps.limit:') === 0) {
           this.fpsLimit = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
-        } else if(d.raw.indexOf('server.secure:') >= 0) {
+        } else if(d.raw.indexOf('server.secure:') === 0) {
           this.serverSecure = d.raw.split(' ').slice(1).join(' ').split('"').join('');
+        } else if(d.raw.indexOf('wolf.population:') === 0) {
+          this.populations.wolf = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
+        } else if(d.raw.indexOf('zombie.population:') === 0) {
+          this.populations.zombie = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
+        } else if(d.raw.indexOf('bear.population:') === 0) {
+          this.populations.bear = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
+        } else if(d.raw.indexOf('polarbear.population:') === 0) {
+          this.populations.polarbear = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
+        } else if(d.raw.indexOf('boar.population:') === 0) {
+          this.populations.boar = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
+        } else if(d.raw.indexOf('chicken.population:') === 0) {
+          this.populations.chicken = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
+        } else if(d.raw.indexOf('stag.population:') === 0) {
+          this.populations.stag = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
+        } else if(d.raw.indexOf('horse.population:') === 0) {
+          this.populations.horse = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
+        } else if(d.raw.indexOf('ridablehorse.population:') === 0) {
+          this.populations.ridablehorse = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
+        } else if(d.raw.indexOf('minicopter.population:') === 0) {
+          this.populations.minicopter = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
+        } else if(d.raw.indexOf('modularcar.population:') === 0) {
+          this.populations.modulecar = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
+        } else if(d.raw.indexOf('motorrowboat.population:') === 0) {
+          this.populations.motorrowboat = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
+        } else if(d.raw.indexOf('rhib.rhibpopulation:') === 0) {
+          this.populations.rhib = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
+        } else if(d.raw.indexOf('scraptransporthelicopter.population:') === 0) {
+          this.populations.scraptransporthelicopter = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
+        } else if(d.raw.indexOf('halloween.murdererpopulation:') === 0) {
+          this.populations.halloweenmurderer = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
+        } else if(d.raw.indexOf('halloween.scarecrowpopulation:') === 0) {
+          this.populations.halloweenscarecrow = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
+        } else if(d.raw.indexOf('hotairballoon.population:') === 0) {
+          this.populations.hotairballoon = parseInt(d.raw.split(' ').slice(1).join(' ').split('"').join(''));
+        } else {
+          console.log('unknown config', d.raw);
         }
       }
     });
@@ -174,6 +210,25 @@ export class ConfigComponent implements OnInit, OnDestroy {
     this.rustSrv.sendCommand('server.saveinterval', REType.SRV_INFO);
     this.rustSrv.sendCommand('fps.limit', REType.SRV_INFO);
     this.rustSrv.sendCommand('server.secure', REType.SRV_INFO);
+
+    // Population
+    this.rustSrv.sendCommand('wolf.population', REType.SRV_INFO);
+    this.rustSrv.sendCommand('zombie.population', REType.SRV_INFO);
+    this.rustSrv.sendCommand('bear.population', REType.SRV_INFO);
+    this.rustSrv.sendCommand('polarbear.population', REType.SRV_INFO);
+    this.rustSrv.sendCommand('boar.population', REType.SRV_INFO);
+    this.rustSrv.sendCommand('chicken.population', REType.SRV_INFO);
+    this.rustSrv.sendCommand('stag.population', REType.SRV_INFO);
+    this.rustSrv.sendCommand('horse.population', REType.SRV_INFO);
+    this.rustSrv.sendCommand('ridablehorse.population', REType.SRV_INFO);
+    this.rustSrv.sendCommand('minicopter.population', REType.SRV_INFO);
+    this.rustSrv.sendCommand('modularcar.population', REType.SRV_INFO);
+    this.rustSrv.sendCommand('motorrowboat.population', REType.SRV_INFO);
+    this.rustSrv.sendCommand('rhib.rhibpopulation', REType.SRV_INFO);
+    this.rustSrv.sendCommand('scraptransporthelicopter.population', REType.SRV_INFO);
+    this.rustSrv.sendCommand('halloween.murdererpopulation', REType.SRV_INFO);
+    this.rustSrv.sendCommand('halloween.scarecrowpopulation', REType.SRV_INFO);
+    this.rustSrv.sendCommand('hotairballoon.population', REType.SRV_INFO);
 
   }
 
@@ -250,11 +305,38 @@ export class ConfigComponent implements OnInit, OnDestroy {
     this.rustSrv.sendCommand(`fps.limit "${this.fpsLimit}"`);
     this.rustSrv.sendCommand(`server.saveinterval "${this.saveinterval}"`);
     this.rustSrv.sendCommand(`server.secure "${this.serverSecure}"`);
+    this.doClose();
   }
 
   saveSec() {
     this.applySec();
+    this.rustSrv.sendCommand('server.writecfg');
+  }
+
+  applyPop() {
+    this.rustSrv.sendCommand(`wolf.population "${this.populations.wolf}"`);
+    this.rustSrv.sendCommand(`zombie.population "${this.populations.zombie}"`);
+    this.rustSrv.sendCommand(`bear.population "${this.populations.bear}"`);
+    this.rustSrv.sendCommand(`polarbear.population "${this.populations.polarbear}"`);
+    this.rustSrv.sendCommand(`boar.population "${this.populations.boar}"`);
+    this.rustSrv.sendCommand(`chicken.population "${this.populations.chicken}"`);
+    this.rustSrv.sendCommand(`stag.population "${this.populations.stag}"`);
+    this.rustSrv.sendCommand(`horse.population "${this.populations.horse}"`);
+    this.rustSrv.sendCommand(`ridablehorse.population "${this.populations.ridablehorse}"`);
+    this.rustSrv.sendCommand(`minicopter.population "${this.populations.minicopter}"`);
+    this.rustSrv.sendCommand(`modularcar.population "${this.populations.modulecar}"`);
+    this.rustSrv.sendCommand(`motorrowboat.population "${this.populations.motorrowboat}"`);
+    this.rustSrv.sendCommand(`rhib.rhibpopulation "${this.populations.rhib}"`);
+    this.rustSrv.sendCommand(`scraptransporthelicopter.population "${this.populations.scraptransporthelicopter}"`);
+    this.rustSrv.sendCommand(`halloween.murdererpopulation "${this.populations.halloweenmurderer}"`);
+    this.rustSrv.sendCommand(`halloween.scarecrowpopulation "${this.populations.halloweenscarecrow}"`);
+    this.rustSrv.sendCommand(`hotairballoon.population "${this.populations.hotairballoon}"`);
     this.doClose();
+  }
+
+  savePop() {
+    this.applySec();
+    this.rustSrv.sendCommand('server.writecfg');
   }
 
 }

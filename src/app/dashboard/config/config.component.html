@@ -55,7 +55,7 @@
                 <label>Server Banner (1024px x 512px jpg/png)</label>
                 <input type="text" placeholder="https://i.imgur.com/2Bmq0jD.jpg" [(ngModel)]="serverImage" />
                 <label>Preview</label>
-                <div class="preview">
+                <div class="preview" *ngIf="serverImage">
                     <img [src]="serverImage" />
                     <h2>{{serverName}}</h2>
                     <h3>Procedural Map - 0/{{serverMaxPlayers}} - 35ms</h3>
@@ -362,8 +362,7 @@
             <button (click)="saveSec()">Apply & WriteCFG</button>
         </footer>
         <section [hidden]="tab != 4">
-            <p>All values are defined per square km</p>
-            <div class="splitted2">
+            <div class="splitted">
                 <div>
                     <label class="withDetail">
                         Wolf
@@ -397,7 +396,7 @@
                     <input type="number" [(ngModel)]="populations.boar" />
                 </div>
             </div>
-            <div class="splitted2">
+            <div class="splitted">
                 <div>
                     <label class="withDetail">
                         Stags
@@ -431,7 +430,7 @@
                     <input type="number" [(ngModel)]="populations.chicken" />
                 </div>
             </div>
-            <div class="splitted2">
+            <div class="splitted">
                 <div>
                     <label class="withDetail">
                         Polarbear
@@ -465,7 +464,7 @@
                     <input type="number" [(ngModel)]="populations.bear" />
                 </div>
             </div>
-            <div class="splitted2">
+            <div class="splitted">
                 <div>
                     <label class="withDetail">
                         Non-rideable horse
@@ -484,7 +483,7 @@
                 </div>
                 <div>
                     <label class="withDetail">
-                        Rideable horse
+                        Ridable horse
                         <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="question" role="img"
                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"
                             class="svg-inline--fa fa-question fa-w-12">
@@ -496,10 +495,10 @@
                             New rideable horse population per square km
                         </div>
                     </label>
-                    <input type="number" [(ngModel)]="populations.rideablehorse" />
+                    <input type="number" [(ngModel)]="populations.ridablehorse" />
                 </div>
             </div>
-            <div class="splitted2">
+            <div class="splitted">
                 <div>
                     <label class="withDetail">
                         Minicopter
@@ -533,7 +532,7 @@
                     <input type="number" [(ngModel)]="populations.scraptransporthelicopter" />
                 </div>
             </div>
-            <div class="splitted2">
+            <div class="splitted">
                 <div>
                     <label class="withDetail">
                         Motorrowboat
@@ -567,10 +566,10 @@
                     <input type="number" [(ngModel)]="populations.rhib" />
                 </div>
             </div>
-            <div class="splitted2">
+            <div class="splitted">
                 <div>
                     <label class="withDetail">
-                        Modulecar
+                        Modular car
                         <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="question" role="img"
                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"
                             class="svg-inline--fa fa-question fa-w-12">
@@ -601,7 +600,7 @@
                     <input type="number" [(ngModel)]="populations.hotairballoon" />
                 </div>
             </div>
-            <div class="splitted3">
+            <div class="splitted">
                 <div>
                     <label class="withDetail">
                         Halloween murderer
@@ -634,6 +633,8 @@
                     </label>
                     <input type="number" [(ngModel)]="populations.halloweenmurderer" />
                 </div>
+            </div>
+            <div class="splitted">
                 <div>
                     <label class="withDetail">
                         Zombie
@@ -653,7 +654,8 @@
             </div>
         </section>
         <footer *ngIf="tab == 4">
-            <button (click)="doClose()">Close</button>
+            <button (click)="applyPop()" style="margin-right: 3px;">Apply</button>
+            <button (click)="savePop()">Apply & WriteCFG</button>
         </footer>
     </article>
 </div>
