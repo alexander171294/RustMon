@@ -105,20 +105,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
         if(betterChatPlugin) {
           d.data.Message = betterChatPlugin[3].trim();
           d.data.Username = `[${betterChatPlugin[1]}] ${betterChatPlugin[2]}`;
-          this.chatMessages.push(d.data);
+          this.recordChatMessage(d.data);
         } else {
           const betterChatPlugin2 = /([^:]+):(.*)/gi.exec(d.data.Message);
           if(betterChatPlugin2 && betterChatPlugin2[1].trim() == d.data.Username.trim()) {
             d.data.Message = betterChatPlugin2[2].trim();
             d.data.Username = `${betterChatPlugin2[1]}`;
-            this.chatMessages.push(d.data);
+            this.recordChatMessage(d.data);
           } else {
-            this.chatMessages.push(d.data);
+            this.recordChatMessage(d.data);
           }
         }
-        setTimeout(() => {
-          this.chatCompo.goToDown();
-        }, 100);
       }
       if (d.type === REType.UNKOWN) {
         this.consoleMessages.push(d.raw.trim());
@@ -249,6 +246,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   github() {
     window.open('https://github.com/alexander171294/RustMon', "__blank");
+  }
+
+  recordChatMessage(data) {
+    if(this.chatMessages) {
+      this.chatMessages.push(data);
+      setTimeout(() => {
+        this.chatCompo.goToDown();
+      }, 100);
+    } else {
+      setTimeout(() => { this.recordChatMessage(data); }, 100); // chat stack not received, retry in 100ms
+    }
   }
 
 }

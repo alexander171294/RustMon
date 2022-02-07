@@ -11,6 +11,9 @@
             <div [class.active]="tab==1" (click)="tab=1">
                 Allowed players
             </div>
+            <div [class.active]="tab==2" (click)="tab=2">
+                Auto-respond
+            </div>
         </nav>
         <section [hidden]="tab!=0">
             <div>
@@ -27,7 +30,13 @@
             <p>
                 kick players with private profile <br />
                 kick players with vac bans <br />
-
+            </p>
+        </section>
+        <section [hidden]="tab!=2">
+            <h3>Coming soon!</h3>
+            <p>
+                Auto respond wipe <br />
+                Auto respond !pop <br />
             </p>
         </section>
         <footer>

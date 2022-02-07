@@ -174,12 +174,12 @@ export class ConfigComponent implements OnInit, OnDestroy {
     this.serverImage = this.serverImage.split('"').join('');
     this.serverUrl = this.serverUrl.split('"').join('');
 
-    this.rustSrv.sendCommand('"'+this.serverName+'"');
-    this.rustSrv.sendCommand('server.description "'+this.serverDescription+'"');
-    this.rustSrv.sendCommand('server.url "'+this.serverUrl+'"');
-    this.rustSrv.sendCommand('server.tags "'+this.serverTags+'"');
-    this.rustSrv.sendCommand('server.headerimage "'+this.serverImage+'"');
-    this.rustSrv.sendCommand('server.maxplayers '+this.serverMaxPlayers);
+    this.rustSrv.sendCommand(`server.hostname "${this.serverName}"`);
+    this.rustSrv.sendCommand(`server.description "${this.serverDescription}"`);
+    this.rustSrv.sendCommand(`server.url "${this.serverUrl}"`);
+    this.rustSrv.sendCommand(`server.tags "${this.serverTags}"`);
+    this.rustSrv.sendCommand(`server.headerimage "${this.serverImage}"`);
+    this.rustSrv.sendCommand(`server.maxplayers "${this.serverMaxPlayers}"`);
     
     this.doClose();
   }
@@ -205,7 +205,7 @@ export class ConfigComponent implements OnInit, OnDestroy {
   }
 
   applyMisc() {
-    this.rustSrv.sendCommand(`server.hostname "${this.globalChat}"`);
+    this.rustSrv.sendCommand(`server.globalchat "${this.globalChat}"`);
     this.rustSrv.sendCommand(`server.idlekick "${this.idlekick}"`);
     this.rustSrv.sendCommand(`server.idlekickmode "${this.idlekickMode}"`);
     this.rustSrv.sendCommand(`server.idlekickadmins "${this.idlekickAdmins}"`);
