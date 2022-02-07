@@ -144,7 +144,8 @@
       }
       .cogMenu {
         position: absolute;
-        height: 40vh;
+        max-height: 40vh;
+        height: fit-content;
         bottom: 35px;
         background: #181818;
         border-radius: 3px;
