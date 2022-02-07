@@ -49,6 +49,11 @@ export class RustService {
   public frontThreadReady() {
     this.getInfo();
     this.chatTail(50);
+    this.sysInfo();
+  }
+
+  public sysInfo() {
+    this.sendCommand('global.sysinfo');
   }
 
   public getEvtRust() {

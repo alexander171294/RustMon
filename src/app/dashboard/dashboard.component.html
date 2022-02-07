@@ -89,21 +89,13 @@
               <ul class="cogMenu" *ngIf="cogMenu" (click)="cogMenu = false">
                 <li (click)="sendCMD('o.version')">UMod version</li>
                 <li (click)="writeCMD('env.time')">Time</li>
-                <li (click)="sendCMD('buildinfo')">Build Info</li>
-                <li (click)="sendCMD('carstats')">Cars Info</li>
-                <li (click)="sendCMD('debug.puzzlereset')">Reset puzzles</li>
                 <li class="hr"></li>
-                <li (click)="writeCMD('wolf.population')">Wolf population</li>
-                <li (click)="writeCMD('zombie.population')">Zombie population</li>
-                <li (click)="writeCMD('bear.population')">Bear population</li>
-                <li (click)="writeCMD('boar.population')">Boar population</li>
-                <li (click)="writeCMD('chicken.population')">Chicken population</li>
-                <li (click)="writeCMD('stag.population')">Stag population</li>
-                <li (click)="writeCMD('ridablehorse.population')">Horse population</li>
-                <li (click)="writeCMD('minicopter.population')">Minicopter population</li>
-                <li (click)="writeCMD('modularcar.population')">Car population</li>
-                <li (click)="writeCMD('modularcar.population')">Rowboat population</li>
-                <li (click)="writeCMD('scraptransporthelicopter.population')">ScrapHeli population</li>
+                <li (click)="sendCMD('global.sysinfo')">System Info</li>
+                <li (click)="sendCMD('carstats')">Cars Info</li>
+                <li class="hr"></li>
+                <li (click)="sendCMD('debug.puzzlereset')">Reset puzzles</li>
+                <li (click)="sendCMD('debug.resetsleepingbagtimers')">Reset sleepingbag</li>
+                <li (click)="sendCMD('player.resetstate <steamid-64-here>')">Reset player state</li>
                 <li class="hr"></li>
                 <li (click)="sendCMD('supply.call')">Call Airdrop</li>
                 <li (click)="sendCMD('heli.call')">Call Patrol</li>
