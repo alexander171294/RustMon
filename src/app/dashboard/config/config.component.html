@@ -84,8 +84,8 @@
                     <p [innerHtml]="mapData.mapDetails" class="mapTextDetail">
                     </p>
                     <img [src]="mapData.mapImage" class="fullMap" />
+                    <p>Map details powered by <a [href]="mapData.mapURL" target="__blank">Rustmap.com</a></p>
                 </div>
-                <label>Map details powered by <a [href]="mapData.mapURL" target="__blank">Rustmap.com</a></label>
                 <div class="warning" *ngIf="!mapData.mapExists">
                     This map doesn't exists on Rustmap.com, please go to rustmap.com and generate the map. <a
                         [href]="mapData.mapURL" target="__blank">Here</a>
