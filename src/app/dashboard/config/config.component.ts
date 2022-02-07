@@ -49,6 +49,26 @@ export class ConfigComponent implements OnInit, OnDestroy {
   public fpsLimit: number;
   public serverSecure;
 
+  public populations = {
+    wolf: '', // wolf.population
+    zombie: '', // zombie.population
+    bear: '', // bear.population
+    polarbear: '', // polarbear.population
+    boar: '', // boar.population
+    chicken: '', // chicken.population
+    stag: '', // stag.population
+    horse: '',
+    rideablehorse: '', // horse.population
+    minicopter: '', // minicopter.population
+    modulecar: '', // modulecar.population
+    motorrowboat: '', // motorrowboat.population
+    rhib: '', // rhib.rhibpopulation
+    scraptransporthelicopter: '', // scraptransporthelicopter.population
+    halloweenmurderer: '', // halloween.murdererpopulation
+    halloweenscarecrow: '', // halloween.scarecrowpopulation
+    hotairballoon: '', // hotairballoon.population
+  }
+
   public mapData: MapData;
 
   private subCfg: Subscription;
@@ -122,8 +142,6 @@ export class ConfigComponent implements OnInit, OnDestroy {
         } else if(d.raw.indexOf('server.secure:') >= 0) {
           this.serverSecure = d.raw.split(' ').slice(1).join(' ').split('"').join('');
         }
-        
-        
       }
     });
     this.rustSrv.sendCommand('server.seed', REType.SRV_INFO);
