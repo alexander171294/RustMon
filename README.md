@@ -32,8 +32,6 @@ Build redist package:
 
 ![config map](https://i.imgur.com/sH392gF.png)
 
-![server](https://i.imgur.com/U0WbD0T.png)
-
 ### Player details and search
 
 ![player details](https://i.imgur.com/8oUQXug.png)
