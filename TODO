@@ -1,11 +1,4 @@
-chatlock on mouse-enter
-Geocoding API
-Mark player (mar as green yellow red).
-
-Reports screen:
-{
-  "Message": "[PlayerReport] harkonidaz[76561198145188799] reported ssj[76561199061924579] - \"[spam] ADMIN TEST REPORT\"",
-  "Identifier": 0,
-  "Type": "Generic",
-  "Stacktrace": ""
-}
+- finish tools
+- Remember and autoban
+- chatlock on mouse-enter
+- Mark player and notes (mar as green yellow red).
