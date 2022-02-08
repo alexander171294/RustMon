@@ -4,7 +4,7 @@ export const environment = {
   redis: {
     host: process.env.CACHE_HOST ? process.env.CACHE_HOST : 'srv-captain--redistest',
     auth_pass: process.env.CACHE_AUTH ? process.env.CACHE_AUTH : '38674516',
-    port: process.env.CACHE_PORT ? parseInt(process.env.CACHE_PORT) :  6379
+    port: process.env.CACHE_PORT ? parseInt(process.env.CACHE_PORT) : 6379
   },
-  secondsCacheUsers: 604800, // 7 days of cache
+  secondsCacheUsers: process.env.CACHE_TTL ? parseInt(process.env.CACHE_TTL) : 604800, // 7 days of cache
 }

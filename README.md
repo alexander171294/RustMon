@@ -6,15 +6,19 @@ Rust game admin tool for servers (RustMonitor)
 
 Install dependencies:
 
-´npm i´
+`npm i`
 
 Run local dev mode:
 
-´ng serve´
+`ng serve`
 
 Build redist package:
 
-´ng build --prod´
+`ng build --prod`
+
+or if you don't have angular installed
+
+`npm run buildprod`
 
 ## Screenshots:
 
@@ -42,8 +46,30 @@ Build redist package:
 
 # run with docker in server:
 
-docker run -p 8086:80 -itd alexander171294/rustmon:latest
+## Dashboard:
+
+```
+docker run -p 80:80 -itd alexander171294/rustmon:latest
+```
 
 Or see live instance in:
 
-https://rustmon.tandilserver.com/
+[rustmon.tandilserver.com](https://rustmon.tandilserver.com/)
+
+## Backend Service:
+
+Api for get steam-profile, api-geolocalization, rustmap info:
+
+First, in order to use your custom served api, you need to edit environment.prod.ts and change `https://udata-steam.core.tandilserver.com` for your endpoint and rebuild docker image, or run ng build again with your changes.
+
+Second, you need to start a redis service (it is used for cache user data).
+
+Third, you need to run our docker image of rustmon-service with your api key and environments and expose in your endpoint:
+
+```
+docker run -p 80:3000 -e STEAM_API="YOUR-STEAM-API-KEY" -e CACHE_HOST="YOUR-REDIS-HOST" -e CACHE_AUTH="YOUR-REDIS-PASSWORD" -e CACHE_PORT="YOUR-REDIS-PORT" -itd alexander171294/rustmon-service:latest
+```
+
+### How to get my steam api key?
+
+[See steam api key documentation](https://steamcommunity.com/dev/apikey)
