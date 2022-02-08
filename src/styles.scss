@@ -181,3 +181,28 @@ body .ui-overlaypanel {
   color: wheat!important;
   border: 1px solid gray!important;
 }
+
+body .ui-contextmenu {
+  background-color: #181818!important;
+  border: 1px solid #13120f!important;
+  .ui-menuitem-link .ui-menuitem-text {
+    color: #bfbfbf!important;
+  }
+  a.ui-menuitem-link {
+    background-color: transparent;
+  }
+  .ui-menuitem.ui-menuitem-active > .ui-menuitem-link {
+    background-color: #333333!important;
+    a.ui-menuitem-link {
+      background-color: #333333!important;
+      .ui-menuitem-text {
+        color: wheat;
+      }
+    }
+  }
+
+}
+body .ui-contextmenu .ui-submenu-list {
+  background-color: #181818!important;
+  border: 1px solid #13120f!important;
+}

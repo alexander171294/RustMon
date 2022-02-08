@@ -18,13 +18,29 @@ Build redist package:
 
 ## Screenshots:
 
-![Login](https://i.imgur.com/S8nmgMC.png)
+### Login
 
-![Lobby](https://i.imgur.com/vdlTYxw.png)
+![Login](https://i.imgur.com/1mitLwe.png)
 
-![options](https://i.imgur.com/zxmGds5.png)
+### Dashboard
+
+![dashboard](https://i.imgur.com/d0u2uOa.png)
+
+### Server configurations
+
+![config server](https://i.imgur.com/4eBmGje.png)
+
+![config map](https://i.imgur.com/sH392gF.png)
 
 ![server](https://i.imgur.com/U0WbD0T.png)
+
+### Player details and search
+
+![player details](https://i.imgur.com/8oUQXug.png)
+
+### Player tools
+
+![player tools](https://i.imgur.com/nptYGlO.png)
 
 # run with docker in server:
 
