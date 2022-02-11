@@ -42,6 +42,8 @@ export class PlayersComponent implements OnInit {
     { label: 'Moderation', items: [
       { label: 'Ban', command: (event) => this.ctxBan(this.selectedPlayer) },
       { label: 'Kick', command: (event) => this.ctxKick(this.selectedPlayer) },
+      { label: 'Chat mute', command: (event) => this.ctxMute(this.selectedPlayer) },
+      { label: 'Chat unmute', command: (event) => this.ctxUnmute(this.selectedPlayer) },
     ]},
     { label: 'TeamInfo', command: (event) => this.ctxTeamInfo(this.selectedPlayer.SteamID) },
     { label: 'Steam', items: [
@@ -60,6 +62,16 @@ export class PlayersComponent implements OnInit {
   ngOnInit() {
   }
 
+  ctxMute(player: PlayerWithStatus) {
+    this.rustSrv.sendCommand('mute ' + player.SteamID);
+    this.messageService.add({severity: 'success', summary: 'Muted', detail: player.SteamID + ' | ' + player.DisplayName});
+  }
+
+
+  ctxUnmute(player: PlayerWithStatus) {
+    this.rustSrv.sendCommand('unmute ' + player.SteamID);
+    this.messageService.add({severity: 'success', summary: 'Unmuted', detail: player.SteamID + ' | ' + player.DisplayName});
+  }
 
   ctxAddOwner(player: PlayerWithStatus) {
     this.confirmationService.confirm({
