@@ -26,6 +26,9 @@
             <div [class.active]="tab==4" (click)="tab=4">
                 Population
             </div>
+            <div [class.active]="tab==5" (click)="tab=5">
+                Batch
+            </div>
         </nav>
         <!-- FIRST TAB -->
         <section [hidden]="tab!=0">
@@ -656,6 +659,14 @@
         <footer *ngIf="tab == 4">
             <button (click)="applyPop()" style="margin-right: 3px;">Apply</button>
             <button (click)="savePop()">Apply & WriteCFG</button>
+        </footer>
+        <section [hidden]="tab != 5">
+            <p>This box save one command per line, and when you press execute, all commands are executed. It's useful for save commands for apply after a wipe</p>
+            <textarea [(ngModel)]="batchCommand" (change)="batchChange($event)" class="cmdBatch"></textarea>
+        </section>
+        <footer *ngIf="tab == 5">
+            <button (click)="execBatch()" style="margin-right: 3px;">Execute</button>
+            <button (click)="doClose()">Close</button>
         </footer>
     </article>
 </div>

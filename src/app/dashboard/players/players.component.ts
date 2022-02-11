@@ -41,9 +41,12 @@ export class PlayersComponent implements OnInit {
     ]},
     { label: 'Moderation', items: [
       { label: 'Ban', command: (event) => this.ctxBan(this.selectedPlayer) },
+      { label: 'Unban', command: (event) => this.ctxUnban(this.selectedPlayer) },
       { label: 'Kick', command: (event) => this.ctxKick(this.selectedPlayer) },
-      { label: 'Chat mute', command: (event) => this.ctxMute(this.selectedPlayer) },
-      { label: 'Chat unmute', command: (event) => this.ctxUnmute(this.selectedPlayer) },
+    ]},
+    { label: 'Chat', items: [
+      { label: 'Mute', command: (event) => this.ctxMute(this.selectedPlayer) },
+      { label: 'Unmute', command: (event) => this.ctxUnmute(this.selectedPlayer) },
     ]},
     { label: 'TeamInfo', command: (event) => this.ctxTeamInfo(this.selectedPlayer.SteamID) },
     { label: 'Steam', items: [
@@ -115,6 +118,11 @@ export class PlayersComponent implements OnInit {
 
   ctxBan(player: PlayerWithStatus) {
     this.ban(player.SteamID, player.DisplayName);
+  }
+
+  ctxUnban(player: PlayerWithStatus) {
+    this.rustSrv.sendCommand('unban ' + player.SteamID);
+    this.messageService.add({severity: 'success', summary: 'Unbanned', detail: player.SteamID + ' | ' + player.DisplayName});
   }
 
   ctxKick(player: PlayerWithStatus) {

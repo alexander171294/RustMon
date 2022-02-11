@@ -49,6 +49,9 @@ export class ConfigComponent implements OnInit, OnDestroy {
   public fpsLimit: number;
   public serverSecure;
 
+  // batch 
+  public batchCommand: string;
+
   public populations = {
     wolf: undefined, // wolf.population
     zombie: undefined, // zombie.population
@@ -337,6 +340,15 @@ export class ConfigComponent implements OnInit, OnDestroy {
   savePop() {
     this.applySec();
     this.rustSrv.sendCommand('server.writecfg');
+  }
+
+  loadBatch() {
+    const oldBatch = localStorage.getItem('cfg-batch');
+    this.batchCommand = oldBatch ? oldBatch : '';
+  }
+
+  batChange() {
+    localStorage.setItem('cfg-batch', this.batchCommand);
   }
 
 }
