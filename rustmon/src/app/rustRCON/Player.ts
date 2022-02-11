@@ -18,4 +18,5 @@ export class PlayerWithStatus extends Player {
   public country: string = '';
   public vac?: VacResponse;
   public steamData?: DataResponse;
+  public notes: string | undefined;
 }

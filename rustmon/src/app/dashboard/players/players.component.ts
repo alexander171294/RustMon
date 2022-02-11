@@ -7,6 +7,7 @@ import { RustService } from 'src/app/rustRCON/rust.service';
 import { PromptData, PromptService } from '../prompt/prompt.service';
 import { UserDataService } from 'src/app/api/user-data.service';
 import { Clipboard } from 'src/app/utils/clipboard';
+import { faEyeSlash, faStickyNote, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-players',
@@ -22,6 +23,12 @@ export class PlayersComponent implements OnInit {
   @Output() onlyOnlineEvt: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public playerClicked?: PlayerWithStatus;
+
+  public icons = {
+    faExclamationTriangle,
+    faEyeSlash,
+    faStickyNote
+  }
 
   public playerCols = [
     { field: 'ConnectedSeconds', header: 'Alive', width: '50px' },

@@ -22,12 +22,17 @@ span {
       }
       .privateIcon {
         width: 20px;
-        color: #cda32b;
+        color: #d89314;
       }
       .vacIcon {
         width: 16px;
         margin-left: 3px;
         color: #ed3214;
+      }
+      .noteIcon {
+        width: 20px;
+        margin-left: 3px;
+        color: #14d88d;
       }
     }
   }
@@ -66,6 +71,7 @@ p-inputSwitch {
 }
 
 .overlaypanel {
+  display: flex;
   color: wheat;
   p {
     margin: 2px;
@@ -85,5 +91,11 @@ p-inputSwitch {
   .avatar {
     vertical-align: middle;
     margin-right: 5px;
+  }
+  .notes {
+    textarea {
+      height: 100%;
+      margin-left: 5px;
+    }
   }
 }

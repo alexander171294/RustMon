@@ -1,3 +1,4 @@
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard.component';
@@ -38,7 +39,7 @@ const routes: Routes = [
     ChatComponent,
     PlayersComponent,
     ConfigComponent,
-    PlayerToolsComponent
+    PlayerToolsComponent,
   ],
   imports: [
     CommonModule,
@@ -52,6 +53,7 @@ const routes: Routes = [
     OverlayPanelModule,
     SidebarModule,
     PromptModule,
+    FontAwesomeModule,
   ]
 })
 export class DashboardModule { }
