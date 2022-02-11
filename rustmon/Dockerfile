@@ -1,9 +1,9 @@
 ### STAGE 1: Build ###
 FROM node:12.7-alpine AS build
 WORKDIR /usr/src/app
-COPY ./rustmon/package.json package-lock.json ./
+COPY package.json package-lock.json ./
 RUN npm install
-COPY ./rustmon/. .
+COPY . .
 RUN npm run buildprod
 
 ### STAGE 2: Run ###
