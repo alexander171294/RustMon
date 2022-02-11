@@ -50,6 +50,10 @@
             height: calc(75vh);
             overflow-y: auto;
             width: 550px;
+            textarea {
+                width: 100%;
+                height: calc(100% - 160px);
+            }
             &::-webkit-scrollbar {
                 width: 10px;
             }

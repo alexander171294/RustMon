@@ -347,8 +347,14 @@ export class ConfigComponent implements OnInit, OnDestroy {
     this.batchCommand = oldBatch ? oldBatch : '';
   }
 
-  batChange() {
+  batchChange() {
     localStorage.setItem('cfg-batch', this.batchCommand);
+  }
+
+  execBatch() {
+    this.batchCommand.split('\n').forEach(cmd => {
+      this.rustSrv.sendCommand(cmd);
+    })
   }
 
 }
