@@ -144,9 +144,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.info();
     }, 1000);
     this.players();
-    // setInterval(() => {
-    //   this.players();
-    // }, 3500);
+    setInterval(() => {
+      this.players();
+    }, 3500);
   }
 
   players() {
