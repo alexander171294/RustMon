@@ -31,6 +31,7 @@ export class PlayerStorageService {
       (t[1] as PlayerWithStatus).country = (this.userDataSteam[id64] != undefined && this.userDataSteam[id64]?.countryCode) ? (this.userDataSteam[id64] as UserDataDTO).countryCode.toLowerCase() : '';
       (t[1] as PlayerWithStatus).vac = this.userDataSteam[id64]?.vacData;
       (t[1] as PlayerWithStatus).steamData = this.userDataSteam[id64]?.userData;
+      (t[1] as PlayerWithStatus).notes = localStorage.getItem(`note-${id64}`);
       if (onlyOnline) {
         if (oPl.indexOf(t[0]) >= 0) {
           (t[1] as PlayerWithStatus).online = true;
@@ -61,6 +62,10 @@ export class PlayerStorageService {
       }, 1000)
     });
     return new UserDataDTO();
+  }
+
+  public saveNote(id64: string, note: string) {
+    localStorage.setItem(`note-${id64}`, note);
   }
 
 }

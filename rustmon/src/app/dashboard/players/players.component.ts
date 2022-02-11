@@ -1,3 +1,4 @@
+import { PlayerStorageService } from './../../rustRCON/player-storage.service';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { MenuItem } from 'primeng/api/menuitem';
 import {MessageService, ConfirmationService} from 'primeng/api';
@@ -67,7 +68,8 @@ export class PlayersComponent implements OnInit {
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
               private promptSrv: PromptService,
-              private userDataSrv: UserDataService) { }
+              private userDataSrv: UserDataService,
+              private playerStorageSrv: PlayerStorageService) { }
 
   ngOnInit() {
   }
@@ -218,5 +220,9 @@ export class PlayersComponent implements OnInit {
 
   getStringFromInputEvent(evt: any): string {
     return evt.target.value;
+  }
+
+  saveNote(note: string, steamID: string) {
+    this.playerStorageSrv.saveNote(steamID, note);
   }
 }

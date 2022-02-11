@@ -32,9 +32,9 @@
               <img *ngIf="player.country && player.country != 'N/D'" [src]="'https://flagpedia.net/data/flags/w580/' + player.country + '.png'" style="width: 20px;" [title]="player.country" />
               {{player.DisplayName}}
               <div class="warns">
+                <fa-icon title="Notes" class="noteIcon" *ngIf="player.notes" [icon]="icons.faStickyNote"></fa-icon>
                 <fa-icon title="Private Profile" class="privateIcon" *ngIf="!player.steamData || player.steamData.communityvisibilitystate != 3" [icon]="icons.faEyeSlash"></fa-icon>
                 <fa-icon title="VAC" class="vacIcon" *ngIf="player.vac?.VACBanned" [icon]="icons.faExclamationTriangle"></fa-icon>
-                <fa-icon title="Notes" class="noteIcon" *ngIf="player.notes" [icon]="icons.faStickyNote"></fa-icon>
               </div>
             </span>
           </td>
@@ -104,7 +104,7 @@
         </p>
       </div>
       <div class="notes">
-        <textarea placeholder="Notes for this player" [(ngModel)]="playerClicked.notes"></textarea>
+        <textarea placeholder="Notes for this player" [(ngModel)]="playerClicked.notes" (input)="saveNote(playerClicked.notes, playerClicked.steamData.steamid)"></textarea>
       </div>
     </div>
 
