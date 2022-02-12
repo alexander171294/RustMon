@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="1024px" height="268px" viewBox="0 0 1024 268" style="enable-background:new 0 0 1024 268;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#A4A6A7;}
+	.st1{fill:#CD412B;}
+	.st2{fill:#1E2020;}
+</style>
+<title>Rust-Logo-Rough</title>
+<g>
+	<path class="st0" d="M273.9,16.4v235.3h49.3v-68.4h19.1v68.4h97.2v-49.3h-47.9v-19.1h47.9V16.4H273.9z M390.2,134h-67V65.7h67V134z
+		"/>
+	<polygon class="st0" points="580.3,202.3 513.4,202.3 513.4,16.4 464.1,16.4 464.1,251.6 629.6,251.6 629.6,16.4 580.3,16.4 	"/>
+	<g>
+		<polygon class="st0" points="654.2,16.4 654.2,158.7 770.5,158.7 770.5,202.3 654.2,202.3 654.2,251.6 819.8,251.6 819.8,109.3 
+			703.5,109.3 703.5,65.7 819.8,65.7 819.8,16.4 		"/>
+		<polygon class="st0" points="844.4,16.4 844.4,65.7 902.6,65.7 902.6,251.6 951.9,251.6 951.9,65.7 1010,65.7 1010,16.4 		"/>
+	</g>
+	<g>
+		<rect x="14" y="16.4" class="st1" width="235.3" height="235.3"/>
+		<g>
+			<polygon class="st2" points="91,122.5 41.1,114.2 41.1,164.2 91,155.8 			"/>
+			<rect x="99.3" y="122.5" class="st2" width="16.7" height="33.3"/>
+		</g>
+		<g>
+			<polygon class="st2" points="153.5,93.4 161.8,43.4 111.8,43.4 120.1,93.4 			"/>
+			<rect x="120.1" y="101.7" class="st2" width="33.3" height="16.7"/>
+		</g>
+		
+			<rect x="128.5" y="130.9" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -58.3542 137.4995)" class="st2" width="16.7" height="16.7"/>
+		<g>
+			<polygon class="st2" points="157.4,183.4 186.8,224.6 222.2,189.2 181,159.8 			"/>
+			
+				<rect x="140.8" y="151.5" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -66.8886 158.1033)" class="st2" width="33.3" height="16.7"/>
+		</g>
+	</g>
+</g>
+</svg>

@@ -1,0 +1,203 @@
+.container {
+    position: fixed;
+    width: 100vw;
+    background: #1310109c;
+    top: 0px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    article {
+        width: fit-content;
+        border: 1px solid black;
+        padding: 3px;
+        border-radius: 3px;
+        box-shadow: 0px 0px 5px black;
+        background-color: #2b2924;
+        background-image: url(/assets/blur.png);
+        header {
+            background-color: #181818;
+            text-align: center;
+            color: #f7ebe1;
+            padding: 15px;
+            position: relative;
+            svg {
+                width: 15px;
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                cursor: pointer;
+                display: block;
+            }
+        }
+        nav {
+            background: #181818;
+            border-top: 1px solid #312f2a;
+            display: flex;
+            div {
+                color: #d6ccc3;
+                padding: 3px 15px;
+                border-right: 1px solid #312f2a;
+                cursor: pointer;
+                &:hover, &.active {
+                    background: #cd412b;
+                    color: wheat;
+                }
+            }
+        }
+        section {
+            height: calc(75vh);
+            overflow-y: auto;
+            width: 550px;
+            textarea {
+                width: 100%;
+                height: calc(100% - 160px);
+            }
+            &::-webkit-scrollbar {
+                width: 10px;
+            }
+            &::-webkit-scrollbar-track {
+                background: #13120f;
+            }
+            &::-webkit-scrollbar-thumb {
+                background: gray;
+                border-radius: 5px;
+            }
+            &::-webkit-scrollbar-thumb:hover {
+                background: #555;
+            }
+            p, h3 {
+                color: wheat;
+            }
+            div {
+                &.splitted {
+                    display: flex;
+                    >div {
+                        width: 50%;
+                    }
+                }
+                &.splitted3 {
+                    display: flex;
+                    >div {
+                        width: 33%;
+                    }
+                }
+                .preview {
+                    position: relative;
+                    &::after{
+                        content: "";
+                        display: block;
+                        width: 100%;
+                        height: 50%;
+                        background: linear-gradient(transparent, #2a2823b3);
+                        position: absolute;
+                        bottom: 0px;
+                    }
+                    h2 {
+                        position: absolute;
+                        bottom: 20px;
+                        color: white;
+                        text-align: center;
+                        height: 35px;
+                        overflow: hidden;
+                        z-index: 1;
+                        width: 100%;
+                    }
+                    h3 {
+                        position: absolute;
+                        bottom: -5px;
+                        color: #d7d7d7e8;
+                        width: 100%;
+                        text-align: center;
+                        z-index: 1;
+                    }
+                }
+                padding: 5px;
+                label {
+                    display: block;
+                    color: #f7ebe1;
+                    font-family: helvetica;
+                    margin-top: 15px;
+                }
+                input {
+                    width: 100%;
+                }
+                textarea {
+                    background-color: #181818;
+                    border-radius: 0;
+                    border: 2px solid #4a4a4a;
+                    line-height: 1.5;
+                    font-family: Helvetica;
+                    color: #f7ebe1;
+                    width: 100%;
+                }
+                img {
+                    width: 512px;
+                    height: 256px;
+                    margin: 0 auto;
+                    display: block;
+                    &.fullMap {
+                        height: 512px;
+                        margin: 0px;
+                    }
+                }
+            }
+        }
+        footer {
+            text-align: right;
+            background-color: #181818;
+            padding: 3px;
+        }
+    }
+}
+
+iframe.map {
+    width: 100%;
+    height: calc(100% - 90px);
+    border: none;
+}
+
+.warning {
+    background: #ffccc4;
+    border: 1px solid #cd412b;
+    color: #cd412b;
+    margin: 5px;
+    font-weight: bold;
+}
+
+.mapTextDetail {
+    white-space: pre-wrap;
+}
+
+
+label.withDetail {
+    position: relative;
+    margin-bottom: 5px;
+    margin-top: 10px!important;
+    svg {
+        width: 18px;
+        color: #e9472d;
+        margin-left: 5px;
+        background: #181818;
+        padding: 3px;
+        border-radius: 5px;
+        vertical-align: sub;
+    }
+    .detail {
+        width: 200px;
+        background: #181818;
+        position: absolute;
+        margin-top: 12px;
+        border: 1px solid gray;
+        font-size: 14px;
+        line-height: 18px;
+        display: none;
+        z-index: 1;
+    }
+    &:hover {
+        .detail {
+            display: block;
+        }
+    }
+}

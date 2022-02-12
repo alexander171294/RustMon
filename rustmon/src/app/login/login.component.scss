@@ -1,0 +1,68 @@
+section {
+    &#login {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        .logo {
+          font-family: Open Sans;
+          span {
+            text-align: center;
+            display: block;
+            margin: 0 auto;
+            color: #cd412b;
+            font-size: 20px;
+            margin-bottom: 2vh;
+            text-transform: uppercase;
+          }
+          img {
+            width: 250px;
+            margin: 0 auto;
+            display: block;
+          }
+        }
+        .icon {
+          position: relative;
+          svg {
+            color: #f7ebe14a;
+            width: 12px;
+            position: absolute;
+            left: 25px;
+            bottom: 8px;
+          }
+        }
+        label {
+          margin-left: 15px;
+          color: #a5a5a59c;
+        }
+        input {
+          display: block;
+          margin: 15px;
+          padding-left: 2.25em;
+          width: 250px;
+          margin-top: 0px;
+        }
+        select {
+          display: block;
+          margin: 15px;
+          width: 250px;
+          margin-top: 0px;
+        }
+        button {
+          margin-top: 2vh;
+          margin: 0 auto;
+          display: block;
+        }
+        .footLink {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #ffa500c2;
+            &:hover {
+              color: orange;
+            }
+            text-decoration: none;
+        }
+    }
+}

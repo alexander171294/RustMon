@@ -1,0 +1,244 @@
+/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+body,html {
+    margin: 0;
+    padding: 0;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    width: 100vw;
+    height: 100vh;
+    font-family: Open Sans;
+    background-color: #2b2924;
+    background-image: url(/assets/blur.png);
+    position: absolute;
+  }
+
+  .spinner {
+    position: relative;
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      background: transparent;
+      top: 0px;
+      border-left: 2px solid #c23e29;
+      border-right: 2px solid #c23e29;
+      border-radius: 50%;
+      border-top: 2px solid transparent;
+      border-bottom: 2px solid transparent;
+      margin-top: 9px;
+      margin-left: 11px;
+      left: calc(50% - 13px);
+      animation: rotate 1s linear infinite reverse;
+    }
+    &::before {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 44px;
+      height: 44px;
+      background: transparent;
+      top: 0px;
+      border-top: 2px solid #c23e29b0;
+      border-bottom: 2px solid #c23e29b0;
+      border-radius: 50%;
+      border-left: 2px solid transparent;
+      border-right: 2px solid transparent;
+      left: calc(50% - 12px);
+      animation: rotate 1s linear infinite;
+    }
+  }
+
+  button {
+    background-color: #cd412b;
+    border-color: rgba(0,0,0,0);
+    color: #fff;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 5px 25px;
+    outline: none;
+    position: relative;
+    svg {
+      width: 15px;
+      vertical-align: bottom;
+    }
+    &:hover {
+      background-color: #c23e29;
+      border-color: rgba(0,0,0,0);
+    }
+    &.loading {
+      color: #cd412b;
+      &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        background: transparent;
+        top: 0px;
+        border-left: 2px solid white;
+        border-right: 2px solid white;
+        border-radius: 50%;
+        border-top: 2px solid transparent;
+        border-bottom: 2px solid transparent;
+        margin-top: 5px;
+        margin-left: 5px;
+        left: calc(50% - 13px);
+        animation: rotate 1s linear infinite reverse;
+      }
+      &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 22px;
+        height: 22px;
+        background: transparent;
+        top: 0px;
+        border-top: 2px solid white;
+        border-bottom: 2px solid white;
+        border-radius: 50%;
+        border-left: 2px solid transparent;
+        border-right: 2px solid transparent;
+        left: calc(50% - 13px);
+        animation: rotate 1s linear infinite;
+      }
+    }
+  }
+
+  input, select {
+    background-color: #181818;
+    border-radius: 0;
+    color: #f7ebe1;
+    border: 2px solid #4a4a4a;
+    height: 2.25em;
+    line-height: 1.5;
+    font-family: Helvetica;
+    color: #f7ebe1;
+    &:hover, &:focus {
+      border-color: #cd412b;
+      outline: none;
+    }
+  }
+
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  body aside .ui-table .ui-table-thead > tr > th {
+    border: 1px solid #1d1b18;
+    color: wheat;
+    background-color: #333333;
+  }
+
+  body aside .p-datatable .p-datatable-tbody {
+    overflow: hidden;
+    > tr {
+      background-color: #1e1d19;
+      color: wheat;
+      overflow: hidden;
+      td {
+        border: 1px solid #333333;
+      }
+      &:nth-child(even) {
+        background-color: #151311;
+      }
+      &.offline {
+        opacity: 0.3;
+      }
+    }
+  }
+
+  body aside .ui-paginator {
+    background-color: #333333;
+    border: 1px solid #151311;
+  }
+
+  body aside .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
+    background-color: #151311;
+    color: #55aaff;
+  }
+
+  body aside .ui-table .ui-sortable-column.ui-state-highlight {
+    background-color: #151311;
+    color: #55aaff;
+  }
+
+  body aside .ui-table .ui-sortable-column:not(.ui-state-highlight):hover {
+    background-color: #6f6e6e;
+    color: #333333;
+  }
+
+  body .ui-overlaypanel {
+    background-color: #1e1d19!important;
+    color: wheat!important;
+    border: 1px solid gray!important;
+  }
+
+  body .ui-contextmenu {
+    background-color: #181818!important;
+    border: 1px solid #13120f!important;
+    .ui-menuitem-link .ui-menuitem-text {
+      color: #bfbfbf!important;
+    }
+    a.ui-menuitem-link {
+      background-color: transparent;
+    }
+    .ui-menuitem.ui-menuitem-active > .ui-menuitem-link {
+      background-color: #333333!important;
+      a.ui-menuitem-link {
+        background-color: #333333!important;
+        .ui-menuitem-text {
+          color: wheat;
+        }
+      }
+    }
+
+  }
+  body .ui-contextmenu .ui-submenu-list {
+    background-color: #181818!important;
+    border: 1px solid #13120f!important;
+  }
+
+  textarea {
+    background: #181818;
+    border-color: black;
+    outline: none;
+    color: wheat;
+    font-family: monospace;
+  }
+
+
+  /* width */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Track */
+*::-webkit-scrollbar-track {
+  background: #13120f;
+}
+
+/* Handle */
+*::-webkit-scrollbar-thumb {
+  background: gray;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+*::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

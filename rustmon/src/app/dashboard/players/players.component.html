@@ -1,0 +1,112 @@
+<p-table #dt [value]="playerList" [columns]="playerCols"  [paginator]="true" [rows]="15"  [resizableColumns]="true"  [(contextMenuSelection)]="selectedPlayer" [contextMenu]="cm">
+  <ng-template pTemplate="caption">
+    <div style="vertical-align: middle;float: left;">
+      Online <p-inputSwitch [(ngModel)]="onlyOnline" (onChange)="changeOnlineFilter($event)"></p-inputSwitch>
+    </div>
+    <div style="display: inline-block;text-align: right;margin-left: 15px;">
+      <input type="text" pInputText size="50" placeholder="Search Players" (input)="dt.filterGlobal(getStringFromInputEvent($event), 'contains')" style="width:auto">
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+        <th *ngFor="let col of playerCols"  [pSortableColumn]="col.field" [style.width]="col.width" pResizableColumn> <!-- -->
+          {{col.header}}
+          <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+        </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-player let-columns="columns">
+      <tr [class.offline]="!player.online" (click)="showPlayerData($event, player, opPlayer)">
+          <td *ngFor="let col of columns" [pContextMenuRow]="player">
+            <span class="time" *ngIf="col.field == 'ConnectedSeconds' && player.online">{{player.ConnectedSeconds | uptimeFixed}}</span>
+            <span class="hp" *ngIf="col.field == 'Health'" [class.greenText]="player.Health > 50" [class.yellowText]="player.Health <= 50 && player.Health >= 20" [class.redText]="player.Health < 20">
+              {{player.Health | number:'1.0-0'}}
+            </span>
+            <span class="ip" *ngIf="col.field == 'Address'">
+              {{player.Address | portRemove}}
+            </span>
+            <span class="ping" *ngIf="col.field == 'Ping' && player.online" [class.greenText]="player.Ping < 75" [class.yellowText]="player.Ping <= 170 && player.Ping >= 75" [class.redText]="player.Ping > 170">
+              {{player.Ping}}
+            </span>
+            <span class="username" *ngIf="col.field == 'DisplayName'" style="color:#55aaff">
+              <img *ngIf="player.country && player.country != 'N/D'" [src]="'https://flagpedia.net/data/flags/w580/' + player.country + '.png'" style="width: 20px;" [title]="player.country" />
+              {{player.DisplayName}}
+              <div class="warns">
+                <fa-icon title="Notes" class="noteIcon" *ngIf="player.notes" [icon]="icons.faStickyNote"></fa-icon>
+                <fa-icon title="Private Profile" class="privateIcon" *ngIf="!player.steamData || player.steamData.communityvisibilitystate != 3" [icon]="icons.faEyeSlash"></fa-icon>
+                <fa-icon title="VAC" class="vacIcon" *ngIf="player.vac?.VACBanned" [icon]="icons.faExclamationTriangle"></fa-icon>
+              </div>
+            </span>
+          </td>
+      </tr>
+  </ng-template>
+</p-table>
+<p-contextMenu #cm [model]="ctxMenu"></p-contextMenu>
+<p-toast position="top-right"></p-toast>
+<p-confirmDialog icon="pi pi-exclamation-triangle" [baseZIndex]="10000"></p-confirmDialog>
+
+<p-overlayPanel #opPlayer>
+  <ng-template pTemplate>
+    <div class="overlaypanel">
+      <div class="parameters">
+        <p>
+          <img [src]="playerClicked.steamData.avatar" class="avatar"/>
+          <button class="clearCacheButton" (click)="clearCache(playerClicked.SteamID)">Clear Cache</button>
+        </p>
+        <p>
+          <label>SteamID</label>
+          {{playerClicked.steamData.steamid}}
+        </p>
+        <p>
+          <label>Profile</label>
+          <span *ngIf="!playerClicked.steamData || playerClicked.steamData.communityvisibilitystate != 3" class="yes">&nbsp;Private</span>
+          <span *ngIf="playerClicked.steamData && playerClicked.steamData.communityvisibilitystate == 3">&nbsp;Public</span>
+        </p>
+        <p *ngIf="playerClicked.steamData">
+          <label>Created account</label>
+          {{playerClicked.steamData.timecreated * 1000 | date:'d/M/yy'}}
+        </p>
+        <p *ngIf="playerClicked?.vac">
+          <label>Community Banned</label>
+          <span class="yes" *ngIf="playerClicked?.vac?.CommunityBanned">
+            YES
+          </span>
+          <span class="no" *ngIf="!playerClicked?.vac?.CommunityBanned">
+            NO
+          </span>
+        </p>
+        <p *ngIf="playerClicked?.vac">
+          <label>VAC Ban</label>
+          <span class="yes" *ngIf="playerClicked?.vac?.VACBanned">
+            YES ({{playerClicked?.vac?.NumberOfVACBans}})
+          </span>
+          <span class="no" *ngIf="!playerClicked?.vac?.VACBanned">
+            NO
+          </span>
+        </p>
+        <p *ngIf="playerClicked?.vac">
+          <label>Days since last ban</label>
+          <span>
+            {{playerClicked?.vac?.DaysSinceLastBan}}
+          </span>
+        </p>
+        <p *ngIf="playerClicked?.vac">
+          <label>Game bans</label>
+          <span>
+            {{playerClicked?.vac?.NumberOfGameBans}}
+          </span>
+        </p>
+        <p *ngIf="playerClicked?.vac">
+          <label>Economy ban</label>
+          <span>
+            {{playerClicked?.vac?.EconomyBan}}
+          </span>
+        </p>
+      </div>
+      <div class="notes">
+        <textarea placeholder="Notes for this player" [(ngModel)]="playerClicked.notes" (input)="saveNote(playerClicked.notes, playerClicked.steamData.steamid)"></textarea>
+      </div>
+    </div>
+
+  </ng-template>
+</p-overlayPanel>

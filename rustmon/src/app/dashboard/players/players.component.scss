@@ -1,0 +1,101 @@
+span {
+  &.time {
+    font-size: 13px;
+    width: 50px;
+    display: inline-block;
+    color: gray;
+  }
+  &.username {
+    font-size: 14px;
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+    display: block;
+    .warns {
+      position: absolute;
+      right: 0px;
+      top: 3px;
+      width: 40px;
+      text-align: right;
+      svg {
+        display: inline-block;
+      }
+      .privateIcon {
+        width: 20px;
+        margin-left: 3px;
+        color: #d89314;
+      }
+      .vacIcon {
+        width: 16px;
+        margin-left: 3px;
+        color: #ed3214;
+      }
+      .noteIcon {
+        width: 20px;
+        color: #d81476;
+      }
+    }
+  }
+  &.ping {
+    display: inline-block;
+    text-align: right;
+    display: block;
+  }
+  &.ip {
+    display: inline-block;
+    width: 108px;
+    text-align: left;
+    display: block;
+    text-align: center;
+  }
+  &.hp {
+    margin-right: 5px;
+    text-align: center;
+    display: block;
+  }
+  &.greenText {
+    color: #2cb32c;
+  }
+  &.yellowText {
+    color: yellow;
+  }
+  &.redText {
+    color: #cd412b;
+  }
+}
+.datablock {
+  float: right;
+}
+p-inputSwitch {
+  vertical-align: middle;
+}
+
+.overlaypanel {
+  display: flex;
+  color: wheat;
+  p {
+    margin: 2px;
+  }
+  label {
+    font-weight: bold;
+    color: grey;
+  }
+  .yes {
+    font-weight: bolder;
+    color: red;
+  }
+  .clearCacheButton {
+    vertical-align: top;
+    margin-left: 10px;
+  }
+  .avatar {
+    vertical-align: middle;
+    margin-right: 5px;
+  }
+  .notes {
+    textarea {
+      height: 100%;
+      margin-left: 5px;
+    }
+  }
+}
