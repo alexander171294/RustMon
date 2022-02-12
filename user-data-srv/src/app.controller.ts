@@ -1,4 +1,5 @@
-import { Controller, Get, HttpException, HttpStatus, Logger, Query, Response } from '@nestjs/common';
+import { Queue } from './queue/queue.util';
+import { Body, Controller, Get, HttpException, HttpStatus, Logger, Post, Query, Response } from '@nestjs/common';
 import { IPApiData, IPGeocodeService } from './ipGeocode/ipgeocode.service';
 import { SteamVisibleStates, UserDataDTO } from './UserDataDTO';
 import { PlayerDataResponse, PlayerVacsResponse, ValveApiService } from './valve/valve-api.service';
@@ -7,6 +8,7 @@ import { CacheRedisService } from './redis/redis.service';
 import { environment } from './environment';
 import { Response as Res } from 'express';
 import { RustMapService } from './rustmap/rustmap.service';
+
 @Controller()
 export class AppController {
 
@@ -22,43 +24,75 @@ export class AppController {
     if(!steamID) {
       throw new HttpException('steamID required param', HttpStatus.BAD_REQUEST);
     }
-    const udata: UserDataDTO = await this.redis.getFromCache(steamID, true);
-    if(udata) {
-      res.set({ 'x-cached': 'Yes' }).json(udata);
-      return;
+    try {
+      const user = await this.getIUserData(steamID, ip);
+      res.set({ 'x-cached': user.xCached ? 'yes' : 'no', 'x-geo': user.xGeo }).json(user);
+    } catch(e) {
+      throw new HttpException(e.msg, e.code);
     }
-    const result = new UserDataDTO();
-    this.valveApi.getUserData(steamID).subscribe((d: AxiosResponse<PlayerDataResponse>) => {
-      if(d.data.response.players.length == 0) {
-        throw new HttpException('SteamID not found', HttpStatus.NOT_FOUND);
+  }
+
+  @Post('udata')
+  async batchUserData(@Body() data: UDataItem[], @Response() res: Res) {
+    if(!data && Array.isArray(data)) {
+      throw new HttpException('body required, and must be an array', HttpStatus.BAD_REQUEST);
+    }
+    const queue = new Queue();
+    data.forEach(user => {
+      queue.addToQueue(this.getIUserData(user.steamID, user.ip));
+    });
+    queue.processQueue().then(result => {
+      res.json(result);
+    });
+  }
+
+  private async getIUserData(steamID: string, ip: string): Promise<UserDataDTO> {
+    const udata: UserDataDTO = await this.redis.getFromCache(steamID, true);
+    return new Promise((res, rej) => {
+      if(udata) {
+        udata.xCached = true;
+        return udata;
       }
-      result.userData = d.data.response.players[0];
-      this.valveApi.getVacs(steamID).subscribe((d: AxiosResponse<PlayerVacsResponse>) => {
-        result.vacData = d.data.players[0];
-        if((result.userData.communityvisibilitystate != SteamVisibleStates.PUBLIC || !result.userData.loccountrycode) && ip) {
-          this.logger.warn('Geocoding ip ' + ip)
-          this.geocode.getIpApi(ip).subscribe((d: AxiosResponse<IPApiData>) => {
-            this.logger.warn('Geocoded ok ' + JSON.stringify(d.data))
-            result.countryCode = d.data.countryCode;
-            this.saveInCache(steamID, result);
-            res.set({ 'x-cached': 'No', 'x-geo': 'Yes' }).json(result);
-          }, e => {
-            this.logger.error("Error getting geoip", e);
-            this.saveInCache(steamID, result);
-            res.set({ 'x-cached': 'No', 'x-geo': 'Err' }).json(result);
-          })
+      const result = new UserDataDTO();
+      this.valveApi.getUserData(steamID).subscribe((d: AxiosResponse<PlayerDataResponse>) => {
+        if(d.data.response.players.length == 0) {
+          rej({msg: 'SteamID not found', code: HttpStatus.NOT_FOUND })
         } else {
-          result.countryCode = result.userData.loccountrycode;
-          this.saveInCache(steamID, result);
-          res.set({ 'x-cached': 'No', 'x-geo': 'No' }).json(result);
+          result.userData = d.data.response.players[0];
+          this.valveApi.getVacs(steamID).subscribe((d: AxiosResponse<PlayerVacsResponse>) => {
+            result.vacData = d.data.players[0];
+            if((result.userData.communityvisibilitystate != SteamVisibleStates.PUBLIC || !result.userData.loccountrycode) && ip) {
+              this.logger.warn('Geocoding ip ' + ip)
+              this.geocode.getIpApi(ip).subscribe((d: AxiosResponse<IPApiData>) => {
+                this.logger.warn('Geocoded ok ' + JSON.stringify(d.data))
+                result.countryCode = d.data.countryCode;
+                this.saveInCache(steamID, result);
+                result.xCached = false;
+                result.xGeo = 'yes';
+                res(result);
+              }, e => {
+                this.logger.error("Error getting geoip", e);
+                this.saveInCache(steamID, result);
+                result.xCached = false;
+                result.xGeo = 'err';
+                res(result);
+              })
+            } else {
+              result.countryCode = result.userData.loccountrycode;
+              this.saveInCache(steamID, result);
+              result.xCached = false;
+              result.xGeo = 'steam-def';
+              res(result);
+            }
+          }, e => {
+            this.logger.error("Error getting vac", e)
+            rej({msg: 'Error getting vac', code: HttpStatus.BAD_GATEWAY });
+          });
         }
       }, e => {
-        this.logger.error("Error getting vac", e)
-        throw new HttpException('Error getting vac', HttpStatus.BAD_GATEWAY);
+        this.logger.error("Error getting userdata", e);
+        rej({msg: 'Error getting user data', code: HttpStatus.BAD_GATEWAY });
       });
-    }, e => {
-      this.logger.error("Error getting userdata", e)
-      throw new HttpException('Error getting user data', HttpStatus.BAD_GATEWAY);
     });
   }
 
@@ -88,4 +122,9 @@ export class AppController {
     const mapKey = `map-${seed}-${worldSize}`;
     return this.redis.invalidate(mapKey) ? 'OK' : 'NOK';
   }
+}
+
+export interface UDataItem {
+  steamID: string;
+  ip: string;
 }

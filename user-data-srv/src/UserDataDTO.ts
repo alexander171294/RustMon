@@ -3,6 +3,8 @@ export class UserDataDTO {
     public userData: DataResponse;
     public vacData: VacResponse;
     public countryCode: string;
+    public xCached?: boolean;
+    public xGeo?: string;
 }
 
 // https://developer.valvesoftware.com/wiki/Steam_Web_API#GetPlayerSummaries_.28v0002.29

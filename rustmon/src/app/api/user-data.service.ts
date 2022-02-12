@@ -12,10 +12,14 @@ export class UserDataService {
 
   constructor(private http: HttpClient) { }
 
+  public getBatchUserData(items: UDataItem[]): Observable<UserDataDTO[]> {
+    return this.http.post<UserDataDTO[]>(`${environment.uDataApi}/udata`, items);
+  }
+
   public getUserData(steamId: string, ip: string): Observable<UserDataDTO> {
     return this.http.get<UserDataDTO>(`${environment.uDataApi}/udata?steamID=${steamId}&ip=${ip}`);
   }
-  
+
   public clearCache(steamId: string): Observable<string> {
     return this.http.get(`${environment.uDataApi}/invalidate?steamID=${steamId}`, {responseType: 'text'});
   }
@@ -27,4 +31,9 @@ export class UserDataService {
   public mapInvalidateCache(seed: string, size: string) {
     return this.http.get<MapData>(`${environment.uDataApi}/mapdata/invalidate?seed=${seed}&size=${size}`);
   }
+}
+
+export interface UDataItem {
+  steamID: string;
+  ip: string;
 }
