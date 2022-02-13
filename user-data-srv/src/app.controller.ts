@@ -51,7 +51,8 @@ export class AppController {
     return new Promise((res, rej) => {
       if(udata) {
         udata.xCached = true;
-        return udata;
+        res(udata);
+        return;
       }
       const result = new UserDataDTO();
       this.valveApi.getUserData(steamID).subscribe((d: AxiosResponse<PlayerDataResponse>) => {
