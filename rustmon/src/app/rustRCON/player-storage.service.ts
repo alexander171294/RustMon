@@ -98,8 +98,9 @@ export class PlayerStorageService {
     const pys: UDataItem[] = [];
     Object.entries(allPlayers).forEach((t: unknown[]) => {
       const player = t[1] as Player;
+      const addr = player.Address.split(':')[0];
       pys.push({
-        ip: player.Address,
+        ip: addr,
         steamID: player.SteamID
       });
     });

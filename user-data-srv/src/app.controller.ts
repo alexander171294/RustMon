@@ -63,6 +63,9 @@ export class AppController {
           this.valveApi.getVacs(steamID).subscribe((d: AxiosResponse<PlayerVacsResponse>) => {
             result.vacData = d.data.players[0];
             if((result.userData.communityvisibilitystate != SteamVisibleStates.PUBLIC || !result.userData.loccountrycode) && ip) {
+              if(ip.indexOf(':') > 0) {
+                ip = ip.split(':')[0];
+              }
               this.logger.warn('Geocoding ip ' + ip)
               this.geocode.getIpApi(ip).subscribe((d: AxiosResponse<IPApiData>) => {
                 this.logger.warn('Geocoded ok ' + JSON.stringify(d.data))
