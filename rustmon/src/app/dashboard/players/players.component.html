@@ -104,7 +104,7 @@
         </p>
       </div>
       <div class="notes">
-        <textarea placeholder="Notes for this player" [(ngModel)]="playerClicked.notes" (input)="saveNote(playerClicked.notes, playerClicked.steamData.steamid)"></textarea>
+        <textarea placeholder="Notes for this player" [(ngModel)]="playerClicked.notes" (input)="saveNote(playerClicked.notes, playerClicked.steamData.steamid)" (change)="saveNote(playerClicked.notes, playerClicked.steamData.steamid)"></textarea>
       </div>
     </div>
 
