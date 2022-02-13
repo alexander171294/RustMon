@@ -35,8 +35,8 @@ export class PlayersComponent implements OnInit {
     { field: 'ConnectedSeconds', header: 'Alive', width: '50px' },
     { field: 'DisplayName', header: 'Name', width: '300px'},
     { field: 'Health', header: 'HP', width: '52px' },
-    { field: 'Address', header: 'IP', width: '122px' },
-    { field: 'Ping', header: 'Ping', width: '30px' }
+    { field: 'Address', header: 'IP', width: '130px' },
+    { field: 'Ping', header: 'Lag', width: '30px' }
   ];
 
   public selectedPlayer: PlayerWithStatus = new PlayerWithStatus();

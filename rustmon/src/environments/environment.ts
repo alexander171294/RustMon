@@ -4,8 +4,7 @@
 
 export const environment = {
   production: false,
-  debugDataApi: 'http://localhost:3000',
-  uDataApi: 'https://udata-steam.core.tandilserver.com',
+  uDataApi: 'http://localhost:3000',
   version: 'development'
 };
 
