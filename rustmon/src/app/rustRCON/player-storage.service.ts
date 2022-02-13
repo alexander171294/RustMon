@@ -18,13 +18,13 @@ export class PlayerStorageService {
     const playersWS: PlayerWithStatus[] = [];
     let oldPlayers = JSON.parse(localStorage.getItem('players') as string);
     oldPlayers = oldPlayers ? oldPlayers : {};
-    const oPl: string[] = [];
+    const playersOnline: string[] = [];
     players.forEach(el => {
       oldPlayers[el.SteamID] = el;
-      oPl.push(el.SteamID);
+      playersOnline.push(el.SteamID);
     });
     if(this.firstTime) {
-      this.getBatchUserData(oldPlayers).then((pdata) => {
+      this.getBatchUserData(players).then((pdata) => {
         pdata.forEach(data => {
           this.userDataSteam[data.userData.steamid] = data;
         });
@@ -32,26 +32,38 @@ export class PlayerStorageService {
       }).catch(e => {
         console.error(e);
       });
-      return [];
+      let entries: unknown[][] = [];
+      if (onlyOnline) {
+        entries = Object.entries(players);
+      } else {
+        entries = Object.entries(oldPlayers);
+      }
+      return entries.map((t: unknown[]) => {
+        const player = t[1] as PlayerWithStatus;
+        player.online = onlyOnline || playersOnline.indexOf(t[0] as string) >= 0;
+        return player;
+      });
     } else {
       localStorage.setItem('players', JSON.stringify(oldPlayers));
       Object.entries(oldPlayers).forEach(t => {
         const addr = (t[1] as Player).Address.split(':')[0];
         const id64 = (t[1] as Player).SteamID;
-        if(!this.userDataSteam[id64]) {
+        if(!this.userDataSteam[id64] && playersOnline.indexOf(t[0]) >= 0) { // si no esta en memoria y esta online
           this.userDataSteam[id64] = this.getUserData(addr, id64);
         }
-        (t[1] as PlayerWithStatus).country = (this.userDataSteam[id64] != undefined && this.userDataSteam[id64]?.countryCode) ? (this.userDataSteam[id64] as UserDataDTO).countryCode.toLowerCase() : '';
-        (t[1] as PlayerWithStatus).vac = this.userDataSteam[id64]?.vacData;
-        (t[1] as PlayerWithStatus).steamData = this.userDataSteam[id64]?.userData;
+        if(this.userDataSteam[id64]) {
+          (t[1] as PlayerWithStatus).country = (this.userDataSteam[id64] != undefined && this.userDataSteam[id64]?.countryCode) ? (this.userDataSteam[id64] as UserDataDTO).countryCode.toLowerCase() : '';
+          (t[1] as PlayerWithStatus).vac = this.userDataSteam[id64]?.vacData;
+          (t[1] as PlayerWithStatus).steamData = this.userDataSteam[id64]?.userData;
+        }
         (t[1] as PlayerWithStatus).notes = localStorage.getItem(`note-${id64}`);
         if (onlyOnline) {
-          if (oPl.indexOf(t[0]) >= 0) {
+          if (playersOnline.indexOf(t[0]) >= 0) {
             (t[1] as PlayerWithStatus).online = true;
             playersWS.push(t[1] as PlayerWithStatus);
           }
         } else {
-          (t[1] as PlayerWithStatus).online = oPl.indexOf(t[0]) >= 0;
+          (t[1] as PlayerWithStatus).online = playersOnline.indexOf(t[0]) >= 0;
           playersWS.push(t[1] as PlayerWithStatus);
         }
       });
@@ -78,14 +90,14 @@ export class PlayerStorageService {
     return new UserDataDTO();
   }
 
-  public getBatchUserData(oldPlayers: any): Promise<UserDataDTO[]> {
+  public getBatchUserData(allPlayers: any): Promise<UserDataDTO[]> {
     if (this.isBatching) {
       return Promise.reject('batch running');
     }
     this.isBatching = true;
     const pys: UDataItem[] = [];
-    Object.entries(oldPlayers).forEach((t: unknown) => {
-      const player = t as Player;
+    Object.entries(allPlayers).forEach((t: unknown[]) => {
+      const player = t[1] as Player;
       pys.push({
         ip: player.Address,
         steamID: player.SteamID
