@@ -23,6 +23,7 @@ export class Queue {
         return new Promise<any[]>((res, rej) => {
             this.logger.debug("processing in queue " + this.queue.length)
             if(!this.processNext(res)) {
+                this.logger.debug("Queue rejected, nothing to process");
                 rej(); // nada para procesar
             }
         });
@@ -31,8 +32,8 @@ export class Queue {
     private processNext(res) {
         if(this.queue.length > 0) {
             this.inProgress = true;
-            this.queue[0].then(res => {
-                this.results.push(res);
+            this.queue[0].then(uDataRes => {
+                this.results.push(uDataRes);
                 this.queue.splice(0, 1);
                 this.inProgress = false;
                 if(!this.processNext(res)) {

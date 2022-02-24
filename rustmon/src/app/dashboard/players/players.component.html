@@ -1,10 +1,10 @@
-<p-table #dt [value]="playerList" [columns]="playerCols"  [paginator]="true" [rows]="15"  [resizableColumns]="true"  [(contextMenuSelection)]="selectedPlayer" [contextMenu]="cm">
+<p-table #dt [globalFilterFields]="['DisplayName','Address','SteamID']" [value]="playerList" [columns]="playerCols"  [paginator]="true" [rows]="15"  [resizableColumns]="true"  [(contextMenuSelection)]="selectedPlayer" [contextMenu]="cm">
   <ng-template pTemplate="caption">
     <div style="vertical-align: middle;float: left;">
       Online <p-inputSwitch [(ngModel)]="onlyOnline" (onChange)="changeOnlineFilter($event)"></p-inputSwitch>
     </div>
     <div style="display: inline-block;text-align: right;margin-left: 15px;">
-      <input type="text" pInputText size="50" placeholder="Search Players" (input)="dt.filterGlobal(getStringFromInputEvent($event), 'contains')" style="width:auto">
+      <input type="text" pInputText size="50" placeholder="Search Players by Name/IP/steamID" (input)="dt.filterGlobal(getStringFromInputEvent($event), 'contains')" style="width:auto">
     </div>
   </ng-template>
   <ng-template pTemplate="header">
@@ -104,7 +104,7 @@
         </p>
       </div>
       <div class="notes">
-        <textarea placeholder="Notes for this player" [(ngModel)]="playerClicked.notes" (input)="saveNote(playerClicked.notes, playerClicked.steamData.steamid)"></textarea>
+        <textarea placeholder="Notes for this player" [(ngModel)]="playerClicked.notes" (input)="saveNote(playerClicked.notes, playerClicked.steamData.steamid)" (change)="saveNote(playerClicked.notes, playerClicked.steamData.steamid)"></textarea>
       </div>
     </div>
 
