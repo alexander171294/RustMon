@@ -1,7 +1,7 @@
-import { environment } from 'src/environment';
 import { Injectable, Logger } from '@nestjs/common';
 import * as redis from 'redis';
 import { Subject } from 'rxjs';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class StorageService {
@@ -11,11 +11,11 @@ export class StorageService {
     private readonly redisClient: redis.RedisClient;
     private onError: Subject<any> = new Subject<any>();
 
-    constructor() {
+    constructor(private configService: ConfigService) {
         this.redisClient = redis.createClient({
-            host: environment.redisHost,
-            auth_pass: environment.redisPass,
-            port: environment.redisPort
+            host: this.configService.get('redisHost'),
+            auth_pass: this.configService.get('redisPass'),
+            port: this.configService.get('redisPort')
         });
         this.redisClient.on('error', (err) => {
             this.logger.error('Redis kvs error ' + err.toString());
