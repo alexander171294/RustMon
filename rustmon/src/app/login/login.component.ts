@@ -5,6 +5,7 @@ import { RustService } from '../rustRCON/rust.service';
 import { REType } from '../rustRCON/RustEvent';
 import { HashParser } from '../utils/hasParser';
 import { ConectionData, ConnectionHistoryService } from './connection-history.service';
+import { faTimes, faCompressAlt, faCog, faKey } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +21,13 @@ export class LoginComponent implements OnInit {
 
   public connections: ConectionData[] = [];
   public connectionSelected: number = 0;
+
+  icons = {
+    faTimes,
+    faCompressAlt,
+    faCog,
+    faKey
+  }
 
   constructor(private rustSrv: RustService,
               private connectionHistory: ConnectionHistoryService,
@@ -41,6 +49,12 @@ export class LoginComponent implements OnInit {
         this.rconPasswd = params.password;
       }
     }
+  }
+
+  removeSrv() {
+    const conn = this.connections[this.connectionSelected];
+    this.connectionHistory.deleteServerByIPAndPort(conn.server, conn.port);
+    this.connections = this.connectionHistory.getServerList();
   }
 
   previousSessionLoad(evt: any, idConn: number) {

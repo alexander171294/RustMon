@@ -36,6 +36,11 @@ export class ConnectionHistoryService {
     return this.connections.sort((a,b) => b.lastConn - a.lastConn);
   }
 
+  public deleteServerByIPAndPort(ip: string, port: string) {
+    this.connections = this.connections.filter(con => con.port !== port && con.server !== ip);
+    this.saveServerList();
+  }
+
   private saveServerList(): void {
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.connections));
   }
@@ -46,4 +51,4 @@ export class ConectionData {
   public port: string = '';
   public password: string = '';
   public lastConn: number = 0;
-} 
+}

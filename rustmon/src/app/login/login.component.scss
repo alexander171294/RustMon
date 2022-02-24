@@ -25,12 +25,21 @@ section {
         }
         .icon {
           position: relative;
-          svg {
+          fa-icon {
             color: #f7ebe14a;
             width: 12px;
             position: absolute;
             left: 25px;
-            bottom: 8px;
+            bottom: 4px;
+            &.deleteSrv {
+              right: -3px;
+              left: initial;
+              color: #cd412b;
+              cursor: pointer;
+              &:hover {
+                color: gray;
+              }
+            }
           }
         }
         label {
