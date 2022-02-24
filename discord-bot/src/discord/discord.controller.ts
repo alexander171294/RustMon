@@ -1,6 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import { DiscordService } from './discord.service';
-import { Body, Controller, Get, Post, Query, Logger, Res, HttpStatus, HttpException } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Logger } from '@nestjs/common';
 import { ConfigData } from './ConfigData';
 import { StorageService } from 'src/storage/storage.service';
 
@@ -37,7 +37,7 @@ export class DiscordController {
     }
 
     @Post()
-    public botDefine(@Body() data: ConfigData): Promise {
+    public botDefine(@Body() data: ConfigData) {
         return new Promise((res, rej) => {
             this.discordService.getDiscordData(data.accessToken).subscribe(d => {
                 const user = d.data;
