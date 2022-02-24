@@ -23,4 +23,8 @@ export class DiscordService {
         }
     }
 
+    public validateCode(code: string) {
+        // /users/@me
+    }
+
 }

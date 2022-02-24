@@ -28,6 +28,8 @@
     "@nestjs/platform-express": "^8.0.0",
     "discord-api-types": "^0.27.3",
     "discord.js": "^13.6.0",
+    "@types/redis": "^2.8.28",
+    "redis": "^3.1.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0"
