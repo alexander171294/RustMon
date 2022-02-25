@@ -12,6 +12,8 @@ import { ServerInfo } from '../rustRCON/ServerInfo';
 import { ChatComponent } from './chat/chat.component';
 import { PlayerToolsService } from './player-tools/player-tools.service';
 import { PromptData, PromptService } from './prompt/prompt.service';
+import { faCog, faPowerOff } from '@fortawesome/free-solid-svg-icons';
+import { faDiscord } from '@fortawesome/free-brands-svg-icons';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,6 +21,12 @@ import { PromptData, PromptService } from './prompt/prompt.service';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit, OnDestroy {
+
+  public icons = {
+    faCog,
+    faPowerOff,
+    faDiscord,
+  }
 
   // data variable
   public serverInfo: ServerInfo = new ServerInfo();
@@ -31,6 +39,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public hasInfo = false;
   public hasStack = false;
   public openedConfig = false;
+  public openedBot = false;
   public showTeamMessages = true;
   public playerToolsOpened = false;
   public cogMenu = false;
@@ -232,6 +241,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   config() {
     this.openedConfig = true;
+  }
+
+  bot() {
+    this.openedBot = true;
   }
 
   help() {

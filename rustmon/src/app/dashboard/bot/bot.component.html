@@ -1,0 +1,83 @@
+<div class="container">
+  <article>
+      <header>
+          Discord bot configuration
+          <svg (click)="close.emit()" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times"
+              role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512"
+              class="svg-inline--fa fa-times fa-w-11">
+              <path fill="currentColor"
+                  d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                  class=""></path>
+          </svg>
+      </header>
+      <nav>
+        <div (click)="tab = 0" [class.active]="tab === 0">
+          Account
+        </div>
+        <div *ngIf="accountData && accountData.invitation" (click)="tab = 1" [class.active]="tab === 1">
+          Options
+        </div>
+      </nav>
+      <!-- FIRST TAB -->
+      <section *ngIf="tab === 0">
+        <p>
+          First step: login with your discord account
+        </p>
+        <div class="flex-row">
+          <div>
+            <button class="discord" *ngIf="linkLogin" (click)="discordLogin()">
+              <fa-icon [icon]="icons.faDiscord"></fa-icon>
+              Login with discord
+            </button>
+            <button class="discord loading" style="padding-top: 5px" *ngIf="!linkLogin">
+              &nbsp; &nbsp; &nbsp;
+            </button>
+          </div>
+          <div *ngIf="accountData">
+            User: {{accountData.admin}}<br />
+            <span *ngIf="accountData.rconHost">
+              {{accountData.rconHost}}/{{accountData.discordID}}
+            </span>
+            <button *ngIf="accountData.rconHost" (click)="remove()">Delete</button>
+          </div>
+        </div>
+        <div *ngIf="accountData && accountData.notDefined">
+          <hr />
+          <p>
+            Second step: select your discord server
+          </p>
+          <ul>
+            <li *ngFor="let server of accountData.servers" (click)="selectServer(server.id)">
+              <img *ngIf="server.icon" src="https://cdn.discordapp.com/icons/{{server.id}}/{{server.icon}}.webp?size=32" class="serverIcon"/>
+              {{server.name}}
+            </li>
+          </ul>
+        </div>
+        <div *ngIf="accountData && accountData.invitation">
+          <hr />
+          <p>
+            Third step: join the bot to your channel:
+          </p>
+          <div>
+            <button class="discord" (click)="botInvitation()">
+              <fa-icon [icon]="icons.faDiscord"></fa-icon>
+              Add bot to discord
+            </button>
+          </div>
+          <hr />
+          <p>
+            And if you want, you can define some <a href="" (click)="$event.preventDefault(); tab = 1">options</a>
+          </p>
+        </div>
+        <div class="spinner" *ngIf="loading"></div>
+      </section>
+      <section *ngIf="tab === 1">
+        <p>
+          second section
+        </p>
+      </section>
+      <footer>
+        <button>Apply</button>
+    </footer>
+  </article>
+</div>

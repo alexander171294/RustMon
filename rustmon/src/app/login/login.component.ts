@@ -38,6 +38,9 @@ export class LoginComponent implements OnInit {
     this.connections = this.connectionHistory.getServerList();
     this.previousSessionLoad(null, 0);
     if (window.location.hash) {
+      if(window.location.hash.indexOf('#token_type=Bearer') === 0) {
+        localStorage.setItem('discordSession', window.location.hash.split('&').find(f => f.indexOf('access_token') === 0).split('=')[1]);
+      }
       const params = HashParser.getHashParams();
       if(params.server) {
         this.serverIP = params.server;

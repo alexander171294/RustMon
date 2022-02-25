@@ -21,6 +21,7 @@ import { PromptModule } from './prompt/prompt.module';
 import { PlayersComponent } from './players/players.component';
 import { ConfigComponent } from './config/config.component';
 import { PlayerToolsComponent } from './player-tools/player-tools.component';
+import { BotComponent } from './bot/bot.component';
 
 const routes: Routes = [
   {
@@ -40,6 +41,7 @@ const routes: Routes = [
     PlayersComponent,
     ConfigComponent,
     PlayerToolsComponent,
+    BotComponent,
   ],
   imports: [
     CommonModule,

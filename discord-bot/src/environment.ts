@@ -4,5 +4,5 @@ export default () => ({
     redisHost: process.env.REDIS_HOST,
     redisPass: process.env.REDIS_PASS,
     redisPort: parseInt(process.env.REDIS_PORT),
-    redirectURI: 'http://localhost:3000'
+    redirectURI: 'http://localhost:4200/login'
 })

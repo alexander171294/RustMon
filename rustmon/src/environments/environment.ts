@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   uDataApi: 'http://localhost:3000',
-  version: 'development'
+  version: 'development',
+  discordApi: 'http://localhost:3000'
 };
 
 /*

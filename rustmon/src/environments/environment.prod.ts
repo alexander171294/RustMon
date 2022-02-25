@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
   uDataApi: 'https://udata-steam.core.tandilserver.com',
-  version: 'v1.5.1'
+  version: 'v1.5.1',
+  discordApi: 'https://dcbot.core.tandilserver.com'
 };
