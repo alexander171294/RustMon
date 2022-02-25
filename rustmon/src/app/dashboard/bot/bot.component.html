@@ -17,6 +17,9 @@
         <div *ngIf="accountData && accountData.invitation" (click)="tab = 1" [class.active]="tab === 1">
           Options
         </div>
+        <div (click)="tab = 2" [class.active]="tab === 2">
+          Help
+        </div>
       </nav>
       <!-- FIRST TAB -->
       <section *ngIf="tab === 0">
@@ -74,6 +77,17 @@
       <section *ngIf="tab === 1">
         <p>
           second section
+        </p>
+      </section>
+      <section *ngIf="tab === 2">
+        <p>
+          This bot is for manage server discord<br />
+          The main feature is associate discords players with steam accounts in order to identify players in discord server.<br />
+          You can use /steamconnect to request the bot to add a button to login with steam<br />
+          And then the bot can assign a discord custom range.<br />
+          You can automatically rename players in discord in order to have the same nicks in rust game and your discord server <br />
+          You can get steamid from discord player using the command /steamid<br />
+          You can save commands and apply when you wipe your server using /applycmd /savecmd
         </p>
       </section>
       <footer>
