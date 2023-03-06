@@ -54,13 +54,13 @@ docker run -p 80:80 -itd alexander171294/rustmon:latest
 
 Or see live instance in:
 
-[rustmon.tandilserver.com](https://rustmon.tandilserver.com/)
+[rustmon.tercerpiso.net](https://rustmon.tercerpiso.net)
 
 ## Backend Service:
 
 Api for get steam-profile, api-geolocalization, rustmap info:
 
-First, in order to use your custom served api, you need to edit environment.prod.ts and change `https://udata-steam.core.tandilserver.com` for your endpoint and rebuild docker image, or run ng build again with your changes.
+First, in order to use your custom served api, you need to edit environment.prod.ts and change `http://rustmon-udata.tercerpiso.tech/` for your endpoint and rebuild docker image, or run ng build again with your changes.
 
 Second, you need to start a redis service (it is used for cache user data).
 
