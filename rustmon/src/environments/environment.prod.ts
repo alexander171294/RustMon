@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  uDataApi: 'https://udata-steam.core.tandilserver.com',
+  uDataApi: 'https://rustmon.tercerpiso.net',
   version: 'v1.5.1'
 };
