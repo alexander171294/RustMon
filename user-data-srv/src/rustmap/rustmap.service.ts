@@ -16,7 +16,8 @@ export class RustMapService {
             const mapURL = this.rustmapURI.replace('${size}', size).replace('${seed}', seed);
             this.http.get<string>(mapURL+'?embed=i').pipe(first()).subscribe(r => {
                 const result = new RustMapData(mapURL);
-                const mapDetails = /<meta name="og:description" content="([^"]+)">/.exec(r.data);
+                console.log(r.data);
+                const mapDetails = /<meta property="og:description" content="([^"]+)">/gmi.exec(r.data);
                 if(mapDetails) {
                     result.mapExists = true;
                     result.mapDetails = mapDetails[1];
