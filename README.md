@@ -44,6 +44,10 @@ or if you don't have angular installed
 
 ![player tools](https://i.imgur.com/nptYGlO.png)
 
+### Plugin manager
+
+![plugin manager](https://i.imgur.com/8qNMET3.png)
+
 # run with docker in server:
 
 ## Dashboard:
