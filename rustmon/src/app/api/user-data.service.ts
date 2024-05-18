@@ -33,7 +33,7 @@ export class UserDataService {
   }
 
   public getLastVersion() {
-    return this.http.get(`https://raw.githubusercontent.com/alexander171294/RustMon/master/version.sh`, {
+    return this.http.get(`https://raw.githubusercontent.com/alexander171294/RustMon/master/version.txt`, {
       responseType: 'text'
     });
     // return this.http.get<string>(`https://raw.githubusercontent.com/alexander171294/RustMon/master/version.txt`, );
