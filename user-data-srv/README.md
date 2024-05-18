@@ -33,3 +33,7 @@ $ npm run test:cov
 ## Redis cache:
 
 docker run --name rustmonRedis -p 6379:6379 -d redis redis-server --requirepass 38674516
+
+reiniciar cache:
+
+docker stop rustmonRedis && docker rm rustmonRedis && docker run --name rustmonRedis -p 6379:6379 -d redis redis-server --requirepass 38674516

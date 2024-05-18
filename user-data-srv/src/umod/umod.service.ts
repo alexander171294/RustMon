@@ -10,8 +10,7 @@ export class UmodService {
 
   public getPluginVersion(id: string) {
     // ExampleId to example-id
-     
-    console.log(`Plugin slug: ${id}`);
+    // console.log(`Plugin slug: ${id}`);
     return this.http.get(`https://umod.org/plugins/${id}.json`);
   }
 

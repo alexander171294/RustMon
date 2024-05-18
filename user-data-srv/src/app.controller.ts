@@ -125,20 +125,23 @@ export class AppController {
 
   @Post('plugins')
   async getPluginsVersion(@Body() data: PluginData[]) {
+    const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
     // base 64:
-    return Promise.all(data.map(async d => {
+    return Promise.all(data.map(async (d, index) => {
       let meta = await this.redis.getFromCache(`plugins-${d.id}.${d.author}`, true);
       if(!meta) {
         const subscription = this.umodSrv.getPluginVersion(d.id);
         // await subscription:
         try {
+          await delay(index * 100);
           const response = await subscription.toPromise();
           meta = response.data;
+          this.redis.saveInCache(`plugins-${d.id}.${d.author}`, 3600, meta);
         } catch(e) {
           meta = {};
+          console.log(`Error getting plugin version ${d.id}`, e.message)
         }
       }
-      this.redis.saveInCache(`plugins-${d.id}.${d.author}`, 3600, meta);
       return {
         id: d.id,
         meta
