@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   uDataApi: 'http://localhost:3000',
-  version: 'development'
+  version: '1.5.2-dev'
 };
 
 /*

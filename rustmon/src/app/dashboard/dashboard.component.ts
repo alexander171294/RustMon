@@ -148,7 +148,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.rustSrv.frontThreadReady();
     this.setRefreshCommands();
     this.udSrv.getLastVersion().subscribe(v => {
-      this.latestVersion = v;
+      this.latestVersion = v.trim();
     });
   }
 
