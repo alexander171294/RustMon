@@ -21,6 +21,11 @@ export class AppController {
               private rustMap: RustMapService,
               private umodSrv: UmodService) {}
 
+  @Get('ping')
+  async ping() {
+    return 'pong';
+  }
+
   @Get('udata')
   async getUserData(@Query('steamID') steamID: string, @Query('ip') ip: string, @Response() res: Res) {
     if(!steamID) {

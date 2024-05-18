@@ -60,7 +60,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
               private messageService: MessageService,
               private router: Router,
               private promptSrv: PromptService,
-              private readonly udSrv: UserDataService) { }
+              private readonly udSrv: UserDataService) {
+    const api = localStorage.getItem('api-endpoint')
+    if(api) {
+      environment.uDataApi = api;
+    }
+    this.pingUdata();
+  }
 
   ngOnInit() {
     this.connectionString = this.rustSrv.getConnectionString();
@@ -282,4 +288,21 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.oxidePanel = true;
   }
 
+  connected = false;
+  setApi() {
+    const api = prompt('Put the user-data-srv URL, example: http://localhost:3000');
+    if(api) {
+      localStorage.setItem('api-endpoint', api);
+      environment.uDataApi = api;
+      this.pingUdata();
+    }
+  }
+
+  pingUdata() {
+    this.udSrv.ping().subscribe(() => {
+      this.connected = true;
+    }, () => {
+      this.connected = false;
+    });
+  }
 }

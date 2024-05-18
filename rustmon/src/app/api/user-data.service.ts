@@ -16,6 +16,10 @@ export class UserDataService {
     return this.http.post<UserDataDTO[]>(`${environment.uDataApi}/udata`, items);
   }
 
+  public ping() {
+    return this.http.get(`${environment.uDataApi}/ping`, {responseType: 'text'});
+  }
+
   public getUserData(steamId: string, ip: string): Observable<UserDataDTO> {
     return this.http.get<UserDataDTO>(`${environment.uDataApi}/udata?steamID=${steamId}&ip=${ip}`);
   }
