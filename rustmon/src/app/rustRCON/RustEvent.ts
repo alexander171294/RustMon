@@ -15,4 +15,8 @@ export enum REType {
   PLAYERS = 1002,
   BAN_LIST = 1003,
   SRV_INFO = 1004,
+  PLUGINS = 1005,
+  O_LOAD = 1006,
+  O_UNLOAD = 1007,
+  O_RELOAD = 1008,
 }

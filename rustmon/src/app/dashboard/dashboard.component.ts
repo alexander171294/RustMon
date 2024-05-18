@@ -44,6 +44,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public command: string = '';
 
   public version = environment.version;
+  public oxide?: string;
 
   private subscription?: Subscription;
 
@@ -117,6 +118,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
         }
       }
       if (d.type === REType.UNKOWN) {
+        console.log(d)
+        if(d.raw.startsWith('Oxide.Rust Version: ')) {
+          this.oxide = d.raw.replace('Oxide.Rust Version: ', '').split('\n')[0];
+          console.log('Oxide version:', this.oxide);
+        }
         this.consoleMessages.push(d.raw.trim());
         setTimeout(() => {
           this.consoleBox.nativeElement.scrollTop = this.consoleBox.nativeElement.scrollHeight;
@@ -147,6 +153,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
     setInterval(() => {
       this.players();
     }, 3500);
+    this.umod();
+  }
+
+  umod() {
+    this.rustSrv.umod();
   }
 
   players() {
@@ -256,6 +267,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
     } else {
       setTimeout(() => { this.recordChatMessage(data); }, 100); // chat stack not received, retry in 100ms
     }
+  }
+
+  oxidePanel = false;
+  umodPanel() {
+    this.oxidePanel = true;
   }
 
 }

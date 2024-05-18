@@ -13,7 +13,7 @@ export class RustService {
 
   private readonly CONNAME = 'RustMon';
 
-  private connected: boolean = false; 
+  private connected: boolean = false;
   private connectionString: string = '';
 
   constructor(private sck: SocketService, private rustEvents: RustEventsService) { }
@@ -62,6 +62,26 @@ export class RustService {
 
   getInfo() {
     this.sendCommand('serverinfo', REType.GET_INFO);
+  }
+
+  umod() {
+    this.sendCommand('o.version');
+  }
+
+  oplugins() {
+    this.sendCommand('o.plugins', REType.PLUGINS);
+  }
+
+  oload(name: string) {
+    this.sendCommand(`o.load ${name}`, REType.O_LOAD);
+  }
+
+  ounload(name: string) {
+    this.sendCommand(`o.unload ${name}`, REType.O_UNLOAD);
+  }
+
+  oreload(name: string) {
+    this.sendCommand(`o.reload ${name}`, REType.O_RELOAD);
   }
 
   players() {

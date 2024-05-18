@@ -1,0 +1,99 @@
+<section *ngIf="visible">
+  <article>
+    <header>Oxide Mod {{version}}</header>
+    <main>
+      <p-table #dt [globalFilterFields]="['id','author']" [value]="plugins" [columns]="pluginsCols"  [paginator]="true" [rows]="20"  [resizableColumns]="true">
+        <ng-template pTemplate="caption">
+          <div style="display: inline-block;text-align: right;margin-left: 15px;">
+            <input type="text" pInputText size="50" placeholder="Search plugin by name/author" (input)="dt.filterGlobal(getStringFromInputEvent($event), 'contains')" style="width:auto">
+          </div>
+          <div style="display: inline-block;text-align: right;margin-left: 15px;" class="boxInfo">
+            <div class="row" style="display: flex;justify-content: space-between;">
+              <div class="col">
+                <label>Plugins Size</label>
+                <span>{{stats.size}}</span>
+              </div>
+              <div class="col">
+                <label>Plugins Impact</label>
+                <span>{{stats.time}}</span>
+              </div>
+            </div>
+            <div class="row" style="display: flex;justify-content: space-between;">
+              <div class="col">
+                <label>Plugins Loaded</label>
+                <span>{{stats.loaded}}</span>
+              </div>
+              <div class="col">
+                <label>Plugins Unloaded</label>
+                <span>{{stats.unloaded}}</span>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+              <th *ngFor="let col of pluginsCols"  [pSortableColumn]="col.field" [style.width]="col.width" pResizableColumn> <!-- -->
+                {{col.header}}
+                <p-sortIcon [field]="col.field" *ngIf="col.field != 'actions'" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+              </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-plugin let-columns="columns">
+          <tr [class.unloaded]="!plugin.loaded" >
+              <td *ngFor="let col of columns">
+                <span class="id" *ngIf="col.field == 'id'" style="width: 100%;display: flex;justify-content: space-between;">
+                  {{plugin.id}}
+                  <i style="color: #ff806b;">{{plugin.version}}</i>
+                </span>
+                <span class="author" *ngIf="col.field == 'author'">
+                  {{plugin.author}}
+                  <ng-container *ngIf="!plugin.loaded">-</ng-container>
+
+                </span>
+                <span class="size" *ngIf="col.field == 'size'">
+                  {{plugin.size}}
+                  <ng-container *ngIf="!plugin.loaded">-</ng-container>
+                </span>
+                <span class="time" *ngIf="col.field == 'time'">
+                  {{plugin.time}}
+                  <ng-container *ngIf="!plugin.loaded">-</ng-container>
+                </span>
+                <div class="actions" *ngIf="col.field == 'actions'">
+                  <button class="compact" [class.loading]="plugin.loading" *ngIf="plugin.loaded" (click)="plugin.loading = true; reload(plugin.id)">
+                    Reload
+                  </button>
+                  <button class="compact" [class.loading]="plugin.loading" *ngIf="plugin.loaded" (click)="plugin.loading = true; unload(plugin.id)">
+                    Unload
+                  </button>
+                  <button class="compact" [class.loading]="plugin.loading" *ngIf="!plugin.loaded" (click)="plugin.loading = true; load(plugin.id)">
+                    Load
+                  </button>
+                </div>
+                <!-- <span class="hp" *ngIf="col.field == 'Health'" [class.greenText]="player.Health > 50" [class.yellowText]="player.Health <= 50 && player.Health >= 20" [class.redText]="player.Health < 20">
+                  {{player.Health | number:'1.0-0'}}
+                </span>
+                <span class="ip" *ngIf="col.field == 'Address'">
+                  {{player.Address | portRemove}}
+                </span>
+                <span class="ping" *ngIf="col.field == 'Ping' && player.online" [class.greenText]="player.Ping < 75" [class.yellowText]="player.Ping <= 170 && player.Ping >= 75" [class.redText]="player.Ping > 170">
+                  {{player.Ping}}
+                </span>
+                <span class="username" *ngIf="col.field == 'DisplayName'" style="color:#55aaff">
+                  <img *ngIf="player.country && player.country != 'N/D'" [src]="'https://flagpedia.net/data/flags/w580/' + player.country + '.png'" style="width: 20px;" [title]="player.country" />
+                  {{player.DisplayName}}
+                  <div class="warns">
+                    <fa-icon title="Notes" class="noteIcon" *ngIf="player.notes" [icon]="icons.faStickyNote"></fa-icon>
+                    <fa-icon title="Private Profile" class="privateIcon" *ngIf="!player.steamData || player.steamData.communityvisibilitystate != 3" [icon]="icons.faEyeSlash"></fa-icon>
+                    <fa-icon title="VAC" class="vacIcon" *ngIf="player.vac?.VACBanned" [icon]="icons.faExclamationTriangle"></fa-icon>
+                  </div>
+                </span> -->
+              </td>
+          </tr>
+      </ng-template>
+      </p-table>
+    </main>
+    <footer>
+      <button (click)="close.emit()">ok</button>
+    </footer>
+  </article>
+</section>

@@ -74,6 +74,26 @@ body,html {
       background-color: #c23e29;
       border-color: rgba(0,0,0,0);
     }
+    &.compact {
+      &.loading {
+        &::after {
+          margin-top: 2px;
+          margin-left: 4px;
+          width: 4px;
+          height: 4px;
+          border-left: 1px solid white;
+          border-right: 1px solid white;
+          left: calc(50% - 6px);
+        }
+        &::before {
+          width: 10px;
+          height: 10px;
+          border-top: 1px solid white;
+          border-bottom: 1px solid white;
+          left: calc(50% - 6px);
+        }
+      }
+    }
     &.loading {
       color: #cd412b;
       &::after {
@@ -241,4 +261,8 @@ body,html {
 /* Handle on hover */
 *::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.p-datatable .p-sortable-column.p-highlight, .p-datatable .p-sortable-column.p-highlight .p-sortable-column-icon, .p-datatable .p-sortable-column.p-highlight:hover, .p-datatable .p-sortable-column.p-highlight:hover  .p-sortable-column-icon {
+  color: #fd644d;
 }
