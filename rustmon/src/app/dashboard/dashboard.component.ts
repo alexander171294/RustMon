@@ -12,6 +12,7 @@ import { ServerInfo } from '../rustRCON/ServerInfo';
 import { ChatComponent } from './chat/chat.component';
 import { PlayerToolsService } from './player-tools/player-tools.service';
 import { PromptData, PromptService } from './prompt/prompt.service';
+import { UserDataService } from '../api/user-data.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -48,6 +49,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   private subscription?: Subscription;
 
+  latestVersion = environment.version;
+
   @ViewChild('chatCompo', {static: false}) chatCompo?: ChatComponent;
   @ViewChild('console', {static: false}) consoleBox: any;
 
@@ -56,7 +59,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
               private playerTool: PlayerToolsService,
               private messageService: MessageService,
               private router: Router,
-              private promptSrv: PromptService) { }
+              private promptSrv: PromptService,
+              private readonly udSrv: UserDataService) { }
 
   ngOnInit() {
     this.connectionString = this.rustSrv.getConnectionString();
@@ -143,6 +147,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     });
     this.rustSrv.frontThreadReady();
     this.setRefreshCommands();
+    this.udSrv.getLastVersion().subscribe(v => {
+      this.latestVersion = v;
+    });
   }
 
   setRefreshCommands() {

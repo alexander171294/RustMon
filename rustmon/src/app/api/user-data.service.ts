@@ -31,6 +31,13 @@ export class UserDataService {
   public mapInvalidateCache(seed: string, size: string) {
     return this.http.get<MapData>(`${environment.uDataApi}/mapdata/invalidate?seed=${seed}&size=${size}`);
   }
+
+  public getLastVersion() {
+    return this.http.get(`https://raw.githubusercontent.com/alexander171294/RustMon/master/version.sh`, {
+      responseType: 'text'
+    });
+    // return this.http.get<string>(`https://raw.githubusercontent.com/alexander171294/RustMon/master/version.txt`, );
+  }
 }
 
 export interface UDataItem {

@@ -236,3 +236,13 @@ app-players {
     display: none;
   }
 }
+
+.version-panel {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  background: #007ad9;
+  padding: 8px;
+  border-radius: 8px;
+  color: wheat;
+}
