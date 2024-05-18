@@ -62,7 +62,7 @@ export class UmodComponent implements OnInit {
             if(plugin.author.trim() != update.meta.author) {
               console.log(`El plugin ${plugin.name} tiene un nuevo autor: ${plugin.author} -> ${update.meta.author} https://umod.org/plugins/${update.meta.slug}`)
             }
-            if(plugin.version.trim() != update.meta.latest_release_version.trim()) {
+            if(this.vStd(plugin.version.trim()) != this.vStd(update.meta.latest_release_version.trim())) {
               plugin.updates = true;
               plugin.latest_release_version = update.meta.latest_release_version;
               updates = true;
@@ -95,6 +95,13 @@ export class UmodComponent implements OnInit {
     return evt.target.value;
   }
 
+  vStd(version: string): string {
+    const parts = version.split('.');
+    if(parts.length == 2) parts.push('0');
+    if(parts.length == 1) parts.push('0', '0');
+    if(parts.length > 3) parts.splice(3, parts.length - 3)
+    return parts.map(v => v.padStart(3, '0')).join('');
+  }
 
   stats = {
     loaded: 0,
