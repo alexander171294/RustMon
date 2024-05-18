@@ -61,3 +61,14 @@ export enum SteamVisibleStates {
     public EconomyBan: string;
   }
   
+  export class PluginData {
+    id: string;
+    name: string;
+    author: string;
+    file: string;
+    size: string;
+    time: string;
+    version: string;
+    loaded: boolean;
+    loading: boolean;
+  }

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { UserDataService } from 'src/app/api/user-data.service';
 import { RustEvent } from 'src/app/rustRCON/RustEvent';
 import { RustService } from 'src/app/rustRCON/rust.service';
 
@@ -12,10 +13,14 @@ export class UmodComponent implements OnInit {
   @Output() close = new EventEmitter<void>();
   @Input() visible: boolean = false;
   @Input() version: string = '0.0.1';
+  @Output() pluginUpdates = new EventEmitter<void>();
 
-  constructor(private rustSrv: RustService,) { }
+  constructor(
+    private rustSrv: RustService,
+    private readonly userDS: UserDataService
+  ) { }
 
-  public plugins: {id: string, name: string, author: string, file: string, size: string, time: string, version: string, loaded: boolean}[] = [];
+  public plugins: {id: string, name: string, author: string, file: string, size: string, time: string, version: string, loaded: boolean, updates?: boolean, latest_release_version?: string}[] = [];
   public pluginsCols = [
     { field: 'id', header: 'Name', width: '250px' },
     { field: 'author', header: 'Author', width: '250px'},
@@ -43,11 +48,33 @@ export class UmodComponent implements OnInit {
             author: result[5],
             id: id,
             loaded: !result[8],
-            loading: false
+            loading: false,
+            slug: id.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase(),
           };
           return d;
         });
         this.calcStats(this.plugins);
+        this.userDS.getPluginUpdates(this.plugins).subscribe((r: any) => {
+          let updates = false;
+          r.forEach((update: any) => {
+            const plugin = this.plugins.find(p => p.id == update.id);
+            if(!update.meta.slug) return;
+            if(plugin.author.trim() != update.meta.author) {
+              console.log(`El plugin ${plugin.name} tiene un nuevo autor: ${plugin.author} -> ${update.meta.author} https://umod.org/plugins/${update.meta.slug}`)
+            }
+            if(plugin.version.trim() != update.meta.latest_release_version.trim()) {
+              plugin.updates = true;
+              plugin.latest_release_version = update.meta.latest_release_version;
+              updates = true;
+            } else {
+              plugin.updates = false;
+              plugin.latest_release_version = update.meta.latest_release_version;
+            }
+          });
+          if(updates) {
+            this.pluginUpdates.emit();
+          }
+        });
       }
       if(d.type == 1006) {
         console.log('Plugin loaded', d.raw);

@@ -32,11 +32,14 @@ export class UserDataService {
     return this.http.get<MapData>(`${environment.uDataApi}/mapdata/invalidate?seed=${seed}&size=${size}`);
   }
 
+  public getPluginUpdates(data: any) {
+    return this.http.post(`${environment.uDataApi}/plugins`, data);
+  }
+
   public getLastVersion() {
     return this.http.get(`https://raw.githubusercontent.com/alexander171294/RustMon/master/version.txt`, {
       responseType: 'text'
     });
-    // return this.http.get<string>(`https://raw.githubusercontent.com/alexander171294/RustMon/master/version.txt`, );
   }
 }
 

@@ -42,8 +42,22 @@
           <tr [class.unloaded]="!plugin.loaded" >
               <td *ngFor="let col of columns">
                 <span class="id" *ngIf="col.field == 'id'" style="width: 100%;display: flex;justify-content: space-between;">
-                  {{plugin.id}}
-                  <i style="color: #ff806b;">{{plugin.version}}</i>
+                  <ng-container *ngIf="!plugin.latest_release_version">
+                    {{plugin.id}}
+                  </ng-container>
+                  <a [style.color]="plugin.updates ? '#ff806b' : '#c3f488'" [href]="'https://umod.org/plugins/'+plugin.slug" target="_blank" *ngIf="plugin.latest_release_version">
+                    {{plugin.id}}
+                  </a>
+                  <i *ngIf="!plugin.latest_release_version">
+                    {{plugin.version}}
+                  </i>
+                  <i [style.color]="plugin.updates ? '#ff806b' : '#c3f488'" *ngIf="plugin.latest_release_version">
+                    {{plugin.version}}
+                    <ng-container *ngIf="plugin.updates">
+                      >
+                      {{plugin.latest_release_version}}
+                    </ng-container>
+                  </i>
                 </span>
                 <span class="author" *ngIf="col.field == 'author'">
                   {{plugin.author}}

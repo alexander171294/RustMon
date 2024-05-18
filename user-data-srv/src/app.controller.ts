@@ -1,13 +1,14 @@
 import { Queue } from './queue/queue.util';
 import { Body, Controller, Get, HttpException, HttpStatus, Logger, Post, Query, Response } from '@nestjs/common';
 import { IPApiData, IPGeocodeService } from './ipGeocode/ipgeocode.service';
-import { SteamVisibleStates, UserDataDTO } from './UserDataDTO';
+import { PluginData, SteamVisibleStates, UserDataDTO } from './UserDataDTO';
 import { PlayerDataResponse, PlayerVacsResponse, ValveApiService } from './valve/valve-api.service';
 import { AxiosResponse } from 'axios';
 import { CacheRedisService } from './redis/redis.service';
 import { environment } from './environment';
 import { Response as Res } from 'express';
 import { RustMapService } from './rustmap/rustmap.service';
+import { UmodService } from './umod/umod.service';
 
 @Controller()
 export class AppController {
@@ -17,7 +18,8 @@ export class AppController {
   constructor(private valveApi: ValveApiService,
               private geocode: IPGeocodeService,
               private redis: CacheRedisService,
-              private rustMap: RustMapService) {}
+              private rustMap: RustMapService,
+              private umodSrv: UmodService) {}
 
   @Get('udata')
   async getUserData(@Query('steamID') steamID: string, @Query('ip') ip: string, @Response() res: Res) {
@@ -119,6 +121,29 @@ export class AppController {
       const mapDetails = await this.rustMap.getRustData(worldSize.toString(), seed.toString());
       return mapDetails;
     }
+  }
+
+  @Post('plugins')
+  async getPluginsVersion(@Body() data: PluginData[]) {
+    // base 64:
+    return Promise.all(data.map(async d => {
+      let meta = await this.redis.getFromCache(`plugins-${d.id}.${d.author}`, true);
+      if(!meta) {
+        const subscription = this.umodSrv.getPluginVersion(d.id);
+        // await subscription:
+        try {
+          const response = await subscription.toPromise();
+          meta = response.data;
+        } catch(e) {
+          meta = {};
+        }
+      }
+      this.redis.saveInCache(`plugins-${d.id}.${d.author}`, 3600, meta);
+      return {
+        id: d.id,
+        meta
+      }
+    }));
   }
 
   @Get('mapdata/invalidate')

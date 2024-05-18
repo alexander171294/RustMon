@@ -276,6 +276,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
   }
 
+  pluginUpdates = false;
   oxidePanel = false;
   umodPanel() {
     this.oxidePanel = true;
