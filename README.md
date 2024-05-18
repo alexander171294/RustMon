@@ -46,7 +46,7 @@ or if you don't have angular installed
 
 ### Plugin manager
 
-![plugin manager](https://i.imgur.com/pQQqROf.png)
+![plugin manager](https://i.imgur.com/8qNMET3.png)
 
 # run with docker in server:
 
