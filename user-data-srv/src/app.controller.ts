@@ -136,11 +136,11 @@ export class AppController {
           await delay(index * 100);
           const response = await subscription.toPromise();
           meta = response.data;
-          this.redis.saveInCache(`plugins-${d.id}.${d.author}`, 3600, meta);
         } catch(e) {
           meta = {};
           console.log(`Error getting plugin version ${d.id}`, e.message)
         }
+        this.redis.saveInCache(`plugins-${d.id}.${d.author}`, 3600, meta);
       }
       return {
         id: d.id,
