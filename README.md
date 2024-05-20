@@ -1,4 +1,4 @@
-# RustMon 1.5.2
+# RustMon 1.5.4
 
 Rust game admin tool for servers (RustMonitor) 
 
