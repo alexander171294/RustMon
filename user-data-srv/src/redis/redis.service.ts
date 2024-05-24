@@ -15,6 +15,7 @@ export class CacheRedisService {
 
     constructor() {
         this.redisClient = redis.createClient({
+            url: environment.redis.url,
             host: environment.redis.host,
             auth_pass: environment.redis.auth_pass,
             port: environment.redis.port
