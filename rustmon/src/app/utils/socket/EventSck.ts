@@ -7,5 +7,6 @@ export enum EventTypeSck {
   CONNECTED,
   DISCONNECTED,
   ERROR,
+  FATAL_ERROR,
   MESSAGE
 }

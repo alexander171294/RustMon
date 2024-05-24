@@ -20,29 +20,39 @@ export class RustService {
 
   connect(serverIP: string, rconPort: number, rconPasswd: string): EventEmitter<RustEvent> {
     this.connectionString = `${serverIP}`;
-    this.sck.connect('ws://' + serverIP + ':' + rconPort + '/' + rconPasswd).subscribe(evt => {
-      if (evt.eventType === EventTypeSck.CONNECTED) {
+    const connectionEvt = this.sck.connect('ws://' + serverIP + ':' + rconPort + '/' + rconPasswd);
+    if(connectionEvt) {
+      connectionEvt.subscribe(evt => {
+        if (evt.eventType === EventTypeSck.CONNECTED) {
+          const re = new RustEvent();
+          re.type = REType.CONNECTED;
+          this.connected = true;
+          this.evtRust.emit(re);
+        }
+        if (evt.eventType === EventTypeSck.MESSAGE) {
+          this.processMessage(evt.eventData, JSON.parse(evt.eventData.data));
+        }
+        if (evt.eventType === EventTypeSck.DISCONNECTED) {
+          const re = new RustEvent();
+          re.type = REType.DISCONNECT;
+          this.evtRust.emit(re);
+          this.connected = false;
+        }
+        if (evt.eventType === EventTypeSck.ERROR) {
+          const re = new RustEvent();
+          re.type = REType.ERROR;
+          this.evtRust.emit(re);
+          this.connected = false;
+        }
+      });
+    } else {
+      setTimeout(() => {
         const re = new RustEvent();
-        re.type = REType.CONNECTED;
-        this.connected = true;
-        this.evtRust.emit(re);
-      }
-      if (evt.eventType === EventTypeSck.MESSAGE) {
-        this.processMessage(evt.eventData, JSON.parse(evt.eventData.data));
-      }
-      if (evt.eventType === EventTypeSck.DISCONNECTED) {
-        const re = new RustEvent();
-        re.type = REType.DISCONNECT;
+        re.type = REType.FATAL_ERROR;
         this.evtRust.emit(re);
         this.connected = false;
-      }
-      if (evt.eventType === EventTypeSck.ERROR) {
-        const re = new RustEvent();
-        re.type = REType.ERROR;
-        this.evtRust.emit(re);
-        this.connected = false;
-      }
-    });
+      }, 1000);
+    }
     return this.evtRust;
   }
 

@@ -11,34 +11,39 @@ export class SocketService {
 
   constructor() { }
 
-  connect(url: string): EventEmitter<EventSck> {
-    this.ws = new WebSocket(url);
-    this.ws.onmessage = (d) => {
-      const event = new EventSck();
-      event.eventType = EventTypeSck.MESSAGE;
-      event.eventData = d;
-      this.socketEvent.emit(event);
-    };
-    this.ws.onclose = () => {
-      console.warn('closed');
-      const event = new EventSck();
-      event.eventType = EventTypeSck.DISCONNECTED;
-      this.socketEvent.emit(event);
-    };
-    this.ws.onerror = (e) => {
-      console.error('error', e);
-      const event = new EventSck();
-      event.eventType = EventTypeSck.ERROR;
-      event.eventData = e;
-      this.socketEvent.emit(event);
-    };
-    this.ws.onopen = (d) => {
-      const event = new EventSck();
-      event.eventType = EventTypeSck.CONNECTED;
-      event.eventData = d;
-      this.socketEvent.emit(event);
-    };
-    return this.socketEvent;
+  connect(url: string): EventEmitter<EventSck> | undefined {
+    try {
+      this.ws = new WebSocket(url);
+      this.ws.onmessage = (d) => {
+        const event = new EventSck();
+        event.eventType = EventTypeSck.MESSAGE;
+        event.eventData = d;
+        this.socketEvent.emit(event);
+      };
+      this.ws.onclose = () => {
+        console.warn('closed');
+        const event = new EventSck();
+        event.eventType = EventTypeSck.DISCONNECTED;
+        this.socketEvent.emit(event);
+      };
+      this.ws.onerror = (e) => {
+        console.error('error', e);
+        const event = new EventSck();
+        event.eventType = EventTypeSck.ERROR;
+        event.eventData = e;
+        this.socketEvent.emit(event);
+      };
+      this.ws.onopen = (d) => {
+        const event = new EventSck();
+        event.eventType = EventTypeSck.CONNECTED;
+        event.eventData = d;
+        this.socketEvent.emit(event);
+      };
+      return this.socketEvent;
+    } catch(e) {
+      console.error('Error connecting client', e);
+      return undefined;
+    }
   }
 
   sendMessage(message: any) {

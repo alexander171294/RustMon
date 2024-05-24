@@ -73,6 +73,10 @@ export class LoginComponent implements OnInit {
         this.messageService.add({severity: 'error', summary: 'Error', detail: 'Can\'t connect to server.'});
         this.loginLoading = false;
         subscription.unsubscribe();
+      } else if (d.type === REType.FATAL_ERROR) {
+        this.messageService.add({severity: 'error', summary: 'Fatal Error', detail: 'Unsecured content permission required (see the link of connect HTTPS website).'});
+        this.loginLoading = false;
+        subscription.unsubscribe();
       }
     });
   }

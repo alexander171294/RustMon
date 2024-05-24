@@ -8,6 +8,7 @@ export class RustEvent {
 export enum REType {
   CONNECTED = -3000,
   ERROR = -2000,
+  FATAL_ERROR = -4000,
   DISCONNECT = -1000,
   UNKOWN = 0,
   GET_INFO = 1000,
