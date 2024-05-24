@@ -1,3 +1,5 @@
+import { LogLevel } from "elastic-apm-node";
+
 export const environment = {
   steamApiKey: process.env.STEAM_API ? process.env.STEAM_API : 'FBE6A5C249453A8516A55AAD5F87973F', // https://steamcommunity.com/dev/apikey
   ipstackApiKey: '', // https://ipstack.com/signup/free
