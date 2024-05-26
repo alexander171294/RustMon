@@ -29,7 +29,7 @@ Rust admin panel (RustMonitor) See our 👉🏼 [Live Instance](https://rustmon.
 
 ### Dashboard
 
-![dashboard](https://i.imgur.com/d0u2uOa.png)
+![dashboard](https://i.imgur.com/LBMmO1U.png)
 
 ### Server configurations
 
