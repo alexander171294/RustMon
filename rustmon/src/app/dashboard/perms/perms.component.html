@@ -35,13 +35,13 @@
           All members on the group will have the permissions assigned to the group
         </main>
         <main *ngIf="groupSelected">
-          <h1>Group '{{groupSelected}}'</h1>
+          <h1>Group {{groupSelected.toLocaleLowerCase()}} settings</h1>
           <div class="loadingMapData" *ngIf="groupLoading">
             <div class="spinner"></div>
           </div>
           <div class="art" *ngIf="!groupLoading">
             <h4>
-              Players
+              Group members
               <button class="mini" (click)="addPlayer()"  pTooltip="Add player to group">
                 <svg style="width: 14px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
               </button>
@@ -58,7 +58,7 @@
           </div>
           <div class="art" *ngIf="!groupLoading">
             <h4>
-              Permissions
+              Permissions of group members, (add:
               <p-dropdown
                 [options]="notAssignedFilter(perms)"
                 [(ngModel)]="selectedPermission"
@@ -81,7 +81,7 @@
               </p-dropdown>
               <button class="mini" (click)="addPerm(selectedPermission)" pTooltip="Add selected permission to group">
                 <svg style="width: 14px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
-              </button>
+              </button>)
             </h4>
             <ul *ngIf="groupPerms.length">
               <li *ngFor="let perm of groupPerms" pTooltip="Copy permission name" tooltipPosition="bottom" style="cursor: pointer;" (click)="copy(perm)">
@@ -103,8 +103,14 @@
       <section *ngIf="tab == 2" class="eipanel">
         <p class="info">This exports all the permissions on a file, and you can connect to another server and apply the same groups and permissions. <b>WARNING!</b>, when you import a permissions file, all the previous permissions/group will be removed.</p>
         <div class="comboBox">
-          <button (click)="export()">EXPORT</button>
-          <button (click)="import()">IMPORT</button>
+          <button (click)="export()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" style="width: 22px;"><path fill="currentColor" d="M144 480C64.5 480 0 415.5 0 336c0-62.8 40.2-116.2 96.2-135.9c-.1-2.7-.2-5.4-.2-8.1c0-88.4 71.6-160 160-160c59.3 0 111 32.2 138.7 80.2C409.9 102 428.3 96 448 96c53 0 96 43 96 96c0 12.2-2.3 23.8-6.4 34.6C596 238.4 640 290.1 640 352c0 70.7-57.3 128-128 128H144zm79-167l80 80c9.4 9.4 24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-39 39V184c0-13.3-10.7-24-24-24s-24 10.7-24 24V318.1l-39-39c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9z"/></svg>
+            EXPORT
+          </button>
+          <button (click)="import()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" style="width: 22px;"><path fill="currentColor" d="M144 480C64.5 480 0 415.5 0 336c0-62.8 40.2-116.2 96.2-135.9c-.1-2.7-.2-5.4-.2-8.1c0-88.4 71.6-160 160-160c59.3 0 111 32.2 138.7 80.2C409.9 102 428.3 96 448 96c53 0 96 43 96 96c0 12.2-2.3 23.8-6.4 34.6C596 238.4 640 290.1 640 352c0 70.7-57.3 128-128 128H144zm79-217c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l39-39V392c0 13.3 10.7 24 24 24s24-10.7 24-24V257.9l39 39c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0l-80 80z"/></svg>
+            IMPORT
+          </button>
         </div>
       </section>
   </article>

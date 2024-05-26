@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ConfirmationService } from 'primeng/api';
 import { UserDataService } from 'src/app/api/user-data.service';
 import { REType, RustEvent } from 'src/app/rustRCON/RustEvent';
 import { RustService } from 'src/app/rustRCON/rust.service';
@@ -20,7 +21,10 @@ export class PermsComponent implements OnInit {
   perms: {name: string}[] = [];
   selectedPermission?: string;
 
-  constructor(private rustSrv: RustService, private uData: UserDataService) { }
+  constructor(
+    private rustSrv: RustService,
+    private uData: UserDataService,
+    private confirmationService: ConfirmationService,) { }
 
   ngOnInit(): void {
     console.log('INIT');
@@ -96,13 +100,18 @@ export class PermsComponent implements OnInit {
 
   removeGroup(name: string) {
     if(name && name !== 'default' && name !== 'admin') {
-      if (name == this.groupSelected) {
-        this.groupSelected = undefined;
-        this.groupLoading = false;
-      }
-      // TODO: prompt de confirmar
-      this.rustSrv.sendCommand(`o.group remove ${name}`);
-      this.getGroups();
+      this.confirmationService.confirm({
+        message: `Are you sure that you want to remove ${name} group?`,
+        accept: () => {
+            if (name == this.groupSelected) {
+              this.groupSelected = undefined;
+              this.groupLoading = false;
+            }
+            // TODO: prompt de confirmar
+            this.rustSrv.sendCommand(`o.group remove ${name}`);
+            this.getGroups();
+        }
+      });
     }
   }
 
@@ -116,8 +125,13 @@ export class PermsComponent implements OnInit {
 
   removePlayer(steamID: string) {
     if(steamID) {
-      this.rustSrv.sendCommand(`o.usergroup remove ${steamID} ${this.groupSelected}`);
-      this.showGroup(this.groupSelected);
+      this.confirmationService.confirm({
+        message: `Are you sure that you want to remove ${steamID} from ${this.groupSelected} group?`,
+        accept: () => {
+          this.rustSrv.sendCommand(`o.usergroup remove ${steamID} ${this.groupSelected}`);
+          this.showGroup(this.groupSelected);
+        }
+      });
     }
   }
 
@@ -139,8 +153,13 @@ export class PermsComponent implements OnInit {
 
   removePerm(name: string) {
     if(this.groupSelected) {
-      this.rustSrv.sendCommand(`o.revoke group ${this.groupSelected} ${name}`);
-      this.showGroup(this.groupSelected);
+      this.confirmationService.confirm({
+        message: `Are you sure that you want to remove ${name} permission from ${this.groupSelected} group?`,
+        accept: () => {
+          this.rustSrv.sendCommand(`o.revoke group ${this.groupSelected} ${name}`);
+          this.showGroup(this.groupSelected);
+        }
+      });
     }
   }
 
