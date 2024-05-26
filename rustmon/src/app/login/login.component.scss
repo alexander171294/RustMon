@@ -66,3 +66,30 @@ section {
         }
     }
 }
+
+
+footer {
+  display: flex;
+  width: 200px;
+  justify-content: space-around;
+  margin-top: 16px;
+  a {
+    display: flex;
+    color: #a4a6a7;
+    text-decoration: none;
+    align-items: center;
+    &:first-child {
+      padding-right: 8px;
+      border-right: 1px solid #ffffff3b;
+      margin-right: 4px;
+    }
+    &:hover {
+      color: wheat;
+    }
+    svg {
+      width: 30px;
+      margin-right: 8px;
+      color: #cc422c;
+    }
+  }
+}

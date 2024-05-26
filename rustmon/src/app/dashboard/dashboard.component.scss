@@ -180,6 +180,7 @@
     font-size: 14px;
     svg {
       width: 20px;
+      vertical-align: middle;
     }
     a {
       color: #cd412b;
@@ -245,4 +246,7 @@ app-players {
   padding: 8px;
   border-radius: 8px;
   color: wheat;
+  svg {
+    margin-left: 8px;
+  }
 }
