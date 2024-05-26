@@ -25,7 +25,7 @@ Rust admin panel (RustMonitor) See our 👉🏼 [Live Instance](https://rustmon.
 
 ### Login
 
-![Login](https://i.imgur.com/ZUBGFIM.png)
+![Login](https://i.imgur.com/C6AolI6.png)
 
 ### Dashboard
 
