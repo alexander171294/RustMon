@@ -1,6 +1,25 @@
 # RustMon 1.5.9
 
-Rust game admin tool for servers (RustMonitor) 
+Rust admin panel (RustMonitor) See our 👉🏼 [Live Instance](https://rustmon.tercerpiso.net)
+
+### Current features
+
+- Multiple servers login record.
+- Simple full control (Chat, Players and Console) on single screen
+- Plugin enable/disable/reload and update checker
+- Permissions groups and export/import to apply on multiple servers
+- All configurations on a simple panel
+- Reboot with time warning
+- Players tools like autokick when high ping
+
+### Roadmap
+
+- More player tools (auto respond commands, auto kick more options, Skip queue)
+- Discord login screen
+- Player permissions
+- Discord bot to send server information, bypass messages between chat and discord channel, assign groups to discord users
+- Commands memory with up arrow (rewrite last command sended) on console
+- RustMon Blacklist (a blacklist of players shared between rustmon clients)
 
 ## Screenshots:
 
