@@ -5,17 +5,21 @@
             <svg (click)="close.emit()" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512" class="svg-inline--fa fa-times fa-w-11"><path fill="currentColor" d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z" class=""></path></svg>
         </header>
         <nav>
-            <div [class.active]="tab==0" (click)="tab=0">
-                Auto-Kick
-            </div>
-            <div [class.active]="tab==1" (click)="tab=1">
-                Allowed players
-            </div>
-            <div [class.active]="tab==2" (click)="tab=2">
-                Auto-respond
-            </div>
+          <div [class.active]="tab==0" (click)="tab=0">
+            Auto-Kick
+          </div>
+          <div [class.active]="tab==1" (click)="tab=1" class="wip">
+            Restrictions
+          </div>
+          <div [class.active]="tab==2" (click)="tab=2" class="wip">
+            In game BOT
+          </div>
+          <div [class.active]="tab==3" (click)="tab=3" class="wip">
+            Auto-skip queue
+          </div>
         </nav>
         <section [hidden]="tab!=0">
+            <p>This only works when the pannel is open</p>
             <div>
                 <label>Max ping allowed</label>
                 <input type="number" placeholder="500 or 0 for no limits" [(ngModel)]="maxPingAllowed"/>
@@ -28,8 +32,10 @@
         <section [hidden]="tab!=1">
             <h3>Coming soon!</h3>
             <p>
-                kick players with private profile <br />
-                kick players with vac bans <br />
+                kick players when have private profile <br />
+                kick players when have x vac bans <br />
+                kick players when have > ping <br />
+                kick players when are on Rustmon-Blacklist <br />
             </p>
         </section>
         <section [hidden]="tab!=2">
@@ -37,8 +43,16 @@
             <p>
                 Auto respond wipe <br />
                 Auto respond !pop <br />
+                Auto respond !&lt;param&gt; with $param <br />
             </p>
         </section>
+        <section [hidden]="tab!=3">
+          <h3>Coming soon!</h3>
+          <p>
+            List of players added to auto-skip queue <br />
+            Add player to auto-skip queue (from discord? if I have one?)<br />
+          </p>
+      </section>
         <footer>
           <button (click)="save()">Apply</button>
         </footer>

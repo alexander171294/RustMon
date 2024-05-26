@@ -33,6 +33,18 @@
         <!-- FIRST TAB -->
         <section [hidden]="tab!=0">
             <div>
+              <label>Preview</label>
+              <div class="preview" *ngIf="serverImage">
+                  <img [src]="serverImage" />
+                  <h2>{{serverName}}</h2>
+                  <h3>Procedural Map - {{currentPlayers ?? 0}}/{{serverMaxPlayers}} - {{fps ?? 0}}fps</h3>
+                  <button class="embedded wip" pTooltip="HTML for your site">
+                    <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6zm80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3L562.7 256l-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3z"/></svg>
+                  </button>
+              </div>
+            </div>
+            <div>
                 <label>Server name</label>
                 <input type="text" placeholder="Test server name" [(ngModel)]="serverName" />
             </div>
@@ -57,12 +69,6 @@
             <div>
                 <label>Server Banner (1024px x 512px jpg/png)</label>
                 <input type="text" placeholder="https://i.imgur.com/2Bmq0jD.jpg" [(ngModel)]="serverImage" />
-                <label>Preview</label>
-                <div class="preview" *ngIf="serverImage">
-                    <img [src]="serverImage" />
-                    <h2>{{serverName}}</h2>
-                    <h3>Procedural Map - 0/{{serverMaxPlayers}} - 35ms</h3>
-                </div>
             </div>
         </section>
         <footer *ngIf="tab == 0">

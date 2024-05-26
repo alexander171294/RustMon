@@ -201,3 +201,13 @@ label.withDetail {
         }
     }
 }
+
+button.embedded {
+  position: absolute;
+  z-index: 1;
+  bottom: 8px;
+  right: 10px;
+  padding: 8px;
+  border-radius: 6px;
+  display: flex;
+}

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MapData } from 'src/app/api/MapDataDto';
 import { UserDataService } from 'src/app/api/user-data.service';
@@ -13,6 +13,8 @@ import { REType, RustEvent } from 'src/app/rustRCON/RustEvent';
 export class ConfigComponent implements OnInit, OnDestroy {
 
   @Output() close = new EventEmitter<void>();
+  @Input() currentPlayers?: number;
+  @Input() fps?: number;
 
   public retryLoading: boolean = false;
 
@@ -49,7 +51,7 @@ export class ConfigComponent implements OnInit, OnDestroy {
   public fpsLimit: number = 0;
   public serverSecure: any;
 
-  // batch 
+  // batch
   public batchCommand: string = '';
 
   public populations = {
@@ -256,7 +258,7 @@ export class ConfigComponent implements OnInit, OnDestroy {
     this.rustSrv.sendCommand(`server.tags "${this.serverTags}"`);
     this.rustSrv.sendCommand(`server.headerimage "${this.serverImage}"`);
     this.rustSrv.sendCommand(`server.maxplayers "${this.serverMaxPlayers}"`);
-    
+
     this.doClose();
   }
 

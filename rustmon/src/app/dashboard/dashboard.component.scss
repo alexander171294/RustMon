@@ -1,6 +1,9 @@
 #data {
   nav {
     background-color: #181818;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     > svg {
       width: 20px;
       vertical-align: middle;
@@ -45,8 +48,11 @@
       }
     }
     .actions {
-      float: right;
-      margin: 15px;
+      // float: right;
+      // margin: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       button {
         margin-left: 5px;
       }
@@ -186,6 +192,22 @@
       color: #cd412b;
       text-decoration: none;
     }
+    .cloud {
+      display: inline;
+      margin-left: 8px;
+      position: relative;
+      &.lock::after {
+        content: "";
+        display: block;
+        width: 3px;
+        height: 25px;
+        position: absolute;
+        top: -2px;
+        left: 8px;
+        background: #ff0000;
+        transform: rotate(45deg);
+      }
+    }
     .right {
       position: absolute;
       right: 7px;
@@ -249,4 +271,19 @@ app-players {
   svg {
     margin-left: 8px;
   }
+}
+
+button.mini {
+  background-color: #cd412b;
+  border: 1px solid black;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 6px;
+  outline: none;
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  padding: 5px;
 }
