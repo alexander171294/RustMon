@@ -35,14 +35,23 @@
       }
       &.hostname {
         .ip {
-          display: none;
+          opacity: 0;
+          position: absolute;
+          left: 0px;
+          top: 7px;
+          display: block;
+          padding-left: 32px;
+          cursor: pointer;
+          svg {
+            top: 0px;
+          }
         }
         &:hover, &.active {
           .ip {
-            display: inline-block;
+            opacity: 1;
           }
           .name {
-            display: none;
+            opacity: 0;
           }
         }
       }

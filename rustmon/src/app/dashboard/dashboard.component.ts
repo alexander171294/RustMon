@@ -13,6 +13,7 @@ import { ChatComponent } from './chat/chat.component';
 import { PlayerToolsService } from './player-tools/player-tools.service';
 import { PromptData, PromptService } from './prompt/prompt.service';
 import { UserDataService } from '../api/user-data.service';
+import { Clipboard } from 'src/app/utils/clipboard';
 
 @Component({
   selector: 'app-dashboard',
@@ -304,5 +305,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }, () => {
       this.connected = false;
     });
+  }
+
+  copy(text: string) {
+    Clipboard.writeText(text);
   }
 }
