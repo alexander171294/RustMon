@@ -1,4 +1,4 @@
-# RustMon 1.6.0
+# RustMon 1.6.1
 
 Rust admin panel (RustMonitor) See our 👉🏼 [Live Instance](https://rustmon.tercerpiso.net)
 
