@@ -16,7 +16,16 @@ section {
       background: #181818;
       font-size: 18px;
       color: #6e6f70;
+      position: relative;
       padding: 5px;
+      svg {
+          width: 15px;
+          position: absolute;
+          top: 7px;
+          right: 7px;
+          cursor: pointer;
+          display: block;
+      }
     }
     main {
       input {

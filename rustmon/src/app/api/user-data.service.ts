@@ -20,8 +20,12 @@ export class UserDataService {
     return this.http.get(`${environment.uDataApi}/ping`, {responseType: 'text'});
   }
 
-  public getUserData(steamId: string, ip: string): Observable<UserDataDTO> {
-    return this.http.get<UserDataDTO>(`${environment.uDataApi}/udata?steamID=${steamId}&ip=${ip}`);
+  public getUserData(steamId: string, ip?: string): Observable<UserDataDTO> {
+    let uri = `${environment.uDataApi}/udata?steamID=${steamId}`;
+    if(ip) {
+      uri += `&ip=${ip}`;
+    }
+    return this.http.get<UserDataDTO>(uri);
   }
 
   public clearCache(steamId: string): Observable<string> {

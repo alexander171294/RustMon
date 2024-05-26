@@ -1,0 +1,254 @@
+.container {
+  position: fixed;
+  width: 100vw;
+  background: #1310109c;
+  top: 0px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  article {
+      width: fit-content;
+      border: 1px solid black;
+      padding: 3px;
+      border-radius: 3px;
+      box-shadow: 0px 0px 5px black;
+      background-color: #2b2924;
+      background-image: url(/assets/blur.png);
+      header {
+          background-color: #181818;
+          text-align: center;
+          color: #f7ebe1;
+          padding: 15px;
+          position: relative;
+          svg {
+              width: 15px;
+              position: absolute;
+              top: 15px;
+              right: 15px;
+              cursor: pointer;
+              display: block;
+          }
+      }
+      nav {
+          background: #181818;
+          border-top: 1px solid #312f2a;
+          display: flex;
+          div {
+              color: #d6ccc3;
+              padding: 3px 15px;
+              border-right: 1px solid #312f2a;
+              cursor: pointer;
+              &:hover, &.active {
+                  background: #cd412b;
+                  color: wheat;
+              }
+          }
+      }
+      section {
+        width: 70vw;
+        max-height: 80vh;
+          // overflow-y: auto;
+          &::-webkit-scrollbar {
+              width: 10px;
+          }
+          &::-webkit-scrollbar-track {
+              background: #13120f;
+          }
+          &::-webkit-scrollbar-thumb {
+              background: gray;
+              border-radius: 5px;
+          }
+          &::-webkit-scrollbar-thumb:hover {
+              background: #555;
+          }
+          p, h3 {
+              color: wheat;
+          }
+          div {
+              &.splitted {
+                  display: flex;
+                  >div {
+                      width: 50%;
+                  }
+              }
+              .preview {
+                  position: relative;
+                  &::after{
+                      content: "";
+                      display: block;
+                      width: 100%;
+                      height: 50%;
+                      background: linear-gradient(transparent, #2a2823b3);
+                      position: absolute;
+                      bottom: 0px;
+                  }
+                  h2 {
+                      position: absolute;
+                      bottom: 20px;
+                      color: white;
+                      text-align: center;
+                      height: 35px;
+                      overflow: hidden;
+                      z-index: 1;
+                  }
+                  h3 {
+                      position: absolute;
+                      bottom: -5px;
+                      color: #d7d7d7e8;
+                      width: 100%;
+                      text-align: center;
+                      z-index: 1;
+                  }
+              }
+              padding: 5px;
+              label {
+                  display: block;
+                  color: #f7ebe1;
+                  font-family: helvetica;
+                  margin-top: 15px;
+              }
+              input {
+                  width: 100%;
+              }
+              textarea {
+                  background-color: #181818;
+                  border-radius: 0;
+                  border: 2px solid #4a4a4a;
+                  line-height: 1.5;
+                  font-family: Helvetica;
+                  color: #f7ebe1;
+                  width: 100%;
+              }
+              img {
+                  width: 512px;
+                  height: 256px;
+                  margin: 0 auto;
+                  display: block;
+              }
+          }
+      }
+      main {
+        margin-left: 5px;
+        width: 53vw;
+        &.info {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: wheat;
+          flex-direction: column;
+        }
+        h1 {
+          margin: 0px;
+          // margin-bottom: 16px;
+          margin-top: 5px;
+          background: #181818;
+          color: wheat;
+          border-bottom: 2px solid #312f2b;
+          text-align: left;
+          padding: 6px;
+          width: 100%;
+        }
+        .art {
+          background: #181818;
+          margin-top: 3px;
+          h4 {
+            margin: 0px;
+            color: wheat;
+            margin-bottom: 6px;
+          }
+          ul {
+            margin: 0px;
+            padding: 0px;
+            // display: flex;
+            list-style: none;
+            li {
+              display: inline-block;
+              padding: 6px;
+              background: #333333;
+              color: #a69f98;
+              border-radius: 7px;
+              margin: 2px;
+
+            }
+          }
+          button.mini {
+            padding: 4px;
+            border-radius: 6px;
+            margin-left: 5px;
+            color: #333333;
+            transition: color 0.3s;
+            &:hover {
+              color: wheat;
+            }
+          }
+        }
+      }
+      aside {
+        width: 17vw;
+        background: #181818;
+        margin-top: 5px;
+        height: 70vh;
+        overflow-y: auto;
+        ul {
+          margin: 0px;
+          padding: 0px;
+          list-style: none;
+          li {
+            color: #a69f98;
+            padding: 8px;
+            text-align: center;
+            position: relative;
+            svg {
+              right: 4px;
+              color: #59544a;
+              cursor: pointer;
+              &:hover {
+                color: #cc422c;
+              }
+            }
+            &.item {
+              &:hover {
+                color: wheat
+              }
+              cursor: pointer;
+              svg {
+                position: absolute;
+                right: 4px;
+              }
+            }
+            &.header {
+              color: wheat;
+              border-bottom: 2px solid #312f2b;
+              text-align: left;
+            }
+            &.footer {
+              color: #59544a;
+              border-top: 2px solid #312f2b;
+              border-bottom: 2px solid #312f2b;
+            }
+          }
+        }
+      }
+      footer {
+          text-align: right;
+          background-color: #181818;
+          padding: 3px;
+      }
+  }
+}
+
+.eipanel {
+  .comboBox {
+    margin: 16px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .info {
+   width: 80%;
+   margin: 12px auto;
+   text-align: center;
+ }
+}

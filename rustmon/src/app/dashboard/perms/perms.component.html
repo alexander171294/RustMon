@@ -1,0 +1,111 @@
+<div class="container">
+  <article>
+      <header>
+          Permissions Tool
+          <svg (click)="close.emit()" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512" class="svg-inline--fa fa-times fa-w-11"><path fill="currentColor" d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z" class=""></path></svg>
+      </header>
+      <nav>
+        <div [class.active]="tab==0" (click)="tab=0" pTooltip="Manage permissions group">
+          Groups
+        </div>
+        <div [class.active]="tab==1" (click)="tab=1" class="wip" pTooltip="Manage permissions per user">
+          Players
+        </div>
+        <div [class.active]="tab==2" (click)="tab=2" pTooltip="Export or import permissions configuration">
+          Export/Import
+        </div>
+      </nav>
+      <section *ngIf="tab == 0" style="display: flex;">
+        <aside>
+          <ul>
+            <!-- list header: -->
+            <li class="header">List of groups</li>
+            <li class="item" *ngFor="let group of groups" (click)="showGroup(group)" pTooltip="Show users and permissions">
+              {{group}}
+              <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+              <svg *ngIf="group !== 'default' && group !== 'admin' " (click)="removeGroup(group);$event.stopPropagation()" style="width: 16px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg>
+            </li>
+            <li class="footer" (click)="newGroup()" pTooltip="Add new group">
+              <svg style="width: 25px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+            </li>
+          </ul>
+        </aside>
+        <main *ngIf="!groupSelected" class="info">
+          <h3>👈🏻 Slect a group to start</h3>
+          All members on the group will have the permissions assigned to the group
+        </main>
+        <main *ngIf="groupSelected">
+          <h1>Group '{{groupSelected}}'</h1>
+          <div class="loadingMapData" *ngIf="groupLoading">
+            <div class="spinner"></div>
+          </div>
+          <div class="art" *ngIf="!groupLoading">
+            <h4>
+              Players
+              <button class="mini" (click)="addPlayer()"  pTooltip="Add player to group">
+                <svg style="width: 14px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+              </button>
+            </h4>
+            <ul *ngIf="members.length">
+              <li *ngFor="let member of members">
+                <a *ngIf="member.nick !== 'Unnamed'" pTooltip="Copy steam ID" tooltipPosition="bottom" style="cursor: pointer;" (click)="copy(member.steamID)">{{member.nick}}</a>
+                <a *ngIf="member.nick == 'Unnamed'" pTooltip="Unnamed player" tooltipPosition="bottom" style="cursor: pointer;" (click)="copy(member.steamID)">{{member.steamID}}</a>
+                <button class="mini" (click)="removePlayer(member.steamID); $event.stopPropagation()"  pTooltip="Remove player from group">
+                  <svg style="width: 14px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg>
+                </button>
+              </li>
+            </ul>
+          </div>
+          <div class="art" *ngIf="!groupLoading">
+            <h4>
+              Permissions
+              <p-dropdown
+                [options]="notAssignedFilter(perms)"
+                [(ngModel)]="selectedPermission"
+                optionLabel="name"
+                optionValue="name"
+                [filter]="true"
+                filterBy="name"
+                [showClear]="true"
+                placeholder="Select a permission">
+                    <ng-template pTemplate="selectedItem" let-selectedOption>
+                        <div class="flex align-items-center gap-2">
+                            <div>{{ selectedOption.name }}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-country pTemplate="item">
+                        <div class="flex align-items-center gap-2">
+                            <div>{{ country.name }}</div>
+                        </div>
+                    </ng-template>
+              </p-dropdown>
+              <button class="mini" (click)="addPerm(selectedPermission)" pTooltip="Add selected permission to group">
+                <svg style="width: 14px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+              </button>
+            </h4>
+            <ul *ngIf="groupPerms.length">
+              <li *ngFor="let perm of groupPerms" pTooltip="Copy permission name" tooltipPosition="bottom" style="cursor: pointer;" (click)="copy(perm)">
+                {{perm}}
+                <button class="mini" (click)="removePerm(perm); $event.stopPropagation()" pTooltip="Remove permission from group">
+                  <svg style="width: 14px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg>
+                </button>
+              </li>
+            </ul>
+          </div>
+        </main>
+      </section>
+      <section *ngIf="tab == 1" style="display: flex;">
+        <aside></aside>
+        <main class="info">
+          <h3>Coming soon!</h3>
+        </main>
+      </section>
+      <section *ngIf="tab == 2" class="eipanel">
+        <p class="info">This exports all the permissions on a file, and you can connect to another server and apply the same groups and permissions. <b>WARNING!</b>, when you import a permissions file, all the previous permissions/group will be removed.</p>
+        <div class="comboBox">
+          <button (click)="export()">EXPORT</button>
+          <button (click)="import()">IMPORT</button>
+        </div>
+      </section>
+  </article>
+</div>

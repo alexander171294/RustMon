@@ -52,6 +52,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   latestVersion = environment.version;
 
+  // pannels:
+  permsPanel = false;
+
   @ViewChild('chatCompo', {static: false}) chatCompo?: ChatComponent;
   @ViewChild('console', {static: false}) consoleBox: any;
 

@@ -20,4 +20,7 @@ export enum REType {
   O_LOAD = 1006,
   O_UNLOAD = 1007,
   O_RELOAD = 1008,
+  GROUPS = 1009,
+  PERMS = 1010,
+  GROUP_DETAILS = 1011,
 }

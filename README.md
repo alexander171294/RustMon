@@ -1,24 +1,6 @@
-# RustMon 1.5.4
+# RustMon 1.5.9
 
 Rust game admin tool for servers (RustMonitor) 
-
-## Run and build
-
-Install dependencies:
-
-`npm i`
-
-Run local dev mode:
-
-`ng serve`
-
-Build redist package:
-
-`ng build --prod`
-
-or if you don't have angular installed
-
-`npm run buildprod`
 
 ## Screenshots:
 
@@ -47,6 +29,27 @@ or if you don't have angular installed
 ### Plugin manager
 
 ![plugin manager](https://i.imgur.com/8qNMET3.png)
+
+### Permissions manager
+![permissions manager](https://i.imgur.com/bo3G41h.png)
+
+## Run and build
+
+Install dependencies:
+
+`npm i`
+
+Run local dev mode:
+
+`ng serve`
+
+Build redist package:
+
+`ng build --prod`
+
+or if you don't have angular installed
+
+`npm run buildprod`
 
 # run with docker in server:
 

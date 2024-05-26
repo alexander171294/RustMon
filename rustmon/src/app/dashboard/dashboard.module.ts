@@ -22,6 +22,8 @@ import { PlayersComponent } from './players/players.component';
 import { ConfigComponent } from './config/config.component';
 import { PlayerToolsComponent } from './player-tools/player-tools.component';
 import { UmodComponent } from './umod/umod.component';
+import { PermsComponent } from './perms/perms.component';
+import { DropdownModule } from 'primeng/dropdown';
 
 const routes: Routes = [
   {
@@ -42,6 +44,7 @@ const routes: Routes = [
     ConfigComponent,
     PlayerToolsComponent,
     UmodComponent,
+    PermsComponent,
   ],
   imports: [
     CommonModule,
@@ -55,6 +58,7 @@ const routes: Routes = [
     OverlayPanelModule,
     SidebarModule,
     PromptModule,
+    DropdownModule,
     FontAwesomeModule,
   ]
 })
